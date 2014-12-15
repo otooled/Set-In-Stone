@@ -17,7 +17,7 @@
    
     <script>
         var renderer, scene, camera, controls, stats;
-        var light, geometry, material, mesh;
+        var light, geometry, material, mesh, np;
         var clock = new THREE.Clock();
         var renderers = [];
 
@@ -77,26 +77,32 @@
                     light.position.set(-100, 100, -100);
                     light.castShadow = true;
                     scene.add(light);
-
-
-                    geometry = new THREE.CubeGeometry(50, 40, 200);
+                    
+                    //var quaternion = new THREE.Quaternion();
+                    //quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+                    //var vector = new THREE.Vector3(1, 10, 20);
+                    //vector.applyQuaternion(quaternion);
+                    
+                    //Create the slab
+                    geometry = new THREE.CubeGeometry(100, 20, 100);
 
                     //color of slab
                     color = 0x969696;
 
-                    //create the pyrimid shape
-                    pyrimid = new THREE.CylinderGeometry(0, 50, 30, 4, 1);
+                    material = new THREE.MeshPhongMaterial({ color: color, ambient: color, transparent: true });                               
 
-                    material = new THREE.MeshPhongMaterial({ color: color, ambient: color, transparent: true });
-
+                    //slab is called box1
                     box1 = new THREE.Mesh(geometry, material);
                     box1.castShadow = true;
-                    box1.position.set(0, 0, 0);
+                    
+                   
+                    
+                    //create the pyrimid shape
+                    pyrimid = new THREE.CylinderGeometry(0, 50, 30, 4, 1);
 
                     //add the pyrimid (now called cone) to the scene
                     cone = new THREE.Mesh(pyrimid, material);
                     cone.position.set(50, 40, 20);
-                    //cone.geometry.v
 
                     scene.add(box1);
                     scene.add(cone);
@@ -155,14 +161,7 @@
                         cone.scale.y = (coneConfig.scaleY);
                         //box1.scale.z = box1.scale.z + 1;
                         cone.position.y = (box1.scale.y * 40 / 2) + (cone.scale.y * 50 / 2);
-                        //box1.scale.y += 0.05;
-                        //cone.scale.y += 0.01;
-                        //alert(cone.position.x);
-                        //alert(box1.scale.y);
-                        //alert(cone.scale.x);
-                        //alert(cone.scale.y);
-                        //alert(cone.scale.z);
-                        //alert(coneConfig.scaleY);
+                        
                     });
 
                     guiBox1.add(box1Config, 'scaleY', 0, 10).onChange(function () {
@@ -174,7 +173,7 @@
                     });
 
                     function callback() { return; }
-                    renderers.push({ renderer: renderer, scene: scene, camera: camera, controls: controls, callback: callback });
+                    renderers.push({ renderer: renderer, scene: scene, camera: camera, controls: controls, callback: callback });                  
 
                 }
 
@@ -214,9 +213,6 @@
                         r.controls.update();
                     }
                 }
-
-
-
 
             </script>
             <form id="fmContronls" runat="server">
