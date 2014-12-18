@@ -85,6 +85,7 @@
                     
                     //Create the slab
                     geometry = new THREE.CubeGeometry(100, 20, 100);
+                    
 
                     //color of slab
                     color = 0x969696;
@@ -94,15 +95,15 @@
                     //slab is called box1
                     box1 = new THREE.Mesh(geometry, material);
                     box1.castShadow = true;
-                    
-                   
+                   // box1.position.set(0, 0, 15);
                     
                     //create the pyrimid shape
-                    pyrimid = new THREE.CylinderGeometry(0, 50, 30, 4, 1);
+                    pyrimid = new THREE.CylinderGeometry(0, 70, 30, 4, 1);
 
                     //add the pyrimid (now called cone) to the scene
                     cone = new THREE.Mesh(pyrimid, material);
-                    cone.position.set(50, 40, 20);
+                    cone.position.set(0, 25, 0);
+                    cone.rotation.y = Math.PI * 45 / 180;
 
                     scene.add(box1);
                     scene.add(cone);
@@ -115,12 +116,15 @@
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                cone.scale.y = 1 + Math.cos(1.5798 + tim);
+                                //cone.scale.y = 1 + Math.cos(1.5798 + tim);
+                                
+                                
                                 //cone.position.z = box1.scale.z + cone.scale.y;
                             }
                         };
                     };
 
+                    //funtion to manipulated slab shape
                     var box1ConfigData = function () {
                         this.scaleX = 1.0;
                         this.scaleY = 1.0;
@@ -160,12 +164,23 @@
                     guiCone1.add(coneConfig, 'scaleY', 0, 5).step(.01).onChange(function () {
                         cone.scale.y = (coneConfig.scaleY);
                         //box1.scale.z = box1.scale.z + 1;
-                        cone.position.y = (box1.scale.y * 40 / 2) + (cone.scale.y * 50 / 2);
+                        
+                        //cone.position.y = (box1.scale.y * 40 / 2) + (cone.scale.y *10);
+                        cone.position.y = (box1.scale.y + cone.scale.y)*13;
                         
                     });
 
                     guiBox1.add(box1Config, 'scaleY', 0, 10).onChange(function () {
+                        
+                       // var tim2 = clock.getElapsedTime() * 2.7;
+                        //box1.scale.x = 1 + Math.sin(tim);
+                       //var  speed = 1 + Math.cos(2.5798 + tim2);
+                       // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+
+
                         box1.scale.y = (box1Config.scaleY);
+                        cone.position.y = (box1.scale.y + 50)+30;
+                        //box1.scale.y = (cone.scale.y);
                     });
 
                     guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
