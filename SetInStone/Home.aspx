@@ -84,7 +84,7 @@
                     //vector.applyQuaternion(quaternion);
                     
                     //Create the slab
-                    geometry = new THREE.CubeGeometry(100, 20, 100);
+                    geometry = new THREE.CubeGeometry(100, 10, 100);
                     
 
                     //color of slab
@@ -95,10 +95,10 @@
                     //slab is called box1
                     box1 = new THREE.Mesh(geometry, material);
                     box1.castShadow = true;
-                   // box1.position.set(0, 0, 15);
+                    box1.position.set(0, 15, 0);
                     
                     //create the pyrimid shape
-                    pyrimid = new THREE.CylinderGeometry(0, 70, 30, 4, 1);
+                    pyrimid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
                     //add the pyrimid (now called cone) to the scene
                     cone = new THREE.Mesh(pyrimid, material);
@@ -108,26 +108,12 @@
                     scene.add(box1);
                     scene.add(cone);
 
-                    //funtion to manipulated pryimed shape
-                    var coneConfigData = function () {
-                        this.scaleY = 1.0;
-                        this.wireframe = false;
-                        this.opacity = 'full';
-                        this.doScale = function () {
-                            callback = function () {
-                                var tim = clock.getElapsedTime() * 0.7;
-                                //cone.scale.y = 1 + Math.cos(1.5798 + tim);
-                                
-                                
-                                //cone.position.z = box1.scale.z + cone.scale.y;
-                            }
-                        };
-                    };
+                   
 
                     //funtion to manipulated slab shape
                     var box1ConfigData = function () {
                         this.scaleX = 1.0;
-                        this.scaleY = 1.0;
+                        this.scaleY = 0.5;
                         this.scaleZ = 1.0;
                         this.wireframe = false;
                         this.opacity = 'full';
@@ -140,6 +126,26 @@
                             }
                         };
                     };
+                    
+                    //funtion to manipulated pryimed shape
+                    var coneConfigData = function () {
+                        //this.scaleX = 1.0;
+                        this.scaleY = 1.0;
+                        
+                        this.wireframe = false;
+                        this.opacity = 'full';
+                        this.doScale = function () {
+                            callback = function () {
+                                var tim = clock.getElapsedTime() * 0.7;
+                                cone.scale.x = 1 + Math.sin(tim);
+                                cone.scale.y = 1 + Math.cos(1.5798 + tim);
+                                cone.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+
+
+                                //cone.position.z = box1.scale.z + cone.scale.y;
+                            }
+                        };
+                    };
 
                     var box1Config = new box1ConfigData();
                     var box1Gui = new dat.GUI();
@@ -149,6 +155,11 @@
                     var coneConfig = new coneConfigData();
                     var cone1Gui = new dat.GUI();
                     var guiCone1 = cone1Gui.addFolder('Pyrimid ~ Scale');
+                    
+                    ////scale for pyrimid top
+                    //var coneConfig2 = new coneConfigData();
+                    //var cone2Gui = new dat.GUI();
+                    //var guiCone2 = cone2Gui.addFolder('Pyrimid ~ Scale');
 
                     //get value of one of the points
                     displayCo = box1.scale.x;   // box1Config.scaleX;
@@ -156,7 +167,11 @@
                     guiBox1.open();
                     guiBox1.add(box1Config, 'scaleX', 0, 5).step(.01).onChange(function () {
                         box1.scale.x = (box1Config.scaleX);
-                        displayCo = box1.scale.x;
+                        //displayCo = box1.scale.x;
+                        var pp = cone.scale.z ;
+                        pp = box1.scale.x;
+                        
+                        //cone.scale.z = (box1.scale.z);
                     });
 
                     //add pryimid for scale controls
@@ -166,27 +181,35 @@
                         //box1.scale.z = box1.scale.z + 1;
                         
                         //cone.position.y = (box1.scale.y * 40 / 2) + (cone.scale.y *10);
-                        cone.position.y = (box1.scale.y + cone.scale.y)*13;
+                        cone.position.y = (box1.position.y +20) ;
                         
                     });
+                    
+                    //add pryimid for scale controls
+                    //guiCone1.add(coneConfig, 'scaleX', 0, 10).onChange(function () {
+                    //    cone.scale.x = (cone1Gui.scaleX);
+                    //});
 
                     guiBox1.add(box1Config, 'scaleY', 0, 10).onChange(function () {
                         
                        // var tim2 = clock.getElapsedTime() * 2.7;
                         //box1.scale.x = 1 + Math.sin(tim);
                        //var  speed = 1 + Math.cos(2.5798 + tim2);
-                       // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
-
-
+                        // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         box1.scale.y = (box1Config.scaleY);
-                        cone.position.y = (box1.scale.y + 50)+30;
+                        cone.position.y = (box1Config.scaleY * 11)+8;
+
+                        
+                        //cone.position.y = box1.scale.y;
                         //box1.scale.y = (cone.scale.y);
                     });
 
                     guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
                         box1.scale.z = (box1Config.scaleZ);
+                        
                     });
-
+                    
+                    
                     function callback() { return; }
                     renderers.push({ renderer: renderer, scene: scene, camera: camera, controls: controls, callback: callback });                  
 
