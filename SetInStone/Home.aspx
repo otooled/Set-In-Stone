@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="SetInStone.WebForm1" %>
+<%@ Import namespace="System.Web.Optimization" %>
 
 <!DOCTYPE html>
 
@@ -9,11 +10,13 @@
     <meta content='width=1100' name='viewport' />
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
     
-    <script src="Scripts/three.min.js"></script>
+    <%--<script src="Scripts/three.min.js"></script>
     <script src="Scripts/TrackballControls.js"></script>
     <script src="Scripts/Detector.js"></script>
     <script src="Scripts/stats.min.js"></script>
-    <script src="Scripts/dat.gui.min.js"></script>
+    <script src="Scripts/dat.gui.min.js"></script>--%>
+    
+    <%: Scripts.Render("~/bundles/jQuery") %>
    
     <script>
         var renderer, scene, camera, controls, stats;
@@ -112,17 +115,17 @@
 
                     //funtion to manipulated slab shape
                     var box1ConfigData = function () {
-                        this.scaleX = 1.0;
-                        this.scaleY = 0.5;
-                        this.scaleZ = 1.0;
+                        //this.scaleX = 1.0;
+                        this.scaleY = 1;
+                        //this.scaleZ = 1.0;
                         this.wireframe = false;
                         this.opacity = 'full';
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                box1.scale.x = 1 + Math.sin(tim);
+                                //box1.scale.x = 1 + Math.sin(tim);
                                 box1.scale.y = 1 + Math.cos(1.5798 + tim);
-                                box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                //box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                             }
                         };
                     };
@@ -137,9 +140,9 @@
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                cone.scale.x = 1 + Math.sin(tim);
+                               // cone.scale.x = 1 + Math.sin(tim);
                                 cone.scale.y = 1 + Math.cos(1.5798 + tim);
-                                cone.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                //cone.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
 
 
                                 //cone.position.z = box1.scale.z + cone.scale.y;
@@ -165,23 +168,25 @@
                     displayCo = box1.scale.x;   // box1Config.scaleX;
 
                     guiBox1.open();
-                    guiBox1.add(box1Config, 'scaleX', 0, 5).step(.01).onChange(function () {
-                        box1.scale.x = (box1Config.scaleX);
-                        //displayCo = box1.scale.x;
-                        var pp = cone.scale.z ;
-                        pp = box1.scale.x;
+                    //guiBox1.add(box1Config, 'scaleX', 0, 5).step(.01).onChange(function () {
+                    //    box1.scale.x = (box1Config.scaleX);
+                    //    //displayCo = box1.scale.x;
+                    //    var pp = cone.scale.z ;
+                    //    pp = box1.scale.x;
                         
-                        //cone.scale.z = (box1.scale.z);
-                    });
+                    //    //cone.scale.z = (box1.scale.z);
+                    //});
 
                     //add pryimid for scale controls
                     guiCone1.open();
-                    guiCone1.add(coneConfig, 'scaleY', 0, 5).step(.01).onChange(function () {
+                    guiCone1.add(coneConfig, 'scaleY', 0, 2).step(.01).onChange(function () {
                         cone.scale.y = (coneConfig.scaleY);
                         //box1.scale.z = box1.scale.z + 1;
+                        //cone.position.y = (box1.scale.y) + (cone.scale.y);
+                        //var slabposition = box1.position.y ;
+                        //cone.position.y =  slabposition  / 2;// (box1.position.y +20) ;
+                        //box1.position.y = cone.position.y++;
                         
-                        //cone.position.y = (box1.scale.y * 40 / 2) + (cone.scale.y *10);
-                        cone.position.y = (box1.position.y +20) ;
                         
                     });
                     
@@ -190,24 +195,33 @@
                     //    cone.scale.x = (cone1Gui.scaleX);
                     //});
 
-                    guiBox1.add(box1Config, 'scaleY', 0, 10).onChange(function () {
+                    guiBox1.add(box1Config, 'scaleY', 0.5, 2.5).onChange(function () {
                         
                        // var tim2 = clock.getElapsedTime() * 2.7;
                         //box1.scale.x = 1 + Math.sin(tim);
                        //var  speed = 1 + Math.cos(2.5798 + tim2);
                         // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         box1.scale.y = (box1Config.scaleY);
-                        cone.position.y = (box1Config.scaleY * 11)+8;
+                        //cone.position.y = box1.position.y + box1.geometry.y / 2 + cone.scale.y / 2;// (box1.position.y +20) ;
+                        //cone.position.y = (box1Config.scaleY * 11) + 8;
 
                         
                         //cone.position.y = box1.scale.y;
                         //box1.scale.y = (cone.scale.y);
-                    });
-
-                    guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
-                        box1.scale.z = (box1Config.scaleZ);
+                        //if (box1.scale.y +1) {
+                        //    cone.position.y++;
+                        //}
+                        //else 
+                        if (box1.scale.y - 1) {
+                            alert("test");
+                        }
                         
                     });
+
+                    //guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
+                    //    box1.scale.z = (box1Config.scaleZ);
+                        
+                    //});
                     
                     
                     function callback() { return; }
@@ -216,7 +230,7 @@
                 }
 
                 function getCoords() {
-                    alert('test');
+                    
                     alert(displayCo);
 
                 }
@@ -255,6 +269,8 @@
             </script>
             <form id="fmContronls" runat="server">
                 <input id="btnGetValues" type="button" value="Get Values" onclick="getCoords()" />
+                <asp:Button runat="server" ID="btnTest" Text="Test Button" OnClientClick="" OnClick="btnTest_Click"/>
+                
                 <textarea id="txtResults" ></textarea>
                 
             </form>

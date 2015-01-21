@@ -13,5 +13,10 @@ namespace SetInStone
         {
 
         }
+
+        protected void btnTest_Click(object sender, EventArgs e)
+        {
+           // string testStr = this.btnTest.Text;
+        }
     }
 }
