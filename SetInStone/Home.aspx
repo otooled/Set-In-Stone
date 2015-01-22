@@ -14,8 +14,7 @@
     <script src="Scripts/TrackballControls.js"></script>
     <script src="Scripts/Detector.js"></script>
     <script src="Scripts/stats.min.js"></script>
-    <script src="Scripts/dat.gui.min.js"></script>--%>
-    
+    <script src="Scripts/dat.gui.min.js"></script>--%>    
     <%: Scripts.Render("~/bundles/jQuery") %>
    
     <script>
@@ -87,7 +86,7 @@
                     //vector.applyQuaternion(quaternion);
                     
                     //Create the slab
-                    geometry = new THREE.CubeGeometry(100, 10, 100);
+                    geometry = new THREE.CubeGeometry(100, 15, 100);
                     
 
                     //color of slab
@@ -98,14 +97,14 @@
                     //slab is called box1
                     box1 = new THREE.Mesh(geometry, material);
                     box1.castShadow = true;
-                    box1.position.set(0, 15, 0);
+                    box1.position.set(0, 12 , 0);
                     
                     //create the pyrimid shape
                     pyrimid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
                     //add the pyrimid (now called cone) to the scene
                     cone = new THREE.Mesh(pyrimid, material);
-                    cone.position.set(0, 25, 0);
+                    cone.position.set(0, 24.5, 0);
                     cone.rotation.y = Math.PI * 45 / 180;
 
                     scene.add(box1);
@@ -116,7 +115,7 @@
                     //funtion to manipulated slab shape
                     var box1ConfigData = function () {
                         //this.scaleX = 1.0;
-                        this.scaleY = 1;
+                        this.scaleY = 1.0;
                         //this.scaleZ = 1.0;
                         this.wireframe = false;
                         this.opacity = 'full';
@@ -185,7 +184,8 @@
                         //cone.position.y = (box1.scale.y) + (cone.scale.y);
                         //var slabposition = box1.position.y ;
                         //cone.position.y =  slabposition  / 2;// (box1.position.y +20) ;
-                        //box1.position.y = cone.position.y++;
+                        box1.position.y = (coneConfig.scaleY + 11) *2;
+                        //cone.position.y = (box1Config.scaleY * 6.5) + (20);
                         
                         
                     });
@@ -195,7 +195,7 @@
                     //    cone.scale.x = (cone1Gui.scaleX);
                     //});
 
-                    guiBox1.add(box1Config, 'scaleY', 0.5, 2.5).onChange(function () {
+                    guiBox1.add(box1Config, 'scaleY', 0.5, 2).onChange(function () {
                         
                        // var tim2 = clock.getElapsedTime() * 2.7;
                         //box1.scale.x = 1 + Math.sin(tim);
@@ -203,18 +203,12 @@
                         // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         box1.scale.y = (box1Config.scaleY);
                         //cone.position.y = box1.position.y + box1.geometry.y / 2 + cone.scale.y / 2;// (box1.position.y +20) ;
-                        //cone.position.y = (box1Config.scaleY * 11) + 8;
-
+                        cone.position.y = (box1Config.scaleY * 6.5) + (20);
+                        //cone.position.y = box1Config.scaleY;
                         
                         //cone.position.y = box1.scale.y;
                         //box1.scale.y = (cone.scale.y);
-                        //if (box1.scale.y +1) {
-                        //    cone.position.y++;
-                        //}
-                        //else 
-                        if (box1.scale.y - 1) {
-                            alert("test");
-                        }
+                        
                         
                     });
 
@@ -269,9 +263,11 @@
             </script>
             <form id="fmContronls" runat="server">
                 <input id="btnGetValues" type="button" value="Get Values" onclick="getCoords()" />
-                <asp:Button runat="server" ID="btnTest" Text="Test Button" OnClientClick="" OnClick="btnTest_Click"/>
+                <asp:Button runat="server" ID="btnTest" Text="Test Button"  OnClick="btnTest_Click"/>
                 
                 <textarea id="txtResults" ></textarea>
+                
+                <asp:TextBox ID="txtResult" runat="server"></asp:TextBox>
                 
             </form>
             
