@@ -178,23 +178,26 @@
 
                     //add pryimid for scale controls
                     guiCone1.open();
-                    guiCone1.add(coneConfig, 'scaleY', 0, 2).step(.01).onChange(function () {
+                    guiCone1.add(coneConfig, 'scaleY', 0, 2).onChange(function () {
                         cone.scale.y = (coneConfig.scaleY);
                         //box1.scale.z = box1.scale.z + 1;
-                        //cone.position.y = (box1.scale.y) + (cone.scale.y);
+                        
                         //var slabposition = box1.position.y ;
-                        //cone.position.y =  slabposition  / 2;// (box1.position.y +20) ;
-                        box1.position.y = (coneConfig.scaleY + 11) *2;
-                        //cone.position.y = (box1Config.scaleY * 6.5) + (20);
+
+                        //box1.position.y = (coneConfig.scaleY + cone.position.y) + (cone.position.y + cone.position.y)*0.5;
+                        //cone.position.y = coneConfig.scaleY + 12;
                         
-                        
+                        //cone.position.y = (box1Config.scaleY * box1.position.y) + (box1.position.y + box1.position.y)*0.5;
+                        //cone.position.y = (coneConfig.scaleY*7)+18.5;
+                        // .step(.01)
                     });
                     
                     //add pryimid for scale controls
                     //guiCone1.add(coneConfig, 'scaleX', 0, 10).onChange(function () {
                     //    cone.scale.x = (cone1Gui.scaleX);
                     //});
-
+                    
+                    //Change slab deminisions
                     guiBox1.add(box1Config, 'scaleY', 0.5, 2).onChange(function () {
                         
                        // var tim2 = clock.getElapsedTime() * 2.7;
@@ -203,7 +206,13 @@
                         // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         box1.scale.y = (box1Config.scaleY);
                         //cone.position.y = box1.position.y + box1.geometry.y / 2 + cone.scale.y / 2;// (box1.position.y +20) ;
-                        cone.position.y = (box1Config.scaleY * 6.5) + (20);
+
+                        cone.position.y = (box1Config.scaleY * box1.position.y) + (box1.position.y + box1.position.y) * 0.5;
+
+
+
+
+                       // cone.position.y = (box1Config.scaleY * 7) + (18);
                         //cone.position.y = box1Config.scaleY;
                         
                         //cone.position.y = box1.scale.y;
