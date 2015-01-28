@@ -94,26 +94,26 @@
 
                     material = new THREE.MeshPhongMaterial({ color: color, ambient: color, transparent: true });                               
 
-                    //slab is called box1
-                    box1 = new THREE.Mesh(geometry, material);
-                    box1.castShadow = true;
-                    box1.position.set(0, 12 , 0);
+                    //slab creation and position setting
+                    slab = new THREE.Mesh(geometry, material);
+                    slab.castShadow = true;
+                    slab.position.set(0, 12, 0);
                     
                     //create the pyrimid shape
                     pyrimid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
                     //add the pyrimid (now called cone) to the scene
-                    cone = new THREE.Mesh(pyrimid, material);
-                    cone.position.set(0, 24.5, 0);
-                    cone.rotation.y = Math.PI * 45 / 180;
+                    pyrimid = new THREE.Mesh(pyrimid, material);
+                    pyrimid.position.set(0, 24.5, 0);
+                    pyrimid.rotation.y = Math.PI * 45 / 180;
 
-                    scene.add(box1);
-                    scene.add(cone);
+                    scene.add(slab);
+                    scene.add(pyrimid);
 
                    
 
                     //funtion to manipulated slab shape
-                    var box1ConfigData = function () {
+                    var slabConfigData = function () {
                         //this.scaleX = 1.0;
                         this.scaleY = 1.0;
                         //this.scaleZ = 1.0;
@@ -122,15 +122,15 @@
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                //box1.scale.x = 1 + Math.sin(tim);
-                                box1.scale.y = 1 + Math.cos(1.5798 + tim);
-                                //box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                //slab.scale.x = 1 + Math.sin(tim);
+                                slab.scale.y = 1 + Math.cos(1.5798 + tim);
+                                //slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                             }
                         };
                     };
                     
                     //funtion to manipulated pryimed shape
-                    var coneConfigData = function () {
+                    var pyrimidConfigData = function () {
                         //this.scaleX = 1.0;
                         this.scaleY = 1.0;
                         
@@ -139,90 +139,93 @@
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                               // cone.scale.x = 1 + Math.sin(tim);
-                                cone.scale.y = 1 + Math.cos(1.5798 + tim);
-                                //cone.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
-
-
-                                //cone.position.z = box1.scale.z + cone.scale.y;
+                                // pyrimid.scale.x = 1 + Math.sin(tim);
+                                pyrimid.scale.y = 1 + Math.cos(1.5798 + tim);
+                                //pyrimid.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                
                             }
                         };
                     };
 
-                    var box1Config = new box1ConfigData();
-                    var box1Gui = new dat.GUI();
-                    var guiBox1 = box1Gui.addFolder('Slab ~ Scale');
+                    var slabConfig = new slabConfigData();
+                    var slabGui = new dat.GUI();
+                    var guiSlab = slabGui.addFolder('Slab ~ Scale');
 
                     //scale for pyrimid top
-                    var coneConfig = new coneConfigData();
-                    var cone1Gui = new dat.GUI();
-                    var guiCone1 = cone1Gui.addFolder('Pyrimid ~ Scale');
+                    var pyrimidConfig = new pyrimidConfigData();
+                    var pyrimidGui = new dat.GUI();
+                    var guiPyrimid = pyrimidGui.addFolder('Pyrimid ~ Scale');
+
+                    //get value of one of the x co-ordinate points - this is for test purposes
+                    displayCo = slab.scale.x;   // box1Config.scaleX;
+
+                    //add slab scale control
+                    guiSlab.open();
                     
-                    ////scale for pyrimid top
-                    //var coneConfig2 = new coneConfigData();
-                    //var cone2Gui = new dat.GUI();
-                    //var guiCone2 = cone2Gui.addFolder('Pyrimid ~ Scale');
-
-                    //get value of one of the points
-                    displayCo = box1.scale.x;   // box1Config.scaleX;
-
-                    guiBox1.open();
+                    //add pryimid scale control
+                    guiPyrimid.open();
+                    
+                    
+                    //The following controls the x axis which I'm not working on yet
                     //guiBox1.add(box1Config, 'scaleX', 0, 5).step(.01).onChange(function () {
-                    //    box1.scale.x = (box1Config.scaleX);
-                    //    //displayCo = box1.scale.x;
-                    //    var pp = cone.scale.z ;
-                    //    pp = box1.scale.x;
+                    //    slab.scale.x = (box1Config.scaleX);
+                    //    //displayCo = slab.scale.x;
+                    //    var pp = pyrimid.scale.z ;
+                    //    pp = slab.scale.x;
                         
-                    //    //cone.scale.z = (box1.scale.z);
+                    //    //pyrimid.scale.z = (slab.scale.z);
                     //});
-
-                    //add pryimid for scale controls
-                    guiCone1.open();
-                    guiCone1.add(coneConfig, 'scaleY', 0, 2).onChange(function () {
-                        cone.scale.y = (coneConfig.scaleY);
-                        //box1.scale.z = box1.scale.z + 1;
+                    
+                    guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 2).onChange(function () {
+                        pyrimid.scale.y = (pyrimidConfig.scaleY);
                         
-                        //var slabposition = box1.position.y ;
-
-                        //box1.position.y = (coneConfig.scaleY + cone.position.y) + (cone.position.y + cone.position.y)*0.5;
-                        //cone.position.y = coneConfig.scaleY + 12;
+                        //Past attempts at controlling shapes as one on screen
                         
-                        //cone.position.y = (box1Config.scaleY * box1.position.y) + (box1.position.y + box1.position.y)*0.5;
-                        //cone.position.y = (coneConfig.scaleY*7)+18.5;
+                        //slab.scale.z = slab.scale.z + 1;
+                        //var slabposition = slab.position.y ;
+
+                        //slab.position.y = (coneConfig.scaleY + pyrimid.position.y) + (pyrimid.position.y + pyrimid.position.y)*0.5;
+                        //pyrimid.position.y = coneConfig.scaleY + 12;
+                        
+                        //pyrimid.position.y = (box1Config.scaleY * slab.position.y) + (slab.position.y + slab.position.y)*0.5;
+                        //pyrimid.position.y = (coneConfig.scaleY*7)+18.5;
                         // .step(.01)
                     });
                     
-                    //add pryimid for scale controls
+                    //add pryimid for scale controls - X axis
+                    
                     //guiCone1.add(coneConfig, 'scaleX', 0, 10).onChange(function () {
-                    //    cone.scale.x = (cone1Gui.scaleX);
+                    //    pyrimid.scale.x = (cone1Gui.scaleX);
                     //});
                     
-                    //Change slab deminisions
-                    guiBox1.add(box1Config, 'scaleY', 0.5, 2).onChange(function () {
+                    
+                    //Change slab deminisions & move pyrimid in accordance with the altered slab
+                    guiSlab.add(slabConfig, 'scaleY', 0.5, 2).onChange(function () {
                         
                        // var tim2 = clock.getElapsedTime() * 2.7;
-                        //box1.scale.x = 1 + Math.sin(tim);
+                        //slab.scale.x = 1 + Math.sin(tim);
                        //var  speed = 1 + Math.cos(2.5798 + tim2);
-                        // box1.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
-                        box1.scale.y = (box1Config.scaleY);
-                        //cone.position.y = box1.position.y + box1.geometry.y / 2 + cone.scale.y / 2;// (box1.position.y +20) ;
+                        // slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                        slab.scale.y = (slabConfig.scaleY);
 
-                        cone.position.y = (box1Config.scaleY * box1.position.y) + (box1.position.y + box1.position.y) * 0.5;
-
+                        pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
 
 
-
-                       // cone.position.y = (box1Config.scaleY * 7) + (18);
-                        //cone.position.y = box1Config.scaleY;
+                        //Past attempts to manipulate shapes as one
                         
-                        //cone.position.y = box1.scale.y;
-                        //box1.scale.y = (cone.scale.y);
+                        //pyrimid.position.y = slab.position.y + slab.geometry.y / 2 + pyrimid.scale.y / 2;// (slab.position.y +20) ;
+                        // pyrimid.position.y = (box1Config.scaleY * 7) + (18);
+                        //var differnece = pyrimid.position.y - slab.position.y;
+                        //pyrimid.position.y = (differnece + slab.position.y);
                         
+                        //pyrimid.position.y = slab.scale.y;
+                        //slab.scale.y = (pyrimid.scale.y);
                         
                     });
-
+                    
+                    //Z co-ordinates for slab - not working on it yet
                     //guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
-                    //    box1.scale.z = (box1Config.scaleZ);
+                    //    slab.scale.z = (box1Config.scaleZ);
                         
                     //});
                     
@@ -270,7 +273,7 @@
                 }
 
             </script>
-            <form id="fmContronls" runat="server">
+           <%-- <form id="fmContronls" runat="server">
                 <input id="btnGetValues" type="button" value="Get Values" onclick="getCoords()" />
                 <asp:Button runat="server" ID="btnTest" Text="Test Button"  OnClick="btnTest_Click"/>
                 
@@ -278,7 +281,7 @@
                 
                 <asp:TextBox ID="txtResult" runat="server"></asp:TextBox>
                 
-            </form>
+            </form>--%>
             
         </div>
     </body>
