@@ -15,6 +15,7 @@
     <script src="Scripts/Detector.js"></script>
     <script src="Scripts/stats.min.js"></script>
     <script src="Scripts/dat.gui.min.js"></script>--%>    
+
     <%: Scripts.Render("~/bundles/jQuery") %>
    
     <script>
@@ -23,7 +24,7 @@
         var clock = new THREE.Clock();
         var renderers = [];
 
-        //globlal variable to get one co-ordination value
+        //globlal variable to get one co-ordination value -  for test purposes
         var displayCo = null;
     </script>
     <title>Set In Stone</title>
@@ -110,8 +111,6 @@
                     scene.add(slab);
                     scene.add(pyrimid);
 
-                   
-
                     //funtion to manipulated slab shape
                     var slabConfigData = function () {
                         //this.scaleX = 1.0;
@@ -154,7 +153,7 @@
                     //scale for pyrimid top
                     var pyrimidConfig = new pyrimidConfigData();
                     var pyrimidGui = new dat.GUI();
-                    var guiPyrimid = pyrimidGui.addFolder('Pyrimid ~ Scale');
+                    var guiPyrimid = pyrimidGui.addFolder('Pyramid ~ Scale');
 
                     //get value of one of the x co-ordinate points - this is for test purposes
                     displayCo = slab.scale.x;   // box1Config.scaleX;
@@ -208,6 +207,7 @@
                         // slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         slab.scale.y = (slabConfig.scaleY);
 
+                        //This moves the slab and pyrimid as one but there is a gap between the objects
                         pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
 
 
@@ -224,6 +224,7 @@
                     });
                     
                     //Z co-ordinates for slab - not working on it yet
+                    
                     //guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
                     //    slab.scale.z = (box1Config.scaleZ);
                         
@@ -273,16 +274,29 @@
                 }
 
             </script>
-           <%-- <form id="fmContronls" runat="server">
-                <input id="btnGetValues" type="button" value="Get Values" onclick="getCoords()" />
-                <asp:Button runat="server" ID="btnTest" Text="Test Button"  OnClick="btnTest_Click"/>
+            <form id="fmContronls" runat="server">
                 
-                <textarea id="txtResults" ></textarea>
+              <%-- // <asp:Button runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="b"  />--%>
+                <asp:Button runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
                 
-                <asp:TextBox ID="txtResult" runat="server"></asp:TextBox>
                 
-            </form>--%>
+                 <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="StoneType" DataValueField="StoneCost">
+                </asp:DropDownList>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT * FROM [Stone]"></asp:SqlDataSource>
+                
+                <div>
+                    <label>Stone Height</label>
+                <asp:TextBox ID="txtStoneHeight" runat="server"></asp:TextBox>
+                    <br/>
+                    <label>Stone Width</label>
+                 <asp:TextBox ID="txtStoneWidth" runat="server"></asp:TextBox>
+                    <br/>
+                   <%-- <label id="lblAnswer">A</label>--%>
+                    <asp:Label runat="server" ID="lblAnswer"></asp:Label>
+                </div>
+            </form>
             
         </div>
+       
     </body>
 </html>

@@ -18,5 +18,18 @@ namespace SetInStone
         {
            //txtResult.Text = 
         }
+
+        protected void btnCalculate_Click(object sender, EventArgs e)
+        {
+            int SH = Convert.ToInt32(txtStoneHeight.Text);
+            int SW = Convert.ToInt32(txtStoneWidth.Text);
+            decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
+            lblAnswer.Text = (SH + SW + SC).ToString();
+
+            //lblAnswer.Text = (Convert.ToInt32(txtStoneHeight.Text)
+            // + Convert.ToInt32(txtStoneWidth.Text) );
+        }
+
+        
     }
 }
