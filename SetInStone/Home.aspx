@@ -275,7 +275,11 @@
 
             </script>
             <form id="fmContronls" runat="server">
+                 <asp:ScriptManager ID="MainScriptManager" runat="server" />
                 
+                    
+                    
+
               <%-- // <asp:Button runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="b"  />--%>
                 <asp:Button runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
                 
@@ -285,14 +289,21 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT * FROM [Stone]"></asp:SqlDataSource>
                 
                 <div>
+                    <asp:UpdatePanel runat="server" id="UpdatePanel" updatemode="Conditional">
+                        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="btnCalculate" />
+        </Triggers>
+                    <ContentTemplate>
                     <label>Stone Height</label>
                 <asp:TextBox ID="txtStoneHeight" runat="server"></asp:TextBox>
                     <br/>
                     <label>Stone Width</label>
                  <asp:TextBox ID="txtStoneWidth" runat="server"></asp:TextBox>
                     <br/>
-                   <%-- <label id="lblAnswer">A</label>--%>
+                   
                     <asp:Label runat="server" ID="lblAnswer"></asp:Label>
+                        </ContentTemplate>
+        </asp:UpdatePanel>
                 </div>
             </form>
             
