@@ -11,12 +11,9 @@ namespace SetInStone
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btnTest_Click(object sender, EventArgs e)
-        {
-           //txtResult.Text = 
+            //var pyrimid_y = PYS.value;
+            //lblTest.Text = pyrimid_y;
+            
         }
 
         protected void btnCalculate_Click(object sender, EventArgs e)
@@ -26,8 +23,12 @@ namespace SetInStone
             decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
             lblAnswer.Text = (SH + SW + SC).ToString();
 
-            //lblAnswer.Text = (Convert.ToInt32(txtStoneHeight.Text)
-            // + Convert.ToInt32(txtStoneWidth.Text) );
+            
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            TextBox1.Text = Hidden1.Value;
         }
 
         

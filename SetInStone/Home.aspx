@@ -14,8 +14,7 @@
     <script src="Scripts/TrackballControls.js"></script>
     <script src="Scripts/Detector.js"></script>
     <script src="Scripts/stats.min.js"></script>
-    <script src="Scripts/dat.gui.min.js"></script>--%>    
-
+    <script src="Scripts/dat.gui.min.js"></script>--%>    <%: Styles.Render("~/Content/bootstrap.css") %>  
     <%: Scripts.Render("~/bundles/jQuery") %>
    
     <script>
@@ -103,7 +102,7 @@
                     //create the pyrimid shape
                     pyrimid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
-                    //add the pyrimid (now called cone) to the scene
+                    //add the pyrimid to the scene
                     pyrimid = new THREE.Mesh(pyrimid, material);
                     pyrimid.position.set(0, 24.5, 0);
                     pyrimid.rotation.y = Math.PI * 45 / 180;
@@ -133,6 +132,7 @@
                         //this.scaleX = 1.0;
                         this.scaleY = 1.0;
                         
+                        
                         this.wireframe = false;
                         this.opacity = 'full';
                         this.doScale = function () {
@@ -145,7 +145,9 @@
                             }
                         };
                     };
-
+                    
+                    
+                    
                     var slabConfig = new slabConfigData();
                     var slabGui = new dat.GUI();
                     var guiSlab = slabGui.addFolder('Slab ~ Scale');
@@ -154,6 +156,8 @@
                     var pyrimidConfig = new pyrimidConfigData();
                     var pyrimidGui = new dat.GUI();
                     var guiPyrimid = pyrimidGui.addFolder('Pyramid ~ Scale');
+                    //var PHeight = pyrimid.scale.y;
+                    //document.getElementById('PHeight').value = PHeight;
 
                     //get value of one of the x co-ordinate points - this is for test purposes
                     displayCo = slab.scale.x;   // box1Config.scaleX;
@@ -163,6 +167,8 @@
                     
                     //add pryimid scale control
                     guiPyrimid.open();
+                    
+
                     
                     
                     //The following controls the x axis which I'm not working on yet
@@ -174,10 +180,16 @@
                         
                     //    //pyrimid.scale.z = (slab.scale.z);
                     //});
+                    //var params = {
+                    //    iterations: 500
+                    //};
+                    
                     
                     guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 2).onChange(function () {
                         pyrimid.scale.y = (pyrimidConfig.scaleY);
-                        
+
+                        displayCo = pyrimid.scale.y;
+
                         //Past attempts at controlling shapes as one on screen
                         
                         //slab.scale.z = slab.scale.z + 1;
@@ -196,8 +208,11 @@
                     //guiCone1.add(coneConfig, 'scaleX', 0, 10).onChange(function () {
                     //    pyrimid.scale.x = (cone1Gui.scaleX);
                     //});
+
                     
-                    
+
+
+
                     //Change slab deminisions & move pyrimid in accordance with the altered slab
                     guiSlab.add(slabConfig, 'scaleY', 0.5, 2).onChange(function () {
                         
@@ -219,10 +234,10 @@
                         //pyrimid.position.y = (differnece + slab.position.y);
                         
                         //pyrimid.position.y = slab.scale.y;
-                        //slab.scale.y = (pyrimid.scale.y);
                         
                     });
-                    
+                    //slab.scale.y = (pyrimid.scale.y);
+                    //document.getElementById('PHe').value = pyrimid.scale.y;
                     //Z co-ordinates for slab - not working on it yet
                     
                     //guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
@@ -241,7 +256,13 @@
                     alert(displayCo);
 
                 }
+                
+                function JavaScriptFunction() {
+                    var JavaScriptVar = displayCo;
+                    document.getElementById('<%= Hidden1.ClientID %>').value = JavaScriptVar;
+        }
 
+                //document.getElementById('PYS').value = pyrimid.scale.y;
 
             </script>
 
@@ -272,42 +293,55 @@
                         r.controls.update();
                     }
                 }
+                
 
             </script>
             <form id="fmContronls" runat="server">
-                 <asp:ScriptManager ID="MainScriptManager" runat="server" />
+                <%--<input type="hidden" name="PHeight" id="PYS" value="" runat="server" />--%>
                 
-                    
-                    
+                <%--Start of Ajax commands--%>
+                <asp:ScriptManager ID="MainScriptManager" runat="server" />
+                
+               
 
-              <%-- // <asp:Button runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="b"  />--%>
-                <asp:Button runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
-                
-                
-                 <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="StoneType" DataValueField="StoneCost">
-                </asp:DropDownList>
+                <%-- Connection to test database--%>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT * FROM [Stone]"></asp:SqlDataSource>
                 
-                <div>
-                    <asp:UpdatePanel runat="server" id="UpdatePanel" updatemode="Conditional">
+                <%--This div gets updated using Ajax--%>
+                <div align="center">
+                    <asp:UpdatePanel runat="server" ID="UpdatePanel" UpdateMode="Conditional">
                         <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="btnCalculate" />
-        </Triggers>
-                    <ContentTemplate>
-                    <label>Stone Height</label>
-                <asp:TextBox ID="txtStoneHeight" runat="server"></asp:TextBox>
-                    <br/>
-                    <label>Stone Width</label>
-                 <asp:TextBox ID="txtStoneWidth" runat="server"></asp:TextBox>
-                    <br/>
-                   
-                    <asp:Label runat="server" ID="lblAnswer"></asp:Label>
+                            <asp:AsyncPostBackTrigger ControlID="btnCalculate" />
+                        </Triggers>
+                        <ContentTemplate>
+                            <label>Stone Height</label>
+                            <asp:TextBox ID="txtStoneHeight" runat="server"></asp:TextBox>
+                            
+                            <br />
+                            <label>Stone Width</label>
+                            <asp:TextBox ID="txtStoneWidth" runat="server"></asp:TextBox>
+                            <br />
+
+                            <asp:DropDownList class="btn btn-info dropdown-toggle" data-toggle="dropdown" ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="StoneType" DataValueField="StoneCost">
+                            </asp:DropDownList>
+                            <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
+                            <br />
+                            <asp:Label runat="server" ID="lblAnswer"></asp:Label>
                         </ContentTemplate>
-        </asp:UpdatePanel>
+                    </asp:UpdatePanel>
+                    <%--Calculate button and drop down menu--%>
                 </div>
-            </form>
+               <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick="JavaScriptFunction()" onclick="Button1_Click" /> 
             
+            <asp:HiddenField ID="Hidden1" runat="server" />
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        
+        <asp:Label ID="lblTest" runat="server" Text="Label"></asp:Label>
+            
+            </form>
+
         </div>
-       
+        
+
     </body>
 </html>
