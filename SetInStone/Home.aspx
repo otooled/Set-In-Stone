@@ -23,8 +23,11 @@
         var clock = new THREE.Clock();
         var renderers = [];
 
-        //globlal variable to get one co-ordination value -  for test purposes
-        var displayCo = null;
+        //Height of pyramid
+        var Pyramid_Height = null;
+        
+        //This will act as width & length as slab
+        var Slab_Width = null;
     </script>
     <title>Set In Stone</title>
     
@@ -112,35 +115,35 @@
 
                     //funtion to manipulated slab shape
                     var slabConfigData = function () {
-                        //this.scaleX = 1.0;
+                        this.scaleX = 1.0;
                         this.scaleY = 1.0;
-                        //this.scaleZ = 1.0;
+                        this.scaleZ = 1.0;
                         this.wireframe = false;
                         this.opacity = 'full';
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                //slab.scale.x = 1 + Math.sin(tim);
+                                slab.scale.x = 1 + Math.sin(tim);
                                 slab.scale.y = 1 + Math.cos(1.5798 + tim);
-                                //slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                             }
                         };
                     };
                     
                     //funtion to manipulated pryimed shape
                     var pyrimidConfigData = function () {
-                        //this.scaleX = 1.0;
+                        this.scaleX = 1.0;
                         this.scaleY = 1.0;
-                        
+                        this.scaleZ = 1.0;
                         
                         this.wireframe = false;
                         this.opacity = 'full';
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                // pyrimid.scale.x = 1 + Math.sin(tim);
+                                pyrimid.scale.x = 1 + Math.sin(tim);
                                 pyrimid.scale.y = 1 + Math.cos(1.5798 + tim);
-                                //pyrimid.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                pyrimid.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                                 
                             }
                         };
@@ -156,39 +159,57 @@
                     var pyrimidConfig = new pyrimidConfigData();
                     var pyrimidGui = new dat.GUI();
                     var guiPyrimid = pyrimidGui.addFolder('Pyramid ~ Scale');
-                    //var PHeight = pyrimid.scale.y;
-                    //document.getElementById('PHeight').value = PHeight;
-
-                    //get value of one of the x co-ordinate points - this is for test purposes
-                    displayCo = slab.scale.x;   // box1Config.scaleX;
 
                     //add slab scale control
                     guiSlab.open();
                     
-                    //add pryimid scale control
-                    guiPyrimid.open();
-                    
+                    //Change slab deminisions & move pyrimid in accordance with the altered slab
+                    guiSlab.add(slabConfig, 'scaleY', 0.5, 2).onChange(function () {
 
-                    
+                        // var tim2 = clock.getElapsedTime() * 2.7;
+                        //slab.scale.x = 1 + Math.sin(tim);
+                        //var  speed = 1 + Math.cos(2.5798 + tim2);
+                        // slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                        slab.scale.y = (slabConfig.scaleY);
+
+                        //This moves the slab and pyrimid as one but there is a gap between the objects
+                        pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
+
+                        //Past attempts to manipulate shapes as one
+
+                        //pyrimid.position.y = slab.position.y + slab.geometry.y / 2 + pyrimid.scale.y / 2;// (slab.position.y +20) ;
+                        // pyrimid.position.y = (box1Config.scaleY * 7) + (18);
+                        //var differnece = pyrimid.position.y - slab.position.y;
+                        //pyrimid.position.y = (differnece + slab.position.y);
+
+                        //pyrimid.position.y = slab.scale.y;
+
+                    });
                     
                     //The following controls the x axis which I'm not working on yet
-                    //guiBox1.add(box1Config, 'scaleX', 0, 5).step(.01).onChange(function () {
-                    //    slab.scale.x = (box1Config.scaleX);
-                    //    //displayCo = slab.scale.x;
-                    //    var pp = pyrimid.scale.z ;
-                    //    pp = slab.scale.x;
-                        
-                    //    //pyrimid.scale.z = (slab.scale.z);
-                    //});
-                    //var params = {
-                    //    iterations: 500
-                    //};
+                    guiSlab.add(slabConfig, 'scaleX', 0.5, 2).step(.01).onChange(function () {
+                        slab.scale.x = (slabConfig.scaleX);
+                        slab.scale.z = (slabConfig.scaleX);
+                        pyrimid.scale.x = (slabConfig.scaleX);
+                        pyrimid.scale.z = (slabConfig.scaleX);
+                        //pyrimid.scale.z = (slab.scale.z);
+                    });
+                    
+                    //Z co-ordinates for slab - not working on it yet
+
+                    guiSlab.add(slabConfig, 'scaleZ', 0, 2).onChange(function () {
+                        slab.scale.z = (slabConfig.scaleZ);
+
+                    });
+                    
+                    //add pryimid scale control
+                    guiPyrimid.open();
                     
                     
                     guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 2).onChange(function () {
                         pyrimid.scale.y = (pyrimidConfig.scaleY);
 
-                        displayCo = pyrimid.scale.y;
+                        Pyramid_Height = pyrimid.scale.y;
 
                         //Past attempts at controlling shapes as one on screen
                         
@@ -205,45 +226,24 @@
                     
                     //add pryimid for scale controls - X axis
                     
-                    //guiCone1.add(coneConfig, 'scaleX', 0, 10).onChange(function () {
-                    //    pyrimid.scale.x = (cone1Gui.scaleX);
-                    //});
-
-                    
-
-
-
-                    //Change slab deminisions & move pyrimid in accordance with the altered slab
-                    guiSlab.add(slabConfig, 'scaleY', 0.5, 2).onChange(function () {
-                        
-                       // var tim2 = clock.getElapsedTime() * 2.7;
-                        //slab.scale.x = 1 + Math.sin(tim);
-                       //var  speed = 1 + Math.cos(2.5798 + tim2);
-                        // slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
-                        slab.scale.y = (slabConfig.scaleY);
-
-                        //This moves the slab and pyrimid as one but there is a gap between the objects
-                        pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
-
-
-                        //Past attempts to manipulate shapes as one
-                        
-                        //pyrimid.position.y = slab.position.y + slab.geometry.y / 2 + pyrimid.scale.y / 2;// (slab.position.y +20) ;
-                        // pyrimid.position.y = (box1Config.scaleY * 7) + (18);
-                        //var differnece = pyrimid.position.y - slab.position.y;
-                        //pyrimid.position.y = (differnece + slab.position.y);
-                        
-                        //pyrimid.position.y = slab.scale.y;
-                        
+                    guiPyrimid.add(pyrimidConfig, 'scaleX', 0, 2).onChange(function () {
+                        pyrimid.scale.x = (pyrimidConfig.scaleX);
+                        pyrimid.scale.z = (pyrimidConfig.scaleX);
+                        slab.scale.x = (pyrimidConfig.scaleX);
+                        slab.scale.z = (pyrimidConfig.scaleX);
                     });
-                    //slab.scale.y = (pyrimid.scale.y);
-                    //document.getElementById('PHe').value = pyrimid.scale.y;
-                    //Z co-ordinates for slab - not working on it yet
-                    
-                    //guiBox1.add(box1Config, 'scaleZ', 0, 10).onChange(function () {
-                    //    slab.scale.z = (box1Config.scaleZ);
-                        
+
+                    //guiPyrimid.add(pyrimidConfig, 'scaleZ', 0, 2).onChange(function() {
+                    //    pyrimid.scale.z = (pyrimidConfig.scaleZ);
+                    //    pyrimid.scale.x = (pyrimidConfig.scaleZ);
                     //});
+
+
+
+                    
+                   // slab.scale.y = (pyrimid.scale.y);
+                   
+                    
                     
                     
                     function callback() { return; }
@@ -251,14 +251,14 @@
 
                 }
 
-                function getCoords() {
+                //function getCoords() {
                     
-                    alert(displayCo);
+                //    alert(displayCo);
 
-                }
+                //}
                 
                 function JavaScriptFunction() {
-                    var JavaScriptVar = displayCo;
+                    var JavaScriptVar = Pyramid_Height;
                     document.getElementById('<%= Hidden1.ClientID %>').value = JavaScriptVar;
         }
 
@@ -327,14 +327,15 @@
                             <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
                             <br />
                             <asp:Label runat="server" ID="lblAnswer"></asp:Label>
+                            <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick="JavaScriptFunction()" onclick="Button1_Click" /> 
+            
+            <asp:HiddenField ID="Hidden1" runat="server" />
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                     <%--Calculate button and drop down menu--%>
                 </div>
-               <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick="JavaScriptFunction()" onclick="Button1_Click" /> 
-            
-            <asp:HiddenField ID="Hidden1" runat="server" />
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+               
         
         <asp:Label ID="lblTest" runat="server" Text="Label"></asp:Label>
             
