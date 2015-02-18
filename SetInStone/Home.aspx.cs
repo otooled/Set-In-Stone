@@ -11,25 +11,45 @@ namespace SetInStone
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //var pyrimid_y = PYS.value;
-            //lblTest.Text = pyrimid_y;
             
+            
+            //txtPryHeight.Text = SlabW.ToString();
+
         }
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
-            int SH = Convert.ToInt32(txtStoneHeight.Text);
-            int SW = Convert.ToInt32(txtStoneWidth.Text);
-            decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
-            lblAnswer.Text = (SH + SW + SC).ToString();
-
             
+            decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
+            decimal StoneSlab = Convert.ToDecimal(DropDownList2.SelectedValue);
+            decimal SlabW = Convert.ToDecimal(SlabWidth.Value);
+            lblAnswer.Text = ((StoneSlab*SC)*(SlabW)).ToString();
+            //txtPryHeight.Text = SlabWidth.Value;
+
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void BtnProvisionalCost_Click(object sender, EventArgs e)
         {
-            TextBox1.Text = Hidden1.Value;
+            decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
+            decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
+            lblDisplyHTotal.Text = (slabHeight + pryamidHeight).ToString("#0.00");
+
+            lblTotalHeight.Visible = true;
+
+            DetermineSlab();
         }
+
+        private void DetermineSlab()
+        {
+            if (decimal.Parse(lblDisplyHTotal.Text) > 2)
+            {
+                lblAnswer.Text = "ello";
+            }
+        }
+
+        
+
+        
 
         
     }

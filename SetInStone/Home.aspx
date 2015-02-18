@@ -28,6 +28,8 @@
         
         //This will act as width & length as slab
         var Slab_Width = null;
+
+        var Slab_Height = null;
     </script>
     <title>Set In Stone</title>
     
@@ -132,18 +134,18 @@
                     
                     //funtion to manipulated pryimed shape
                     var pyrimidConfigData = function () {
-                        this.scaleX = 1.0;
+                        //this.scaleX = 1.0;
                         this.scaleY = 1.0;
-                        this.scaleZ = 1.0;
+                        //this.scaleZ = 1.0;
                         
                         this.wireframe = false;
                         this.opacity = 'full';
                         this.doScale = function () {
                             callback = function () {
                                 var tim = clock.getElapsedTime() * 0.7;
-                                pyrimid.scale.x = 1 + Math.sin(tim);
+                                //pyrimid.scale.x = 1 + Math.sin(tim);
                                 pyrimid.scale.y = 1 + Math.cos(1.5798 + tim);
-                                pyrimid.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                                //pyrimid.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                                 
                             }
                         };
@@ -171,7 +173,10 @@
                         //var  speed = 1 + Math.cos(2.5798 + tim2);
                         // slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         slab.scale.y = (slabConfig.scaleY);
-
+                        
+                        //Put Y scale value in global variable
+                        Slab_Height = slab.scale.y;
+                        
                         //This moves the slab and pyrimid as one but there is a gap between the objects
                         pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
 
@@ -187,28 +192,32 @@
                     });
                     
                     //The following controls the x axis which I'm not working on yet
-                    guiSlab.add(slabConfig, 'scaleX', 0.5, 2).step(.01).onChange(function () {
+                    guiSlab.add(slabConfig, 'scaleX', 0.5, 1.5).step(.01).onChange(function () {
                         slab.scale.x = (slabConfig.scaleX);
                         slab.scale.z = (slabConfig.scaleX);
                         pyrimid.scale.x = (slabConfig.scaleX);
                         pyrimid.scale.z = (slabConfig.scaleX);
                         //pyrimid.scale.z = (slab.scale.z);
+                        
+                        //Puts value of X co-ordinate in globally declared variable
+                        Slab_Width = slab.scale.x;
                     });
                     
                     //Z co-ordinates for slab - not working on it yet
 
-                    guiSlab.add(slabConfig, 'scaleZ', 0, 2).onChange(function () {
-                        slab.scale.z = (slabConfig.scaleZ);
+                    //guiSlab.add(slabConfig, 'scaleZ', 0, 1.5).onChange(function () {
+                    //    slab.scale.z = (slabConfig.scaleZ);
 
-                    });
+                    //});
                     
                     //add pryimid scale control
                     guiPyrimid.open();
                     
-                    
+                    //Pryamid scale Y co-ordinate
                     guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 2).onChange(function () {
                         pyrimid.scale.y = (pyrimidConfig.scaleY);
 
+                        //Puts value of Y co-ordinate in globally declared variable
                         Pyramid_Height = pyrimid.scale.y;
 
                         //Past attempts at controlling shapes as one on screen
@@ -224,50 +233,41 @@
                         // .step(.01)
                     });
                     
-                    //add pryimid for scale controls - X axis
+                    //X & Z co-ordinates of pryamid
                     
-                    guiPyrimid.add(pyrimidConfig, 'scaleX', 0, 2).onChange(function () {
-                        pyrimid.scale.x = (pyrimidConfig.scaleX);
-                        pyrimid.scale.z = (pyrimidConfig.scaleX);
-                        slab.scale.x = (pyrimidConfig.scaleX);
-                        slab.scale.z = (pyrimidConfig.scaleX);
-                    });
+                    //guiPyrimid.add(pyrimidConfig, 'scaleX', 0, 1.5).onChange(function () {
+                    //    pyrimid.scale.x = (pyrimidConfig.scaleX);
+                    //    pyrimid.scale.z = (pyrimidConfig.scaleX);
+                    //    slab.scale.x = (pyrimidConfig.scaleX);
+                    //    slab.scale.z = (pyrimidConfig.scaleX);
 
-                    //guiPyrimid.add(pyrimidConfig, 'scaleZ', 0, 2).onChange(function() {
-                    //    pyrimid.scale.z = (pyrimidConfig.scaleZ);
-                    //    pyrimid.scale.x = (pyrimidConfig.scaleZ);
+                        
                     //});
-
-
-
-                    
-                   // slab.scale.y = (pyrimid.scale.y);
-                   
-                    
-                    
+                  
                     
                     function callback() { return; }
-                    renderers.push({ renderer: renderer, scene: scene, camera: camera, controls: controls, callback: callback });                  
+                    renderers.push({ renderer: renderer, scene: scene, camera: camera, controls: controls, callback: callback });
 
                 }
 
-                //function getCoords() {
-                    
-                //    alert(displayCo);
+                //Function to send Y co-ordinate of pryamid to code behind
+                function DisplaySlabWidth() {
+                    var GetSlabWidth = Slab_Width;
+                    document.getElementById('<%= SlabWidth.ClientID %>').value = GetSlabWidth;
+                }
 
-                //}
-                
-                function JavaScriptFunction() {
-                    var JavaScriptVar = Pyramid_Height;
-                    document.getElementById('<%= Hidden1.ClientID %>').value = JavaScriptVar;
-        }
+                function DisplayPryHeight() {
+                    var GetPryHeight = Pyramid_Height;
+                    document.getElementById('<%= PryHeight.ClientID %>').value = GetPryHeight;
+                }
 
-                //document.getElementById('PYS').value = pyrimid.scale.y;
-
+                function DisplaySlabHeight() {
+                    var GetSlabHeight = Slab_Height;
+                    document.getElementById('<%= SlabHeight.ClientID %>').value = GetSlabHeight;
+                }
             </script>
 
             <script>
-
                 //init();
                 animate();
 
@@ -293,20 +293,16 @@
                         r.controls.update();
                     }
                 }
-                
+
 
             </script>
             <form id="fmContronls" runat="server">
-                <%--<input type="hidden" name="PHeight" id="PYS" value="" runat="server" />--%>
-                
                 <%--Start of Ajax commands--%>
                 <asp:ScriptManager ID="MainScriptManager" runat="server" />
-                
-               
 
                 <%-- Connection to test database--%>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT * FROM [Stone]"></asp:SqlDataSource>
-                
+
                 <%--This div gets updated using Ajax--%>
                 <div align="center">
                     <asp:UpdatePanel runat="server" ID="UpdatePanel" UpdateMode="Conditional">
@@ -314,35 +310,43 @@
                             <asp:AsyncPostBackTrigger ControlID="btnCalculate" />
                         </Triggers>
                         <ContentTemplate>
-                            <label>Stone Height</label>
-                            <asp:TextBox ID="txtStoneHeight" runat="server"></asp:TextBox>
-                            
-                            <br />
-                            <label>Stone Width</label>
-                            <asp:TextBox ID="txtStoneWidth" runat="server"></asp:TextBox>
+                           
                             <br />
 
                             <asp:DropDownList class="btn btn-info dropdown-toggle" data-toggle="dropdown" ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="StoneType" DataValueField="StoneCost">
                             </asp:DropDownList>
+                            <asp:DropDownList ID="DropDownList2" runat="server" DataSourceID="SlabTest" DataTextField="SlabSize" DataValueField="SlabCost">
+                            </asp:DropDownList>
+                            <asp:SqlDataSource ID="SlabTest" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT [SlabSize], [SlabCost] FROM [Slab_Test]"></asp:SqlDataSource>
                             <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
                             <br />
                             <asp:Label runat="server" ID="lblAnswer"></asp:Label>
-                            <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick="JavaScriptFunction()" onclick="Button1_Click" /> 
-            
-            <asp:HiddenField ID="Hidden1" runat="server" />
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+
+<%--                         Hidden fields for slab and pryamid measurements--%>
+                            <asp:HiddenField ID="SlabWidth" runat="server" />
+                            <asp:HiddenField ID="PryHeight" runat="server"/>
+                            <asp:HiddenField ID="SlabHeight" runat="server"/>
+
+                            <asp:TextBox runat="server" ID="txtPryHeight"></asp:TextBox>
+                            
+                           <div id="ProvisionalCosts" align="right">
+                        <label>Are these measurements correct?</label>
+                        <asp:Button ID="BtnProvisionalCost" runat="server" Text="Yes" OnClientClick="DisplayPryHeight(); DisplaySlabHeight();   " OnClick="BtnProvisionalCost_Click"  />
+                       <br/>
+                               <asp:Label Visible="False" ID="lblTotalHeight" runat="server">Total Height (Slab and Pryamid)</asp:Label>
+<%--                         <label hidden="true" id="lblTotalHeight">Total Height (Slab and Pryamid)</label>--%>
+                        <asp:Label ID="lblDisplyHTotal" runat="server"></asp:Label>
+                    </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
-                    <%--Calculate button and drop down menu--%>
+                    
                 </div>
-               
-        
-        <asp:Label ID="lblTest" runat="server" Text="Label"></asp:Label>
-            
+
+
             </form>
 
         </div>
-        
+
 
     </body>
 </html>
