@@ -31,15 +31,6 @@ namespace SetInStone {
         protected global::System.Web.UI.ScriptManager MainScriptManager;
         
         /// <summary>
-        /// SqlDataSource1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-        
-        /// <summary>
         /// UpdatePanel control.
         /// </summary>
         /// <remarks>
@@ -49,31 +40,40 @@ namespace SetInStone {
         protected global::System.Web.UI.UpdatePanel UpdatePanel;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// ddlStoneType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlStoneType;
         
         /// <summary>
-        /// DropDownList2 control.
+        /// ddlStoneSlab control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
+        protected global::System.Web.UI.WebControls.DropDownList ddlStoneSlab;
         
         /// <summary>
-        /// SlabTest control.
+        /// SetInStone_Slab control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SlabTest;
+        protected global::System.Web.UI.WebControls.SqlDataSource SetInStone_Slab;
+        
+        /// <summary>
+        /// SetInStone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SetInStone;
         
         /// <summary>
         /// btnCalculate control.
@@ -83,15 +83,6 @@ namespace SetInStone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCalculate;
-        
-        /// <summary>
-        /// lblAnswer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAnswer;
         
         /// <summary>
         /// SlabWidth control.
@@ -128,6 +119,15 @@ namespace SetInStone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPryHeight;
+        
+        /// <summary>
+        /// lblCalculateAnswer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCalculateAnswer;
         
         /// <summary>
         /// BtnProvisionalCost control.

@@ -17,16 +17,20 @@ namespace SetInStone
 
         }
 
-        protected void btnCalculate_Click(object sender, EventArgs e)
-        {
-            
-            decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
-            decimal StoneSlab = Convert.ToDecimal(DropDownList2.SelectedValue);
-            decimal SlabW = Convert.ToDecimal(SlabWidth.Value);
-            lblAnswer.Text = ((StoneSlab*SC)*(SlabW)).ToString();
-            //txtPryHeight.Text = SlabWidth.Value;
+        //protected void btnCalculate_Click(object sender, EventArgs e)
+        //{
+        //    decimal stoneType = Convert.ToDecimal(ddlStoneType.SelectedValue);
+        //    decimal stoneSlab = Convert.ToDecimal(ddlStoneSlab.SelectedValue);
+        //    //decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
+        //    //decimal StoneSlab = Convert.ToDecimal(DropDownList2.SelectedValue);
+        //    decimal slabW = Convert.ToDecimal(SlabWidth.Value);
 
-        }
+        //    //lblCalculateAnswer.Text = ((stoneSlab*stoneType)).ToString();
+           
+        //    //txtPryHeight.Text = SlabWidth.Value;
+            
+
+        //}
 
         protected void BtnProvisionalCost_Click(object sender, EventArgs e)
         {
@@ -35,16 +39,31 @@ namespace SetInStone
             lblDisplyHTotal.Text = (slabHeight + pryamidHeight).ToString("#0.00");
 
             lblTotalHeight.Visible = true;
-
+            //lblCalculateAnswer.Text = "test";
             DetermineSlab();
+            
         }
 
         private void DetermineSlab()
         {
-            if (decimal.Parse(lblDisplyHTotal.Text) > 2)
-            {
-                lblAnswer.Text = "ello";
-            }
+            //if (decimal.Parse(lblDisplyHTotal.Text) > 2)
+            //{
+            //    lblAnswer.Text = "ello";
+            //}
+        }
+
+        protected void btnCalculate_Click(object sender, EventArgs e)
+        {
+            
+
+            decimal stoneType = Convert.ToDecimal(ddlStoneType.SelectedValue);
+            decimal stoneSlab = Convert.ToDecimal(ddlStoneSlab.SelectedValue);
+            //decimal SC = Convert.ToDecimal(DropDownList1.SelectedValue);
+            //decimal StoneSlab = Convert.ToDecimal(DropDownList2.SelectedValue);
+
+            lblCalculateAnswer.Text = ((stoneSlab*stoneType)).ToString();
+            
+            //txtPryHeight.Text = SlabWidth.Value;
         }
 
         

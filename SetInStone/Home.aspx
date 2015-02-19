@@ -14,8 +14,7 @@
     <script src="Scripts/TrackballControls.js"></script>
     <script src="Scripts/Detector.js"></script>
     <script src="Scripts/stats.min.js"></script>
-    <script src="Scripts/dat.gui.min.js"></script>--%>    <%: Styles.Render("~/Content/bootstrap.css") %>  
-    <%: Scripts.Render("~/bundles/jQuery") %>
+    <script src="Scripts/dat.gui.min.js"></script>--%><%: Styles.Render("~/Content/bootstrap.css") %>    <%: Scripts.Render("~/bundles/jQuery") %>
    
     <script>
         var renderer, scene, camera, controls, stats;
@@ -301,8 +300,6 @@
                 <asp:ScriptManager ID="MainScriptManager" runat="server" />
 
                 <%-- Connection to test database--%>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT * FROM [Stone]"></asp:SqlDataSource>
-
                 <%--This div gets updated using Ajax--%>
                 <div align="center">
                     <asp:UpdatePanel runat="server" ID="UpdatePanel" UpdateMode="Conditional">
@@ -311,16 +308,20 @@
                         </Triggers>
                         <ContentTemplate>
                            
+                            <asp:DropDownList ID="ddlStoneType"  runat="server" DataSourceID="SetInStone" DataTextField="StoneType" DataValueField="CostPerSqMetre"
+                                class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            </asp:DropDownList>
+                            <asp:DropDownList ID="ddlStoneSlab" runat="server" DataSourceID="SetInStone_Slab" DataTextField="SlabSize" DataValueField="SlabCost"
+                                class="btn btn-info dropdown-toggle">
+                            </asp:DropDownList>
+                            <asp:SqlDataSource ID="SetInStone_Slab" runat="server" ConnectionString="<%$ ConnectionStrings:SetInStoneConnectionString %>" SelectCommand="SELECT * FROM [Slab_Table]"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SetInStone" runat="server" ConnectionString="<%$ ConnectionStrings:SetInStoneConnectionString %>" SelectCommand="SELECT * FROM [Stone Type]"></asp:SqlDataSource>
+                           
                             <br />
 
-                            <asp:DropDownList class="btn btn-info dropdown-toggle" data-toggle="dropdown" ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="StoneType" DataValueField="StoneCost">
-                            </asp:DropDownList>
-                            <asp:DropDownList ID="DropDownList2" runat="server" DataSourceID="SlabTest" DataTextField="SlabSize" DataValueField="SlabCost">
-                            </asp:DropDownList>
-                            <asp:SqlDataSource ID="SlabTest" runat="server" ConnectionString="<%$ ConnectionStrings:StoneTestConnectionString %>" SelectCommand="SELECT [SlabSize], [SlabCost] FROM [Slab_Test]"></asp:SqlDataSource>
-                            <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
+                            <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"  />
                             <br />
-                            <asp:Label runat="server" ID="lblAnswer"></asp:Label>
+                            
 
 <%--                         Hidden fields for slab and pryamid measurements--%>
                             <asp:HiddenField ID="SlabWidth" runat="server" />
@@ -328,7 +329,7 @@
                             <asp:HiddenField ID="SlabHeight" runat="server"/>
 
                             <asp:TextBox runat="server" ID="txtPryHeight"></asp:TextBox>
-                            
+                            <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
                            <div id="ProvisionalCosts" align="right">
                         <label>Are these measurements correct?</label>
                         <asp:Button ID="BtnProvisionalCost" runat="server" Text="Yes" OnClientClick="DisplayPryHeight(); DisplaySlabHeight();   " OnClick="BtnProvisionalCost_Click"  />
