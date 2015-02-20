@@ -46,10 +46,23 @@ namespace SetInStone
 
         private void DetermineSlab()
         {
-            //if (decimal.Parse(lblDisplyHTotal.Text) > 2)
-            //{
-            //    lblAnswer.Text = "ello";
-            //}
+            if(decimal.Parse(lblDisplyHTotal.Text) <1)
+            {
+                ddlStoneSlab.SelectedIndex = 0;
+            }
+
+            else if (decimal.Parse(lblDisplyHTotal.Text) >= 2 && decimal.Parse(lblDisplyHTotal.Text) < 3)
+            {
+                ddlStoneSlab.SelectedIndex = 1;
+            }
+
+            else 
+            {
+                ddlStoneSlab.SelectedIndex = 2;
+            }
+
+            
+
         }
 
         protected void btnCalculate_Click(object sender, EventArgs e)
@@ -64,6 +77,14 @@ namespace SetInStone
             lblCalculateAnswer.Text = ((stoneSlab*stoneType)).ToString();
             
             //txtPryHeight.Text = SlabWidth.Value;
+        }
+
+        protected void btnTotalCost_Click(object sender, EventArgs e)
+        {
+            decimal slabCost, slabHeight;
+            slabCost = Convert.ToDecimal(lblCalculateAnswer.Text);
+            slabHeight = Convert.ToDecimal(lblDisplyHTotal.Text);
+            lblTotalCost.Text = (slabCost * slabHeight).ToString();
         }
 
         

@@ -328,12 +328,14 @@
                             <asp:HiddenField ID="PryHeight" runat="server"/>
                             <asp:HiddenField ID="SlabHeight" runat="server"/>
 
-                            <asp:TextBox runat="server" ID="txtPryHeight"></asp:TextBox>
+                            
                             <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
                            <div id="ProvisionalCosts" align="right">
                         <label>Are these measurements correct?</label>
                         <asp:Button ID="BtnProvisionalCost" runat="server" Text="Yes" OnClientClick="DisplayPryHeight(); DisplaySlabHeight();   " OnClick="BtnProvisionalCost_Click"  />
                        <br/>
+                               <asp:Button runat="server" ID="btnTotalCost" OnClick="btnTotalCost_Click"/>
+                               <asp:Label runat="server" ID="lblTotalCost"></asp:Label>
                                <asp:Label Visible="False" ID="lblTotalHeight" runat="server">Total Height (Slab and Pryamid)</asp:Label>
 <%--                         <label hidden="true" id="lblTotalHeight">Total Height (Slab and Pryamid)</label>--%>
                         <asp:Label ID="lblDisplyHTotal" runat="server"></asp:Label>
