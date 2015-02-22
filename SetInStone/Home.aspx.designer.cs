@@ -13,13 +13,13 @@ namespace SetInStone {
     public partial class WebForm1 {
         
         /// <summary>
-        /// fmContronls control.
+        /// fmControls control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm fmContronls;
+        protected global::System.Web.UI.HtmlControls.HtmlForm fmControls;
         
         /// <summary>
         /// MainScriptManager control.
@@ -76,6 +76,69 @@ namespace SetInStone {
         protected global::System.Web.UI.WebControls.SqlDataSource SetInStone;
         
         /// <summary>
+        /// BtnProvisionalCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnProvisionalCost;
+        
+        /// <summary>
+        /// btnTotalCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTotalCost;
+        
+        /// <summary>
+        /// lblTotalCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalCost;
+        
+        /// <summary>
+        /// lblTotalHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalHeight;
+        
+        /// <summary>
+        /// lblDisplyHeightTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDisplyHeightTotal;
+        
+        /// <summary>
+        /// lblTotalWidth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalWidth;
+        
+        /// <summary>
+        /// lblDisplayTotalWidth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDisplayTotalWidth;
+        
+        /// <summary>
         /// btnCalculate control.
         /// </summary>
         /// <remarks>
@@ -119,50 +182,5 @@ namespace SetInStone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCalculateAnswer;
-        
-        /// <summary>
-        /// BtnProvisionalCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnProvisionalCost;
-        
-        /// <summary>
-        /// btnTotalCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnTotalCost;
-        
-        /// <summary>
-        /// lblTotalCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalCost;
-        
-        /// <summary>
-        /// lblTotalHeight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalHeight;
-        
-        /// <summary>
-        /// lblDisplyHTotal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDisplyHTotal;
     }
 }

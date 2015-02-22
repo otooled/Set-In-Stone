@@ -36,9 +36,12 @@ namespace SetInStone
         {
             decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
             decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
-            lblDisplyHTotal.Text = (slabHeight + pryamidHeight).ToString("#0.00");
-
+            decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
+            lblDisplyHeightTotal.Text = (slabHeight + pryamidHeight).ToString("#0.00");
+            lblDisplayTotalWidth.Text = (slabWidth * slabWidth).ToString("#0.00");
+            
             lblTotalHeight.Visible = true;
+            lblTotalWidth.Visible = true;
             //lblCalculateAnswer.Text = "test";
             DetermineSlab();
             
@@ -46,12 +49,12 @@ namespace SetInStone
 
         private void DetermineSlab()
         {
-            if(decimal.Parse(lblDisplyHTotal.Text) <1)
+            if(decimal.Parse(lblDisplyHeightTotal.Text) <2)
             {
                 ddlStoneSlab.SelectedIndex = 0;
             }
 
-            else if (decimal.Parse(lblDisplyHTotal.Text) >= 2 && decimal.Parse(lblDisplyHTotal.Text) < 3)
+            else if (decimal.Parse(lblDisplyHeightTotal.Text) >= 2 && decimal.Parse(lblDisplyHeightTotal.Text) < 3)
             {
                 ddlStoneSlab.SelectedIndex = 1;
             }
@@ -83,7 +86,7 @@ namespace SetInStone
         {
             decimal slabCost, slabHeight;
             slabCost = Convert.ToDecimal(lblCalculateAnswer.Text);
-            slabHeight = Convert.ToDecimal(lblDisplyHTotal.Text);
+            slabHeight = Convert.ToDecimal(lblDisplyHeightTotal.Text);
             lblTotalCost.Text = (slabCost * slabHeight).ToString();
         }
 
