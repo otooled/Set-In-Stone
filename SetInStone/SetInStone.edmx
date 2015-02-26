@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SetInStoneModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SetInStoneModelStoreContainer">
+          <EntitySet Name="Slab_Table" EntityType="SetInStoneModel.Store.Slab_Table" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Stone Type" EntityType="SetInStoneModel.Store.Stone Type" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Slab_Table_Stone Type" Association="SetInStoneModel.Store.FK_Slab_Table_Stone Type">
+            <End Role="Stone Type" EntitySet="Stone Type" />
+            <End Role="Slab_Table" EntitySet="Slab_Table" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Slab_Table">
+          <Key>
+            <PropertyRef Name="SlabID" />
+          </Key>
+          <Property Name="SlabID" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SlabSize" Type="tinyint" />
+          <Property Name="SlabCost" Type="smallmoney" />
+        </EntityType>
+        <EntityType Name="Stone Type">
+          <Key>
+            <PropertyRef Name="StoneTypeID" />
+          </Key>
+          <Property Name="StoneTypeID" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StoneType" Type="nvarchar" MaxLength="20" />
+          <Property Name="CostPerSqMetre" Type="smallmoney" />
+        </EntityType>
+        <Association Name="FK_Slab_Table_Stone Type">
+          <End Role="Stone Type" Type="SetInStoneModel.Store.Stone Type" Multiplicity="1" />
+          <End Role="Slab_Table" Type="SetInStoneModel.Store.Slab_Table" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stone Type">
+              <PropertyRef Name="StoneTypeID" />
+            </Principal>
+            <Dependent Role="Slab_Table">
+              <PropertyRef Name="SlabID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SetInStoneModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SetInStoneEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Slab_Table" EntityType="SetInStoneModel.Slab_Table" />
+          <EntitySet Name="Stone_Types" EntityType="SetInStoneModel.Stone_Type" />
+          <AssociationSet Name="FK_Slab_Table_Stone_Type" Association="SetInStoneModel.FK_Slab_Table_Stone_Type">
+            <End Role="Stone_Type" EntitySet="Stone_Types" />
+            <End Role="Slab_Table" EntitySet="Slab_Table" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Slab_Table">
+          <Key>
+            <PropertyRef Name="SlabID" />
+          </Key>
+          <Property Name="SlabID" Type="Byte" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SlabSize" Type="Byte" />
+          <Property Name="SlabCost" Type="Decimal" Precision="10" Scale="4" />
+          <NavigationProperty Name="Stone_Type" Relationship="SetInStoneModel.FK_Slab_Table_Stone_Type" FromRole="Slab_Table" ToRole="Stone_Type" />
+        </EntityType>
+        <EntityType Name="Stone_Type">
+          <Key>
+            <PropertyRef Name="StoneTypeID" />
+          </Key>
+          <Property Name="StoneTypeID" Type="Byte" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="StoneType" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="CostPerSqMetre" Type="Decimal" Precision="10" Scale="4" />
+          <NavigationProperty Name="Slab_Table" Relationship="SetInStoneModel.FK_Slab_Table_Stone_Type" FromRole="Stone_Type" ToRole="Slab_Table" />
+        </EntityType>
+        <Association Name="FK_Slab_Table_Stone_Type">
+          <End Role="Stone_Type" Type="SetInStoneModel.Stone_Type" Multiplicity="1" />
+          <End Role="Slab_Table" Type="SetInStoneModel.Slab_Table" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stone_Type">
+              <PropertyRef Name="StoneTypeID" />
+            </Principal>
+            <Dependent Role="Slab_Table">
+              <PropertyRef Name="SlabID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SetInStoneModelStoreContainer" CdmEntityContainer="SetInStoneEntities">
+          <EntitySetMapping Name="Slab_Table">
+            <EntityTypeMapping TypeName="SetInStoneModel.Slab_Table">
+              <MappingFragment StoreEntitySet="Slab_Table">
+                <ScalarProperty Name="SlabID" ColumnName="SlabID" />
+                <ScalarProperty Name="SlabSize" ColumnName="SlabSize" />
+                <ScalarProperty Name="SlabCost" ColumnName="SlabCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stone_Types">
+            <EntityTypeMapping TypeName="SetInStoneModel.Stone_Type">
+              <MappingFragment StoreEntitySet="Stone Type">
+                <ScalarProperty Name="StoneTypeID" ColumnName="StoneTypeID" />
+                <ScalarProperty Name="StoneType" ColumnName="StoneType" />
+                <ScalarProperty Name="CostPerSqMetre" ColumnName="CostPerSqMetre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

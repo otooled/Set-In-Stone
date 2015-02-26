@@ -313,14 +313,9 @@
                     </Triggers>
                     <ContentTemplate>
                         
-                        <asp:DropDownList ID="ddlStoneType" runat="server" DataSourceID="SetInStone" DataTextField="StoneType" DataValueField="CostPerSqMetre"
-                            class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                        </asp:DropDownList>
-                        <asp:DropDownList ID="ddlStoneSlab" runat="server" DataSourceID="SetInStone_Slab" DataTextField="SlabSize" DataValueField="SlabCost"
-                            class="btn btn-info dropdown-toggle">
-                        </asp:DropDownList>
-                        <asp:SqlDataSource ID="SetInStone_Slab" runat="server" ConnectionString="<%$ ConnectionStrings:SetInStoneConnectionString %>" SelectCommand="SELECT * FROM [Slab_Table]"></asp:SqlDataSource>
-                        <asp:SqlDataSource ID="SetInStone" runat="server" ConnectionString="<%$ ConnectionStrings:SetInStoneConnectionString %>" SelectCommand="SELECT * FROM [Stone Type]"></asp:SqlDataSource>
+                        <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>
+                        <asp:DropDownList ID="ddlStoneSlab" runat="server" class="btn btn-info dropdown-toggle"/>
+                        
                          <div id="ProvisionalCosts"  >
                             <label>Confirm Measurements</label>
                             <br/>
@@ -355,6 +350,10 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
+            <asp:Button runat="server" ID="btnTest" Text="Test" OnClick="btnTest_Click"/>
+            <asp:ListBox runat="server" ID="lbxTest"/>
+            <asp:DropDownList runat="server" ID="ddlTest" OnSelectedIndexChanged="ddlTest_SelectedIndexChanged"/>
+            <asp:DropDownList runat="server" ID="ddlslabtest" OnSelectedIndexChanged="ddlslabtest_SelectedIndexChanged"/>
         </form>
 </body>
 </html>
