@@ -24,10 +24,12 @@ namespace SetInStone
             
             if (!IsPostBack)
             {
-                
+                //Populate menus on page load
                 PopulateStoneMenu();
                 PopulateSlabMenu();
                 PopulateProductMenu();
+
+                //Forces the user to select a stone type
                 if (ddlStoneType.SelectedIndex == 0)
                 {
                     btnCalculate.Enabled = false;
@@ -37,77 +39,52 @@ namespace SetInStone
             }
 
         }
-
-        protected void BtnProvisionalCost_Click(object sender, EventArgs e)
-        {
-            //decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
-            //decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
-            //decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
-            //lblDisplyHeightTotal.Text = (slabHeight + pryamidHeight).ToString("#0.00");
-            //lblDisplayTotalWidth.Text = (slabWidth * slabWidth).ToString("#0.00");
-
-            //lblTotalHeight.Visible = true;
-            //lblTotalWidth.Visible = true;
-            //lblCalculateAnswer.Text = "test";
-            //DetermineSlab();
-            
-        }
-
         
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
-
-            //decimal stoneType = Convert.ToDecimal(ddlStoneType.SelectedValue);
-            //decimal stoneSlab = Convert.ToDecimal(ddlStoneSlab.SelectedValue);
-
-            //lblCalculateAnswer.Text = ((stoneSlab * stoneType)).ToString();
-
+            //Call the method that calculates the size of the slab
             CalculateDeminsions();
 
+            //Call the method that determines the size of the slab
             DetermineSlab(ddlStoneSlab.SelectedIndex);
 
-            CalculateStoneSlabCost();
+            //Call the method that calculates the provisional cost of the slab (not including the width)
+            CalculateStoneSlabCost(Convert.ToDecimal(lblTotalCost.Text));
 
-            CalculateTotal(Convert.ToDecimal(lblTotalCost.Text));
+            //Call the method that calculates the total (includes the width)
+            CalculateTotal(Convert.ToDecimal(lblCalculateAnswer.Text));
             //lblTotalCost.Text = "hello";
         }
 
         private void CalculateDeminsions()
         {
+            //Get deminsion values from the client
             decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
             decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
             decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
 
             decimal heightTotal = (slabHeight + pryamidHeight);
-            decimal widthTotal = (slabWidth*slabWidth);
-
-            decimal totalSlabDeminsions = heightTotal + widthTotal;
-
+            decimal widthTotal = (slabWidth * slabWidth);
+            
+            //Send the height total to the Determine slab method so the slab thickness can be worked out
             DetermineSlab(heightTotal);
-            
-            //CalculateTotal(heightTotal);
 
-            lblDisplyHeightTotal.Text = heightTotal.ToString("#0.00");
-            lblDisplayTotalWidth.Text = widthTotal.ToString("#0.00");
+            //Sent the width total to the Calculate slab method so a correct price can be worked out
+            CalculateStoneSlabCost(widthTotal);
 
-            //lblDisplyHeightTotal.Text = (slabHeight + pryamidHeight).ToString("#0.00");
-            //lblDisplayTotalWidth.Text = (slabWidth * slabWidth).ToString("#0.00");
-            
-            lblTotalHeight.Visible = true;
-            lblTotalWidth.Visible = true;
-           
         }
 
+        //Determines the slab height based on the slab deminsions
         private void DetermineSlab(decimal height)
         {
             if (height < 2)
-            //if(decimal.Parse(lblDisplyHeightTotal.Text)<2)
+            
             {
                 ddlStoneSlab.SelectedIndex = 1;
             }
             else if (height >= 2 && height < 3)
-           // else if (decimal.Parse(lblDisplyHeightTotal.Text) >= 2 && decimal.Parse(lblDisplyHeightTotal.Text) < 3)
+           
             {
                 ddlStoneSlab.SelectedIndex = 2;
             }
@@ -119,50 +96,33 @@ namespace SetInStone
            
         }
 
-        private void CalculateStoneSlabCost()
+        private void CalculateStoneSlabCost(decimal widTot)
         {
             decimal stoneType = Convert.ToDecimal(ddlStoneType.SelectedValue);
             decimal stoneSlab = Convert.ToDecimal(ddlStoneSlab.SelectedValue);
 
             decimal provionalSlabCost = (stoneSlab*stoneType);
 
-            CalculateTotal(provionalSlabCost);
-            lblCalculateAnswer.Text = provionalSlabCost.ToString();
+            decimal finalSlabCost = provionalSlabCost*widTot;
+
+            CalculateTotal(finalSlabCost);
+            lblTotalCost.Text = finalSlabCost.ToString();
+            //lblCalculateAnswer.Text = finalSlabCost.ToString();
+            
         }
 
-        private void CalculateTotal(decimal psc)
+        private void CalculateTotal(decimal fsc)
         {
-            decimal slabCost, slabHeight;
-            slabCost = psc;
+            decimal slabCost;//, slabHeight;
+            slabCost = fsc;
             //slabCost = Convert.ToDecimal(lblCalculateAnswer.Text);
            // slabHeight = totalHet;
-            slabHeight = Convert.ToDecimal(lblDisplyHeightTotal.Text);
+            //slabHeight = Convert.ToDecimal(lblDisplyHeightTotal.Text);
 
-            decimal totalCost = (slabCost+slabHeight);
-            lblTotalCost.Text = totalCost.ToString();
-           // lblTotalCost.Text = (slabCost * slabHeight).ToString();
+            decimal totalCost = (slabCost);//+slabHeight
+            lblCalculateAnswer.Text = totalCost.ToString();
+            
         }
-
-
-
-
-
-
-        protected void btnTotalCost_Click(object sender, EventArgs e)
-        {
-            decimal slabCost, slabHeight;
-            slabCost = Convert.ToDecimal(lblCalculateAnswer.Text);
-            slabHeight = Convert.ToDecimal(lblDisplyHeightTotal.Text);
-            lblTotalCost.Text = (slabCost * slabHeight).ToString();
-        }
-
-        protected void btnTest_Click(object sender, EventArgs e)
-        {
-            //decimal stone = Convert.ToDecimal(ddlStoneType.SelectedValue);
-            //decimal slab = Convert.ToDecimal(ddlStoneSlab.SelectedValue);
-            //lblCalculateAnswer.Text = ((stone * slab)).ToString();
-        }
-
        
 
         private void PopulateStoneMenu()

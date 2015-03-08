@@ -319,20 +319,20 @@
                         <asp:DropDownList ID="ddlStoneSlab" runat="server" class="btn btn-info dropdown-toggle"/>
                         
                          <div id="ProvisionalCosts"  >
-                            <label>Confirm Measurements</label>
+                            <%--<label>Confirm Measurements</label>
                             <br/>
-                            <label>Are these measurements correct?</label>
+                            <label>Are these measurements correct?</label>--%>
                             <br/>
-                            <asp:Button ID="BtnProvisionalCost" runat="server" Text="Yes" OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
-                                DisplaySlabWidth();" OnClick="BtnProvisionalCost_Click" class="btn btn-primary" />
+                            <%--<asp:Button ID="BtnProvisionalCost" runat="server" Text="Yes" OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
+                                DisplaySlabWidth();" OnClick="BtnProvisionalCost_Click" class="btn btn-primary" />--%>
                             <br />
-                            <asp:Button runat="server" ID="btnTotalCost"  OnClick="btnTotalCost_Click" Text="Total" />
-                            <asp:Label runat="server" ID="lblTotalCost"></asp:Label>
-                            <asp:Label Visible="False" ID="lblTotalHeight" runat="server">Total Height (Slab and Pryamid)</asp:Label>
-                             <asp:Label ID="lblDisplyHeightTotal" runat="server"></asp:Label>
+                            <%--<asp:Button runat="server" ID="btnTotalCost"  OnClick="btnTotalCost_Click" Text="Total" />--%>
+                            <asp:Label runat="server" ID="lblTotalCost" Visible="False"></asp:Label>
+                            <%--<asp:Label Visible="False" ID="lblTotalHeight" runat="server">Total Height (Slab and Pryamid)</asp:Label>
+                             <asp:Label ID="lblDisplyHeightTotal" runat="server"></asp:Label>--%>
                              <br/>
-                             <asp:Label Visible="False" ID="lblTotalWidth"  runat="server">Total Width (Metres sq.)</asp:Label>
-                            <asp:Label  ID="lblDisplayTotalWidth" runat="server"></asp:Label>
+                             <%--<asp:Label Visible="False" ID="lblTotalWidth"  runat="server">Total Width (Metres sq.)</asp:Label>
+                            <asp:Label  ID="lblDisplayTotalWidth" runat="server"></asp:Label>--%>
                             
                         </div>
                         <br />
@@ -349,7 +349,7 @@
                         <asp:HiddenField ID="SlabHeight" runat="server" />
 
 
-                        <asp:Label runat="server" ID="lblCalculateAnswer" Visible="False"></asp:Label>
+                        <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
                         <asp:Label runat="server"></asp:Label>
                         
                     </ContentTemplate>
