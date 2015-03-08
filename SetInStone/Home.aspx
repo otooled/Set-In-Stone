@@ -312,8 +312,10 @@
                         <asp:AsyncPostBackTrigger ControlID="btnCalculate" />
                     </Triggers>
                     <ContentTemplate>
-                        
-                        <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>
+                        <asp:DropDownList ID="ddlProductType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>
+                        <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown" 
+                            OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True"
+                            />
                         <asp:DropDownList ID="ddlStoneSlab" runat="server" class="btn btn-info dropdown-toggle"/>
                         
                          <div id="ProvisionalCosts"  >
@@ -335,7 +337,9 @@
                         </div>
                         <br />
 
-                        <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click" />
+                        <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"
+                              OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
+                                DisplaySlabWidth();"/>
                         <br />
 
                        
@@ -345,15 +349,13 @@
                         <asp:HiddenField ID="SlabHeight" runat="server" />
 
 
-                        <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
+                        <asp:Label runat="server" ID="lblCalculateAnswer" Visible="False"></asp:Label>
+                        <asp:Label runat="server"></asp:Label>
                         
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
-            <asp:Button runat="server" ID="btnTest" Text="Test" OnClick="btnTest_Click"/>
-            <asp:ListBox runat="server" ID="lbxTest"/>
-            <asp:DropDownList runat="server" ID="ddlTest" OnSelectedIndexChanged="ddlTest_SelectedIndexChanged"/>
-            <asp:DropDownList runat="server" ID="ddlslabtest" OnSelectedIndexChanged="ddlslabtest_SelectedIndexChanged"/>
+         
         </form>
 </body>
 </html>

@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="SetInStoneModel.Slab_Table" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SetInStoneModel.Stone_Type" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="SetInStoneModel.FK_Slab_Table_Stone_Type" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SetInStoneModel.Product" Width="1.5" PointX="6.5" PointY="1.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

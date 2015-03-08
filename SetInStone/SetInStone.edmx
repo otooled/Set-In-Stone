@@ -4,8 +4,9 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SetInStoneModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SetInStoneModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SetInStoneModelStoreContainer">
+          <EntitySet Name="Product" EntityType="SetInStoneModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Slab_Table" EntityType="SetInStoneModel.Store.Slab_Table" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Stone Type" EntityType="SetInStoneModel.Store.Stone Type" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Slab_Table_Stone Type" Association="SetInStoneModel.Store.FK_Slab_Table_Stone Type">
@@ -13,6 +14,13 @@
             <End Role="Slab_Table" EntitySet="Slab_Table" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Slab_Table">
           <Key>
             <PropertyRef Name="SlabID" />
@@ -41,8 +49,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SetInStoneModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -53,6 +60,7 @@
             <End Role="Stone_Type" EntitySet="Stone_Types" />
             <End Role="Slab_Table" EntitySet="Slab_Table" />
           </AssociationSet>
+          <EntitySet Name="Products" EntityType="SetInStoneModel.Product" />
         </EntityContainer>
         <EntityType Name="Slab_Table">
           <Key>
@@ -84,6 +92,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Type="Byte" Name="ProductID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ProductName" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -105,6 +120,14 @@
                 <ScalarProperty Name="StoneTypeID" ColumnName="StoneTypeID" />
                 <ScalarProperty Name="StoneType" ColumnName="StoneType" />
                 <ScalarProperty Name="CostPerSqMetre" ColumnName="CostPerSqMetre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="SetInStoneModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

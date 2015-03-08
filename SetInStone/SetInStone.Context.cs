@@ -27,5 +27,6 @@ namespace SetInStone
     
         public DbSet<Slab_Table> Slab_Table { get; set; }
         public DbSet<Stone_Type> Stone_Types { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
