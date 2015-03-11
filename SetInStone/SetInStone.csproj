@@ -113,11 +113,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Customer_Table.cs">
+      <DependentUpon>SetInStone.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Product.cs">
+    <Compile Include="Order_Table.cs">
+      <DependentUpon>SetInStone.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product_Table.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,6 +153,9 @@
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="Stone_Type.cs">
+      <DependentUpon>SetInStone.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
   </ItemGroup>

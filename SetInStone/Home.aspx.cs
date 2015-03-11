@@ -12,7 +12,7 @@ namespace SetInStone
     public partial class WebForm1 : System.Web.UI.Page
     {
         
-        private SetInStoneEntities db = new SetInStoneEntities();
+        private SetInStoneEntities1  db = new SetInStoneEntities1();
 
         protected void Dispose(bool disposing)
         {
@@ -28,9 +28,10 @@ namespace SetInStone
                 PopulateStoneMenu();
                 PopulateSlabMenu();
                 PopulateProductMenu();
+                
 
                 //Forces the user to select a stone type
-                if (ddlStoneType.SelectedIndex == 0)
+                if (ddlStoneType.SelectedIndex == 0) 
                 {
                     btnCalculate.Enabled = false;
                     btnCalculate.ToolTip = "Please choose a Product & Stone Type";
@@ -43,18 +44,29 @@ namespace SetInStone
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
-            //Call the method that calculates the size of the slab
-            CalculateDeminsions();
 
-            //Call the method that determines the size of the slab
-            DetermineSlab(ddlStoneSlab.SelectedIndex);
+            decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
+            decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
 
-            //Call the method that calculates the provisional cost of the slab (not including the width)
-            CalculateStoneSlabCost(Convert.ToDecimal(lblTotalCost.Text));
+            decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
 
-            //Call the method that calculates the total (includes the width)
-            CalculateTotal(Convert.ToDecimal(lblCalculateAnswer.Text));
-            //lblTotalCost.Text = "hello";
+            decimal heightTotal = (slabHeight + pryamidHeight);
+
+            DetermineSlab(heightTotal);
+
+            ////Call the method that calculates the size of the slab
+            //CalculateDeminsions();
+
+            ////Call the method that determines the size of the slab
+            //DetermineSlab(ddlStoneSlab.SelectedIndex);
+            //decimal testArea = 50;
+            //DetermineSlab(testArea);
+            ////Call the method that calculates the provisional cost of the slab (not including the width)
+            //CalculateStoneSlabCost(Convert.ToDecimal(lblTotalCost.Text));
+
+            ////Call the method that calculates the total (includes the width)
+            //CalculateTotal(Convert.ToDecimal(lblCalculateAnswer.Text));
+            ////lblTotalCost.Text = "hello";
         }
 
         private void CalculateDeminsions()
@@ -76,14 +88,14 @@ namespace SetInStone
         }
 
         //Determines the slab height based on the slab deminsions
-        private void DetermineSlab(decimal height)
+        private decimal DetermineSlab(decimal heightT)
         {
-            if (height < 2)
+            if (heightT < 2)
             
             {
                 ddlStoneSlab.SelectedIndex = 1;
             }
-            else if (height >= 2 && height < 3)
+            else if (heightT >= 2 && heightT < 3)
            
             {
                 ddlStoneSlab.SelectedIndex = 2;
@@ -93,7 +105,25 @@ namespace SetInStone
             {
                 ddlStoneSlab.SelectedIndex = 3;
             }
-           
+
+            return 0;
+            //decimal stoneArea = (decimal)1.2 * (decimal)0.8;
+            //decimal totalCost = CalculateCost(stoneArea);
+        }
+
+        private decimal CalculateCost(decimal stoneArea)
+        {
+            return stoneArea * (decimal)7.5;
+
+            //get area
+            
+            
+            //calc stone cost
+            //overall slab cost divided by ....
+            
+            //calc 1st cut
+            //calc 2nd cut
+
         }
 
         private void CalculateStoneSlabCost(decimal widTot)
@@ -127,7 +157,7 @@ namespace SetInStone
 
         private void PopulateStoneMenu()
         {
-            var stone = from s in db.Stone_Types select new { s.StoneType, s.CostPerSqMetre };
+            var stone = from s in  db.Stone_Type select new { s.StoneType, s.CostPerSqMetre };
             ddlStoneType.DataSource = stone.ToList();
             ddlStoneType.DataValueField = "CostPerSqMetre";
             ddlStoneType.DataTextField = "StoneType";
@@ -146,10 +176,10 @@ namespace SetInStone
         }
         private  void PopulateProductMenu()
         {
-            var p = from pdt in db.Products select new {pdt.ProductName};
+            var p = from pdt in db.Product_Table select new {pdt.ProductType};
             ddlProductType.DataSource = p.ToList();
-            ddlProductType.DataValueField = "ProductName";
-            ddlProductType.DataTextField = "ProductName";
+            ddlProductType.DataValueField = "ProductType";
+            ddlProductType.DataTextField = "ProductType";
             ddlProductType.DataBind();
             ddlProductType.Items.Insert(0, "Select Product");
 
