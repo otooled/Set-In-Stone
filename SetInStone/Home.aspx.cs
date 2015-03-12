@@ -54,6 +54,11 @@ namespace SetInStone
 
             DetermineSlab(heightTotal);
 
+            decimal provionalSlabCost;
+            provionalSlabCost = Convert.ToDecimal(ddlStoneType.SelectedValue)*
+                                Convert.ToDecimal(ddlStoneSlab.SelectedValue);
+            lblCalculateAnswer.Text = provionalSlabCost.ToString();   
+
             ////Call the method that calculates the size of the slab
             //CalculateDeminsions();
 
@@ -106,7 +111,7 @@ namespace SetInStone
                 ddlStoneSlab.SelectedIndex = 3;
             }
 
-            return 0;
+            return heightT;
             //decimal stoneArea = (decimal)1.2 * (decimal)0.8;
             //decimal totalCost = CalculateCost(stoneArea);
         }

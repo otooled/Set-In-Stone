@@ -199,9 +199,9 @@
                 //The following controls the x axis which I'm not working on yet
                 guiSlab.add(slabConfig, 'scaleX', 0.5, 1.5).step(.01).onChange(function () {
                     slab.scale.x = (slabConfig.scaleX);
-                    slab.scale.z = (slabConfig.scaleX);
-                    pyrimid.scale.x = (slabConfig.scaleX);
-                    pyrimid.scale.z = (slabConfig.scaleX);
+                    //slab.scale.z = (slabConfig.scaleX);
+                    //pyrimid.scale.x = (slabConfig.scaleX);
+                   // pyrimid.scale.z = (slabConfig.scaleX);
                     //pyrimid.scale.z = (slab.scale.z);
 
                     //Puts value of X co-ordinate in globally declared variable
@@ -210,10 +210,10 @@
 
                 //Z co-ordinates for slab - not working on it yet
 
-                //guiSlab.add(slabConfig, 'scaleZ', 0, 1.5).onChange(function () {
-                //    slab.scale.z = (slabConfig.scaleZ);
+                guiSlab.add(slabConfig, 'scaleZ', 0, 1.5).onChange(function () {
+                    slab.scale.z = (slabConfig.scaleZ);
 
-                //});
+                });
                 
                 //add pryimid scale control
                 guiPyrimid.open();
