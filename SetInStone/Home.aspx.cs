@@ -49,16 +49,24 @@ namespace SetInStone
             decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
 
             decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
+            decimal slabLength = Convert.ToDecimal(SlabLength.Value);
+
+            decimal slabArea = slabWidth*slabLength;
 
             decimal heightTotal = (slabHeight + pryamidHeight);
 
             DetermineSlab(heightTotal);
 
-            decimal provionalSlabCost;
-            provionalSlabCost = Convert.ToDecimal(ddlStoneType.SelectedValue)*
-                                Convert.ToDecimal(ddlStoneSlab.SelectedValue);
-            lblCalculateAnswer.Text = provionalSlabCost.ToString();   
+            decimal provionalSlabCost = (Convert.ToDecimal(ddlStoneType.SelectedValue)*
+                                Convert.ToDecimal(ddlStoneSlab.SelectedValue)) * slabArea;
+            CalculateAreaCutCost();
 
+            //lblCalculateAnswer.Text = provionalSlabCost.ToString();  
+ 
+
+
+
+           // lblCalculateAnswer.Text = slabArea.ToString();
             ////Call the method that calculates the size of the slab
             //CalculateDeminsions();
 
@@ -72,6 +80,14 @@ namespace SetInStone
             ////Call the method that calculates the total (includes the width)
             //CalculateTotal(Convert.ToDecimal(lblCalculateAnswer.Text));
             ////lblTotalCost.Text = "hello";
+        }
+
+        private void CalculateAreaCutCost()
+        {
+            if (ddlStoneType.SelectedItem = "Granite")
+            {
+                lblCalculateAnswer.Text = "hello";
+            }
         }
 
         private void CalculateDeminsions()

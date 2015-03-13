@@ -30,6 +30,7 @@
 
         //This will act as width & length as slab
         var Slab_Width = null;
+        var Slab_Length = null;
 
         var Slab_Height = null;
     </script>
@@ -173,10 +174,7 @@
                 //Change slab deminisions & move pyrimid in accordance with the altered slab
                 guiSlab.add(slabConfig, 'scaleY', 0.5, 2).onChange(function () {
 
-                    // var tim2 = clock.getElapsedTime() * 2.7;
-                    //slab.scale.x = 1 + Math.sin(tim);
-                    //var  speed = 1 + Math.cos(2.5798 + tim2);
-                    // slab.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
+                    
                     slab.scale.y = (slabConfig.scaleY);
 
                     //Put Y scale value in global variable
@@ -185,24 +183,14 @@
                     //This moves the slab and pyrimid as one but there is a gap between the objects
                     pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
 
-                    //Past attempts to manipulate shapes as one
-
-                    //pyrimid.position.y = slab.position.y + slab.geometry.y / 2 + pyrimid.scale.y / 2;// (slab.position.y +20) ;
-                    // pyrimid.position.y = (box1Config.scaleY * 7) + (18);
-                    //var differnece = pyrimid.position.y - slab.position.y;
-                    //pyrimid.position.y = (differnece + slab.position.y);
-
-                    //pyrimid.position.y = slab.scale.y;
+                   
 
                 });
 
                 //The following controls the x axis which I'm not working on yet
                 guiSlab.add(slabConfig, 'scaleX', 0.5, 1.5).step(.01).onChange(function () {
                     slab.scale.x = (slabConfig.scaleX);
-                    //slab.scale.z = (slabConfig.scaleX);
-                    //pyrimid.scale.x = (slabConfig.scaleX);
-                   // pyrimid.scale.z = (slabConfig.scaleX);
-                    //pyrimid.scale.z = (slab.scale.z);
+                    
 
                     //Puts value of X co-ordinate in globally declared variable
                     Slab_Width = slab.scale.x;
@@ -212,6 +200,9 @@
 
                 guiSlab.add(slabConfig, 'scaleZ', 0, 1.5).onChange(function () {
                     slab.scale.z = (slabConfig.scaleZ);
+
+                    //Puts value of Z co-ordingate in globally declared variable
+                    Slab_Length = slab.scale.z;
 
                 });
                 
@@ -226,17 +217,7 @@
                     //Puts value of Y co-ordinate in globally declared variable
                     Pyramid_Height = pyrimid.scale.y;
 
-                    //Past attempts at controlling shapes as one on screen
-
-                    //slab.scale.z = slab.scale.z + 1;
-                    //var slabposition = slab.position.y ;
-
-                    //slab.position.y = (coneConfig.scaleY + pyrimid.position.y) + (pyrimid.position.y + pyrimid.position.y)*0.5;
-                    //pyrimid.position.y = coneConfig.scaleY + 12;
-
-                    //pyrimid.position.y = (box1Config.scaleY * slab.position.y) + (slab.position.y + slab.position.y)*0.5;
-                    //pyrimid.position.y = (coneConfig.scaleY*7)+18.5;
-                    // .step(.01)
+                  
                 });
 
                 //guiPyrimid.add(pyrimidConfig, 'scaleX', 0, 1.5).onChange(function () {
@@ -252,10 +233,20 @@
 
             }
 
-            //Function to send Y co-ordinate of pryamid to code behind
+            //Functions to send co-ordinates of pryamid and slab to code behind
+            function DisplaySlabHeight() {
+                var GetSlabHeight = Slab_Height;
+                document.getElementById('<%= SlabHeight.ClientID %>').value = GetSlabHeight;
+            }
+            
             function DisplaySlabWidth() {
                 var GetSlabWidth = Slab_Width;
                 document.getElementById('<%= SlabWidth.ClientID %>').value = GetSlabWidth;
+            }
+
+            function DisplaySlabLength() {
+                var GetSlabLength = Slab_Length;
+                document.getElementById('<%=SlabLength.ClientID %>').value = GetSlabLength;
             }
 
             function DisplayPryHeight() {
@@ -263,10 +254,7 @@
                 document.getElementById('<%= PryHeight.ClientID %>').value = GetPryHeight;
             }
 
-            function DisplaySlabHeight() {
-                var GetSlabHeight = Slab_Height;
-                document.getElementById('<%= SlabHeight.ClientID %>').value = GetSlabHeight;
-            }
+            
         </script>
 
          </div>
@@ -339,11 +327,12 @@
 
                         <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"
                               OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
-                                DisplaySlabWidth();"/>
+                                DisplaySlabWidth();  DisplaySlabLength();"/>
                         <br />
 
                        
                         <%--Hidden fields for slab and pryamid measurements--%>
+                        <asp:HiddenField ID="SlabLength" runat="server"/>
                         <asp:HiddenField ID="SlabWidth" runat="server" />
                         <asp:HiddenField ID="PryHeight" runat="server" />
                         <asp:HiddenField ID="SlabHeight" runat="server" />

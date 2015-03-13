@@ -18,7 +18,8 @@ namespace SetInStone.App_Start
                 "~/Scripts/jquery-1.9.1.js",
                  "~/Scripts/stats.min.js",
                  "~/Scripts/three.min.js",
-                 "~/Scripts/TrackballControls.js"
+                 "~/Scripts/TrackballControls.js",
+                 "~/Scripts/TGALoader.js"
                  ));
 
             BundleTable.EnableOptimizations = true;

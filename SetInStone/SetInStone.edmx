@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SetInStoneModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SetInStoneModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SetInStoneModelStoreContainer">
           <EntitySet Name="Customer_Table" EntityType="SetInStoneModel.Store.Customer_Table" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order_Table" EntityType="SetInStoneModel.Store.Order_Table" store:Type="Tables" Schema="dbo" />
@@ -58,8 +58,9 @@
             <PropertyRef Name="SlabID" />
           </Key>
           <Property Name="SlabID" Type="tinyint" Nullable="false" />
-          <Property Name="SlabSize" Type="tinyint" />
+          <Property Name="SlabSize" Type="int" />
           <Property Name="SlabCost" Type="smallmoney" />
+          <Property Name="SlabCutCost" Type="smallmoney" />
         </EntityType>
         <EntityType Name="Stone_Type">
           <Key>
@@ -115,8 +116,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SetInStoneModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -177,9 +177,10 @@
             <PropertyRef Name="SlabID" />
           </Key>
           <Property Name="SlabID" Type="Byte" Nullable="false" />
-          <Property Name="SlabSize" Type="Byte" />
+          <Property Name="SlabSize" Type="Int16" />
           <Property Name="SlabCost" Type="Decimal" Precision="10" Scale="4" />
           <NavigationProperty Name="Stone_Type" Relationship="SetInStoneModel.FK_Slab_Table_Stone_Type" FromRole="Slab_Table" ToRole="Stone_Type" />
+          <Property Type="Decimal" Name="SlabCutCost" Precision="10" Scale="4" />
         </EntityType>
         <EntityType Name="Stone_Type">
           <Key>
@@ -276,6 +277,7 @@
           <EntitySetMapping Name="Slab_Table">
             <EntityTypeMapping TypeName="SetInStoneModel.Slab_Table">
               <MappingFragment StoreEntitySet="Slab_Table">
+                <ScalarProperty Name="SlabCutCost" ColumnName="SlabCutCost" />
                 <ScalarProperty Name="SlabID" ColumnName="SlabID" />
                 <ScalarProperty Name="SlabSize" ColumnName="SlabSize" />
                 <ScalarProperty Name="SlabCost" ColumnName="SlabCost" />
