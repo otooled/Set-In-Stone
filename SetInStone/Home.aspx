@@ -172,7 +172,7 @@
                 guiSlab.open();
 
                 //Change slab deminisions & move pyrimid in accordance with the altered slab
-                guiSlab.add(slabConfig, 'scaleY', 0.5, 2).onChange(function () {
+                guiSlab.add(slabConfig, 'scaleY', 0.5, 1.5).onChange(function () {
 
                     
                     slab.scale.y = (slabConfig.scaleY);
@@ -193,24 +193,25 @@
                     
 
                     //Puts value of X co-ordinate in globally declared variable
-                    Slab_Width = slab.scale.x;
+                    //Slab_Width = slab.scale.x;
+                    Slab_Length = slab.scale.x;
                 });
 
                 //Z co-ordinates for slab - not working on it yet
 
-                guiSlab.add(slabConfig, 'scaleZ', 0, 1.5).onChange(function () {
+                guiSlab.add(slabConfig, 'scaleZ', 0.5, 1.5).onChange(function () {
                     slab.scale.z = (slabConfig.scaleZ);
 
                     //Puts value of Z co-ordingate in globally declared variable
-                    Slab_Length = slab.scale.z;
-
+                    //Slab_Length = slab.scale.z;
+                    Slab_Width = slab.scale.z;
                 });
                 
                 //add pryimid scale control
                 guiPyrimid.open();
 
                 //Pryamid scale Y co-ordinate
-                guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 2).onChange(function () {
+                guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 1).onChange(function () {
 
                     pyrimid.scale.y = (pyrimidConfig.scaleY);
 

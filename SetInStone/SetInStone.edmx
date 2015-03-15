@@ -60,7 +60,6 @@
           <Property Name="SlabID" Type="tinyint" Nullable="false" />
           <Property Name="SlabSize" Type="int" />
           <Property Name="SlabCost" Type="smallmoney" />
-          <Property Name="SlabCutCost" Type="smallmoney" />
         </EntityType>
         <EntityType Name="Stone_Type">
           <Key>
@@ -69,6 +68,7 @@
           <Property Name="StoneTypeID" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="StoneType" Type="nvarchar" MaxLength="20" />
           <Property Name="CostPerSqMetre" Type="smallmoney" />
+          <Property Name="CutCost" Type="smallmoney" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -180,7 +180,6 @@
           <Property Name="SlabSize" Type="Int16" />
           <Property Name="SlabCost" Type="Decimal" Precision="10" Scale="4" />
           <NavigationProperty Name="Stone_Type" Relationship="SetInStoneModel.FK_Slab_Table_Stone_Type" FromRole="Slab_Table" ToRole="Stone_Type" />
-          <Property Type="Decimal" Name="SlabCutCost" Precision="10" Scale="4" />
         </EntityType>
         <EntityType Name="Stone_Type">
           <Key>
@@ -190,6 +189,7 @@
           <Property Name="StoneType" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="CostPerSqMetre" Type="Decimal" Precision="10" Scale="4" />
           <NavigationProperty Name="Slab_Table" Relationship="SetInStoneModel.FK_Slab_Table_Stone_Type" FromRole="Stone_Type" ToRole="Slab_Table" />
+          <Property Type="Decimal" Name="CutCost" Precision="10" Scale="4" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -277,7 +277,6 @@
           <EntitySetMapping Name="Slab_Table">
             <EntityTypeMapping TypeName="SetInStoneModel.Slab_Table">
               <MappingFragment StoreEntitySet="Slab_Table">
-                <ScalarProperty Name="SlabCutCost" ColumnName="SlabCutCost" />
                 <ScalarProperty Name="SlabID" ColumnName="SlabID" />
                 <ScalarProperty Name="SlabSize" ColumnName="SlabSize" />
                 <ScalarProperty Name="SlabCost" ColumnName="SlabCost" />
@@ -287,6 +286,7 @@
           <EntitySetMapping Name="Stone_Type">
             <EntityTypeMapping TypeName="SetInStoneModel.Stone_Type">
               <MappingFragment StoreEntitySet="Stone_Type">
+                <ScalarProperty Name="CutCost" ColumnName="CutCost" />
                 <ScalarProperty Name="StoneTypeID" ColumnName="StoneTypeID" />
                 <ScalarProperty Name="StoneType" ColumnName="StoneType" />
                 <ScalarProperty Name="CostPerSqMetre" ColumnName="CostPerSqMetre" />

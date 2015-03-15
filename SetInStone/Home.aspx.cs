@@ -46,48 +46,58 @@ namespace SetInStone
         {
 
             decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
-            decimal pryamidHeight = Convert.ToDecimal(PryHeight.Value);
+            decimal pyramidHeight = Convert.ToDecimal(PryHeight.Value);
 
             decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
             decimal slabLength = Convert.ToDecimal(SlabLength.Value);
 
             decimal slabArea = slabWidth*slabLength;
 
-            decimal heightTotal = (slabHeight + pryamidHeight);
+            decimal heightTotal = (slabHeight + pyramidHeight);
 
             DetermineSlab(heightTotal);
 
             decimal provionalSlabCost = (Convert.ToDecimal(ddlStoneType.SelectedValue)*
                                 Convert.ToDecimal(ddlStoneSlab.SelectedValue)) * slabArea;
-            CalculateAreaCutCost();
 
-            //lblCalculateAnswer.Text = provionalSlabCost.ToString();  
- 
+            //Pyramid surface area - formula A = lw+l.√(w2/2)²+h²+w.√(l/2)²+h²
 
+            //step one of formula (L)(W)+(L)
+            decimal fPart1 = slabArea + slabLength;
 
+            //step two of formula (w2/2)²+h²+w - not getting the square root yet
+            decimal fPart2 = (slabWidth/2)*(slabWidth/2) + (pyramidHeight*pyramidHeight) + slabWidth;
 
-           // lblCalculateAnswer.Text = slabArea.ToString();
-            ////Call the method that calculates the size of the slab
-            //CalculateDeminsions();
+            //step three of formula (l/2)²+h² - not getting the square root yet
 
-            ////Call the method that determines the size of the slab
-            //DetermineSlab(ddlStoneSlab.SelectedIndex);
-            //decimal testArea = 50;
-            //DetermineSlab(testArea);
-            ////Call the method that calculates the provisional cost of the slab (not including the width)
-            //CalculateStoneSlabCost(Convert.ToDecimal(lblTotalCost.Text));
+            decimal fPart3 = (slabLength/2)*(slabLength/2) + (pyramidHeight*pyramidHeight);
 
-            ////Call the method that calculates the total (includes the width)
-            //CalculateTotal(Convert.ToDecimal(lblCalculateAnswer.Text));
-            ////lblTotalCost.Text = "hello";
+            //step four of formula - get square root of part 2 and part 3
+
+            decimal sqrtOfPart2 = (Decimal)Math.Sqrt(Convert.ToDouble(fPart2));
+            decimal sqrtOfPart3 = (Decimal)Math.Sqrt(Convert.ToDouble(fPart3));
+
+            decimal surfaceAreaOfPyramid = fPart1*sqrtOfPart2*sqrtOfPart3;
+
+            CalculatePyrimidAreaCutCost(surfaceAreaOfPyramid);
+
+            lblCalculateAnswer.Text = CalculatePyrimidAreaCutCost(0).ToString();
+
         }
 
-        private void CalculateAreaCutCost()
+        private decimal CalculatePyrimidAreaCutCost(decimal cpacc)
         {
-            if (ddlStoneType.SelectedItem = "Granite")
+            var costPerMetre = from c in db.Stone_Type
+                               where c.CutCost == ddlStoneType.SelectedIndex
+                               select c.CutCost;
+                                   
+            
+            decimal totalCutCost = 0;
+            if (ddlStoneType.SelectedIndex == 1)
             {
-                lblCalculateAnswer.Text = "hello";
+                totalCutCost = ;
             }
+            return totalCutCost;
         }
 
         private void CalculateDeminsions()

@@ -17,7 +17,6 @@ namespace SetInStone
         public byte SlabID { get; set; }
         public Nullable<short> SlabSize { get; set; }
         public Nullable<decimal> SlabCost { get; set; }
-        public Nullable<decimal> SlabCutCost { get; set; }
     
         public virtual Stone_Type Stone_Type { get; set; }
     }
