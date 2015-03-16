@@ -68,6 +68,16 @@
                 mainGraphic.appendChild(renderer.domElement);
 
                 var light, geometry, color, material, pyrimid;
+                
+                //Load textures
+                var stoneTex = new THREE.ImageUtils.loadTexture("Textures/Limestone.jpg");
+                
+                stoneTex.minFilter= THREE.LinearFilter;
+                stoneTex.magFilter = THREE.LinearFilter;
+                stoneTex.wrapS = THREE.RepeatWrapping;
+                stoneTex.repeat.x = 1;
+                stoneTex.repeat.y = 1;
+               
 
                 scene = new THREE.Scene();
 
@@ -92,10 +102,10 @@
                 //Create the slab
                 geometry = new THREE.CubeGeometry(100, 15, 100);
 
-                //color of slab
-                color = 0x969696;
+                //color of slab color: color , ambient: color, transparent: true
+               // color = 0x969696;
 
-                material = new THREE.MeshPhongMaterial({ color: color, ambient: color, transparent: true });
+                material = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide,  transparent: true });
 
                 //slab creation and position setting
                 slab = new THREE.Mesh(geometry, material);
@@ -255,6 +265,11 @@
                 document.getElementById('<%= PryHeight.ClientID %>').value = GetPryHeight;
             }
 
+            //Stone texture
+            function stoneTexture() {
+                var getStoneTexture = stoneTex;
+                document.getElementById('<%= stoneTextureHF%>').value = getStoneTexture;
+            }
             
         </script>
 
@@ -303,8 +318,8 @@
                     <ContentTemplate>
                         <asp:DropDownList ID="ddlProductType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>
                         <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown" 
-                            OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True"
-                            />
+                            OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True" 
+                            onchange="stoneTexture();"  />
                         <asp:DropDownList ID="ddlStoneSlab" runat="server" class="btn btn-info dropdown-toggle"/>
                         
                          <div id="ProvisionalCosts"  >
@@ -328,7 +343,7 @@
 
                         <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"
                               OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
-                                DisplaySlabWidth();  DisplaySlabLength();"/>
+                                DisplaySlabWidth();  DisplaySlabLength();" />
                         <br />
 
                        
@@ -337,7 +352,8 @@
                         <asp:HiddenField ID="SlabWidth" runat="server" />
                         <asp:HiddenField ID="PryHeight" runat="server" />
                         <asp:HiddenField ID="SlabHeight" runat="server" />
-
+                        
+                        <asp:HiddenField runat="server" ID="stoneTextureHF"/>
 
                         <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
                         <asp:Label runat="server"></asp:Label>

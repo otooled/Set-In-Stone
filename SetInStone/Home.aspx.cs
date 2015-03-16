@@ -21,9 +21,12 @@ namespace SetInStone
 
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             
-            if (!IsPostBack)
+            if (!Page.IsPostBack)
             {
+                ddlStoneType.Attributes.Add("onchange", "stoneTexture();");
+
                 //Populate menus on page load
                 PopulateStoneMenu();
                 PopulateSlabMenu();
@@ -36,6 +39,7 @@ namespace SetInStone
                     btnCalculate.Enabled = false;
                     btnCalculate.ToolTip = "Please choose a Product & Stone Type";
                 }
+                
                 
             }
 
@@ -79,25 +83,28 @@ namespace SetInStone
 
             decimal surfaceAreaOfPyramid = fPart1*sqrtOfPart2*sqrtOfPart3;
 
-            CalculatePyrimidAreaCutCost(surfaceAreaOfPyramid);
+            //method to calculate the cost of the cut, sending the surface of the area to 
+            //the CalculatePyrimidAreaCutCost method
+            //var dummyDecimal = CalculatePyrimidAreaCutCost(surfaceAreaOfPyramid);
 
-            lblCalculateAnswer.Text = CalculatePyrimidAreaCutCost(0).ToString();
+            //lblCalculateAnswer.Text = dummyDecimal.ToString("#,##0.00");
+            lblCalculateAnswer.Text = provionalSlabCost.ToString();
 
         }
 
-        private decimal CalculatePyrimidAreaCutCost(decimal cpacc)
+        private decimal CalculatePyrimidAreaCutCost(decimal surfaceArea)
         {
             var costPerMetre = from c in db.Stone_Type
-                               where c.CutCost == ddlStoneType.SelectedIndex
+                               where c.StoneTypeID == Convert.ToByte(ddlStoneType.SelectedItem.Value)
                                select c.CutCost;
-                                   
-            
-            decimal totalCutCost = 0;
-            if (ddlStoneType.SelectedIndex == 1)
-            {
-                totalCutCost = ;
-            }
-            return totalCutCost;
+
+            return Convert.ToDecimal(costPerMetre)*surfaceArea;
+            //decimal totalCutCost = 0;
+            //if (ddlStoneType.SelectedIndex == 1)
+            //{
+            //    totalCutCost = ;
+            //}
+            //return totalCutCost;
         }
 
         private void CalculateDeminsions()
@@ -188,7 +195,7 @@ namespace SetInStone
 
         private void PopulateStoneMenu()
         {
-            var stone = from s in  db.Stone_Type select new { s.StoneType, s.CostPerSqMetre };
+            var stone = from s in db.Stone_Type select new { s.StoneType, s.CostPerSqMetre };
             ddlStoneType.DataSource = stone.ToList();
             ddlStoneType.DataValueField = "CostPerSqMetre";
             ddlStoneType.DataTextField = "StoneType";
@@ -220,6 +227,12 @@ namespace SetInStone
         {
             btnCalculate.Enabled = true;
             btnCalculate.ToolTip = "Calculate";
+
+            if (ddlStoneType.SelectedIndex == 1)
+            {
+                //stoneTextureHF.Value = "Textures/Granite.jpg";
+                //lblCalculateAnswer.Text = "hello";
+            }
         }
 
     }
