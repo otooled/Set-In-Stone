@@ -4,16 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e968b71b96bc40dbbaf8f0bf7cab9b37" Name="Diagram1">
-        <EntityTypeShape EntityType="SetInStoneModel.Customer_Table" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SetInStoneModel.Order_Table" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SetInStoneModel.Product_Table" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SetInStoneModel.Slab_Table" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SetInStoneModel.Stone_Type" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SetInStoneModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+      <Diagram DiagramId="b58160ca5a234a9ba0f501655be74035" Name="Diagram1">
+        <EntityTypeShape EntityType="SetInStoneModel.Customer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.Order" Width="1.5" PointX="1.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.Order_Details" Width="1.5" PointX="3.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.Product" Width="1.5" PointX="1.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.Quote" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.Slab" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.Stone_Type" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SetInStoneModel.sysdiagram" Width="1.5" PointX="5.75" PointY="1.875" IsExpanded="true" />
         <AssociationConnector Association="SetInStoneModel.FK_Customer_Table_Order_Table" ManuallyRouted="false" />
-        <AssociationConnector Association="SetInStoneModel.FK_Order_Table_Product_Table" ManuallyRouted="false" />
-        <AssociationConnector Association="SetInStoneModel.FK_Slab_Table_Stone_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="SetInStoneModel.FK_Quote_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="SetInStoneModel.FK_Order_Details_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="SetInStoneModel.FK_Order_Details_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="SetInStoneModel.FK_Quote_Stone_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="SetInStoneModel.FK_Slab_Stone_Type" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

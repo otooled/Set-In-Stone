@@ -13,10 +13,10 @@ namespace SetInStone
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SetInStoneEntities1 : DbContext
+    public partial class SetInStoneEntities2 : DbContext
     {
-        public SetInStoneEntities1()
-            : base("name=SetInStoneEntities1")
+        public SetInStoneEntities2()
+            : base("name=SetInStoneEntities2")
         {
         }
     
@@ -25,10 +25,12 @@ namespace SetInStone
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Customer_Table> Customer_Table { get; set; }
-        public DbSet<Order_Table> Order_Table { get; set; }
-        public DbSet<Product_Table> Product_Table { get; set; }
-        public DbSet<Slab_Table> Slab_Table { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Order_Details> Order_Details { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
+        public DbSet<Slab> Slabs { get; set; }
         public DbSet<Stone_Type> Stone_Type { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
     }

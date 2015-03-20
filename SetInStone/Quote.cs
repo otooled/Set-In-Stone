@@ -12,17 +12,16 @@ namespace SetInStone
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Quote
     {
-        public Product()
-        {
-            this.Order_Details = new HashSet<Order_Details>();
-        }
-    
-        public byte ProductID { get; set; }
+        public byte QuoteId { get; set; }
+        public string QuoteRef { get; set; }
         public string ProductType { get; set; }
-        public string ProductNumber { get; set; }
+        public Nullable<decimal> QuotePrice { get; set; }
+        public Nullable<byte> CustomerId { get; set; }
+        public Nullable<byte> StoneTypeId { get; set; }
     
-        public virtual ICollection<Order_Details> Order_Details { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Stone_Type Stone_Type { get; set; }
     }
 }

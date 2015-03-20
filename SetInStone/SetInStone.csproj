@@ -117,17 +117,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="Customer_Table.cs">
+    <Compile Include="Customer.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Order_Table.cs">
+    <Compile Include="Order.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
-    <Compile Include="Product_Table.cs">
+    <Compile Include="Order_Details.cs">
+      <DependentUpon>SetInStone.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Quote.cs">
+      <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="SetInStone.Context.cs">
       <AutoGen>True</AutoGen>
@@ -153,7 +159,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SetInStone.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Slab_Table.cs">
+    <Compile Include="Slab.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="Stone_Type.cs">
