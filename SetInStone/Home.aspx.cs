@@ -55,11 +55,19 @@ namespace SetInStone
             decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
             decimal slabLength = Convert.ToDecimal(SlabLength.Value);
 
-            decimal slabArea = slabWidth*slabLength;
+            decimal customerSlabArea = slabWidth*slabLength;
 
             decimal heightTotal = (slabHeight + pyramidHeight);
 
             decimal slabCost = DetermineSlab(heightTotal);
+
+            decimal stockSlabWidth = DetermineStockSlabWidth(heightTotal);
+
+            decimal stockSlabHeight = DetermineStockSlabLength(heightTotal);
+
+            decimal stockSlabArea = stockSlabWidth*stockSlabHeight;
+
+            decimal customerSlabCost = (customerSlabArea/stockSlabArea)*slabCost;
             
 
             //decimal provionalSlabCost = (Convert.ToDecimal(ddlStoneType.SelectedValue)*
@@ -70,7 +78,7 @@ namespace SetInStone
             //Pyramid surface area - formula A = lw+l.√(w2/2)²+h²+w.√(l/2)²+h²
 
             //step one of formula (L)(W)+(L)
-            decimal fPart1 = slabArea + slabLength;
+            decimal fPart1 = customerSlabArea + slabLength;
 
             //step two of formula (w2/2)²+h²+w - not getting the square root yet
             decimal fPart2 = (slabWidth/2)*(slabWidth/2) + (pyramidHeight*pyramidHeight) + slabWidth;
@@ -91,8 +99,132 @@ namespace SetInStone
             //var dummyDecimal = CalculatePyrimidAreaCutCost(surfaceAreaOfPyramid);
 
             //lblCalculateAnswer.Text = dummyDecimal.ToString("#,##0.00");
-            lblCalculateAnswer.Text = slabCost.ToString();
+            lblCalculateAnswer.Text = customerSlabCost.ToString();
 
+        }
+
+        private decimal DetermineStockSlabLength(decimal heightT)
+        {
+            //determine cost of the slab based on its depth and
+            //stonetype granite selected by the user
+            decimal stockSlabLength = 0;
+
+            var slabLength =
+                (from sl in db.Slabs
+                 where sl.StoneId == ddlStoneType.SelectedIndex
+
+                 select sl.Length).ToList();
+
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 1)
+            {
+                stockSlabLength = (Decimal)slabLength.FirstOrDefault();
+            }
+
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 1) && (heightT < 3 && ddlStoneType.SelectedIndex == 1))
+            {
+                stockSlabLength = (Decimal)slabLength.ElementAt(1);
+            }
+
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 1)
+            {
+                stockSlabLength = (Decimal)slabLength.ElementAt(2);
+            }
+
+            ////determine cost of the slab based on its depth and
+            ////stonetype limestone selected by the user
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 2)
+            {
+                stockSlabLength = (Decimal)slabLength.FirstOrDefault();
+            }
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 2) && (heightT < 3 && ddlStoneType.SelectedIndex == 2))
+            {
+                stockSlabLength = (Decimal)slabLength.ElementAt(1);
+            }
+
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 2)
+            {
+                stockSlabLength = (Decimal)slabLength.ElementAt(2);
+            }
+
+            ////determine cost of the slab based on its depth and
+            ////stonetype sandstone selected by the user
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 3)
+            {
+                stockSlabLength = (Decimal)slabLength.FirstOrDefault();
+            }
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 3) && (heightT < 3 && ddlStoneType.SelectedIndex == 3))
+            {
+                stockSlabLength = (Decimal)slabLength.ElementAt(1);
+            }
+
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 3)
+            {
+                stockSlabLength = (Decimal)slabLength.ElementAt(2);
+            }
+
+            return stockSlabLength;
+        }
+
+        private decimal DetermineStockSlabWidth(decimal heightT)
+        {
+            //determine cost of the slab based on its depth and
+            //stonetype granite selected by the user
+            decimal stockSlabWidth = 0;
+
+            var slabWidth  =
+                (from sw in db.Slabs
+                 where sw.StoneId == ddlStoneType.SelectedIndex
+                 
+                 select sw.Width).ToList();
+
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 1)
+            {
+                stockSlabWidth = (Decimal) slabWidth.FirstOrDefault();
+            }
+
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 1) && (heightT < 3 && ddlStoneType.SelectedIndex == 1))
+            {
+                stockSlabWidth = (Decimal)slabWidth.ElementAt(1);
+            }
+
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 1)
+            {
+                stockSlabWidth = (Decimal)slabWidth.ElementAt(2);
+            }
+
+            ////determine cost of the slab based on its depth and
+            ////stonetype limestone selected by the user
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 2)
+            {
+                stockSlabWidth = (Decimal)slabWidth.FirstOrDefault();
+            }
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 2) && (heightT < 3 && ddlStoneType.SelectedIndex == 2))
+            {
+                stockSlabWidth = (Decimal)slabWidth.ElementAt(1);
+            }
+
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 2)
+            {
+                stockSlabWidth = (Decimal)slabWidth.ElementAt(2);
+            }
+
+            ////determine cost of the slab based on its depth and
+            ////stonetype sandstone selected by the user
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 3)
+            {
+                stockSlabWidth = (Decimal)slabWidth.FirstOrDefault();
+            }
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 3) && (heightT < 3 && ddlStoneType.SelectedIndex == 3))
+            {
+                stockSlabWidth = (Decimal)slabWidth.ElementAt(1);
+            }
+
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 3)
+            {
+                stockSlabWidth = (Decimal)slabWidth.ElementAt(2);
+            }
+
+            return stockSlabWidth;
         }
 
         //private decimal CalculatePyrimidAreaCutCost(decimal surfaceArea)
@@ -117,63 +249,62 @@ namespace SetInStone
         {
             //determine cost of the slab based on its depth and
             //stonetype granite selected by the user
-            decimal slabCost =0;
+            decimal slabCost = 0;
 
             var findSlabCost =
                 (from sc in db.Slabs
                  where sc.StoneId == ddlStoneType.SelectedIndex
+                 
                  select sc.Cost).ToList();
 
-            //if (heightT < 2 && ddlStoneType.SelectedIndex == 1)
-            //{
-            //    slabCost = Convert.ToDecimal(findSlabCost.ToList());
-            //}
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 1)
+            {
+                slabCost = (Decimal) findSlabCost.FirstOrDefault();
+            }
 
             if ((heightT >= 2 && ddlStoneType.SelectedIndex == 1) && (heightT < 3 && ddlStoneType.SelectedIndex == 1))
             {
-                slabCost =  Convert.ToDecimal(findSlabCost);
+                slabCost = (Decimal) findSlabCost.ElementAt(1);
             }
 
-            //if (heightT > 3 && ddlStoneType.SelectedIndex == 1)
-            //{
-            //    slabCost
-            //}
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 1)
+            {
+                slabCost = (Decimal)findSlabCost.ElementAt(2);
+            }
 
             ////determine cost of the slab based on its depth and
             ////stonetype limestone selected by the user
-            //if (heightT < 2 && ddlStoneType.SelectedIndex == 2)
-            //{
-            //    slabCost
-            //}
-            //if ((heightT >= 2 && ddlStoneType.SelectedIndex == 2) && (heightT < 3 && ddlStoneType.SelectedIndex == 2))
-            //{
-            //   slabCost
-            //}
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 2)
+            {
+                slabCost = (Decimal)findSlabCost.FirstOrDefault();
+            }
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 2) && (heightT < 3 && ddlStoneType.SelectedIndex == 2))
+            {
+                slabCost = (Decimal)findSlabCost.ElementAt(1);
+            }
 
-            //if (heightT > 3 && ddlStoneType.SelectedIndex == 2)
-            //{
-            //    slabCost
-            //}
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 2)
+            {
+                slabCost = (Decimal)findSlabCost.ElementAt(2);
+            }
 
             ////determine cost of the slab based on its depth and
             ////stonetype sandstone selected by the user
-            //if (heightT < 2 && ddlStoneType.SelectedIndex == 3)
-            //{
-            //    slabCost
-            //}
-            //if ((heightT >= 2 && ddlStoneType.SelectedIndex == 3) && (heightT < 3 && ddlStoneType.SelectedIndex == 3))
-            //{
-            //    slabCost
-            //}
+            if (heightT < 2 && ddlStoneType.SelectedIndex == 3)
+            {
+                 slabCost = (Decimal) findSlabCost.FirstOrDefault();
+            }
+            if ((heightT >= 2 && ddlStoneType.SelectedIndex == 3) && (heightT < 3 && ddlStoneType.SelectedIndex == 3))
+            {
+                slabCost = (Decimal)findSlabCost.ElementAt(1);
+            }
 
-            //if (heightT > 3 && ddlStoneType.SelectedIndex == 3)
-            //{
-            //    slabCost
-            //}
-
+            if (heightT > 3 && ddlStoneType.SelectedIndex == 3)
+            {
+                slabCost = (Decimal)findSlabCost.ElementAt(2);
+            }
 
              return slabCost;
-
 
         }
 
@@ -185,33 +316,7 @@ namespace SetInStone
 
         }
 
-        private void CalculateStoneSlabCost(decimal widTot)
-        {
-            decimal stoneType = Convert.ToDecimal(ddlStoneType.SelectedValue);
-            decimal stoneSlab = Convert.ToDecimal(ddlStoneSlab.SelectedValue);
-
-            decimal provionalSlabCost = (stoneSlab*stoneType);
-
-            decimal finalSlabCost = provionalSlabCost*widTot;
-
-            CalculateTotal(finalSlabCost);
-            lblTotalCost.Text = finalSlabCost.ToString();
-            //lblCalculateAnswer.Text = finalSlabCost.ToString();
-            
-        }
-
-        private void CalculateTotal(decimal fsc)
-        {
-            decimal slabCost;//, slabHeight;
-            slabCost = fsc;
-            //slabCost = Convert.ToDecimal(lblCalculateAnswer.Text);
-           // slabHeight = totalHet;
-            //slabHeight = Convert.ToDecimal(lblDisplyHeightTotal.Text);
-
-            decimal totalCost = (slabCost);//+slabHeight
-            lblCalculateAnswer.Text = totalCost.ToString();
-            
-        }
+        
        
 
         private void PopulateStoneMenu()

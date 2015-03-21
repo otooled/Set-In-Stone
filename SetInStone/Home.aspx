@@ -70,7 +70,7 @@
                 var light, geometry, color, material, pyrimid;
                 
                 //Load textures
-                var stoneTex = new THREE.ImageUtils.loadTexture("Textures/Limestone.jpg");
+                var stoneTex = new THREE.ImageUtils.loadTexture("Textures/Granite.jpg");
                 
                 stoneTex.minFilter= THREE.LinearFilter;
                 stoneTex.magFilter = THREE.LinearFilter;
