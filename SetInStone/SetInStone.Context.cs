@@ -13,10 +13,10 @@ namespace SetInStone
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SetInStoneEntities2 : DbContext
+    public partial class SetInStoneEntities4 : DbContext
     {
-        public SetInStoneEntities2()
-            : base("name=SetInStoneEntities2")
+        public SetInStoneEntities4()
+            : base("name=SetInStoneEntities4")
         {
         }
     
@@ -26,6 +26,7 @@ namespace SetInStone
         }
     
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Cut_Cost> Cut_Cost { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Order_Details> Order_Details { get; set; }
         public DbSet<Product> Products { get; set; }

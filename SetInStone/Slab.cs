@@ -20,6 +20,7 @@ namespace SetInStone
         public Nullable<decimal> Width { get; set; }
         public Nullable<decimal> Depth { get; set; }
         public Nullable<decimal> Cost { get; set; }
+        public Nullable<decimal> CutCostPerSqMtr { get; set; }
     
         public virtual Stone_Type Stone_Type { get; set; }
     }

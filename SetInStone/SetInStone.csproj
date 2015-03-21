@@ -120,6 +120,9 @@
     <Compile Include="Customer.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
+    <Compile Include="Cut_Cost.cs">
+      <DependentUpon>SetInStone.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

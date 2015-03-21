@@ -12,20 +12,13 @@ namespace SetInStone
     using System;
     using System.Collections.Generic;
     
-    public partial class Stone_Type
+    public partial class Cut_Cost
     {
-        public Stone_Type()
-        {
-            this.Cut_Cost = new HashSet<Cut_Cost>();
-            this.Quotes = new HashSet<Quote>();
-            this.Slabs = new HashSet<Slab>();
-        }
+        public byte CutID { get; set; }
+        public Nullable<byte> StoneID { get; set; }
+        public Nullable<decimal> CostPerSqMtr { get; set; }
+        public Nullable<decimal> CutCost { get; set; }
     
-        public byte StoneTypeID { get; set; }
-        public string StoneType { get; set; }
-    
-        public virtual ICollection<Cut_Cost> Cut_Cost { get; set; }
-        public virtual ICollection<Quote> Quotes { get; set; }
-        public virtual ICollection<Slab> Slabs { get; set; }
+        public virtual Stone_Type Stone_Type { get; set; }
     }
 }

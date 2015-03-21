@@ -12,7 +12,7 @@ namespace SetInStone
     public partial class WebForm1 : System.Web.UI.Page
     {
         
-        private SetInStoneEntities2  db = new SetInStoneEntities2();
+        private SetInStoneEntities4  db = new SetInStoneEntities4();
 
         protected void Dispose(bool disposing)
         {
@@ -80,8 +80,8 @@ namespace SetInStone
             //step one of formula (L)(W)+(L)
             decimal fPart1 = customerSlabArea + slabLength;
 
-            //step two of formula (w2/2)²+h²+w - not getting the square root yet
-            decimal fPart2 = (slabWidth/2)*(slabWidth/2) + (pyramidHeight*pyramidHeight) + slabWidth;
+            //step two of formula (w/2)²+h²+w - not getting the square root yet
+            decimal fPart2 = (slabWidth / 2) * (slabWidth / 2) + (pyramidHeight * pyramidHeight) + slabWidth;
 
             //step three of formula (l/2)²+h² - not getting the square root yet
 
@@ -94,13 +94,48 @@ namespace SetInStone
 
             decimal surfaceAreaOfPyramid = fPart1*sqrtOfPart2*sqrtOfPart3;
 
+            decimal costOfPyrCut = DeterminePyramidCutCost(surfaceAreaOfPyramid);
+
             //method to calculate the cost of the cut, sending the surface of the area to 
             //the CalculatePyrimidAreaCutCost method
             //var dummyDecimal = CalculatePyrimidAreaCutCost(surfaceAreaOfPyramid);
 
             //lblCalculateAnswer.Text = dummyDecimal.ToString("#,##0.00");
-            lblCalculateAnswer.Text = customerSlabCost.ToString();
+            lblCalculateAnswer.Text = surfaceAreaOfPyramid.ToString();
 
+        }
+
+        private decimal DeterminePyramidCutCost(decimal pyrArea)
+        {
+            decimal pyrCutCost = 0;
+
+            var cutCalcCost =
+                (from cc in db.Slabs
+
+                 where cc.StoneId == ddlStoneType.SelectedIndex
+                 select cc.CutCostPerSqMtr).ToList();
+
+            //var slabLength =
+            //   (from sl in db.Slabs
+            //    where sl.StoneId == ddlStoneType.SelectedIndex
+            //    select sl.Length).ToList();
+
+            if (ddlStoneType.SelectedIndex == 1)
+            {
+                pyrCutCost = (Decimal)cutCalcCost.FirstOrDefault();
+            }
+
+            else if (ddlStoneType.SelectedIndex == 2)
+            {
+                pyrCutCost = (Decimal)cutCalcCost.ElementAt(1);
+            }
+
+            else if (ddlStoneType.SelectedIndex == 3)
+            {
+                pyrCutCost = (Decimal)cutCalcCost.ElementAt(2);
+            }
+
+            return pyrCutCost * pyrArea;
         }
 
         private decimal DetermineStockSlabLength(decimal heightT)
@@ -112,7 +147,6 @@ namespace SetInStone
             var slabLength =
                 (from sl in db.Slabs
                  where sl.StoneId == ddlStoneType.SelectedIndex
-
                  select sl.Length).ToList();
 
             if (heightT < 2 && ddlStoneType.SelectedIndex == 1)
