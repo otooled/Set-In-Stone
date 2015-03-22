@@ -320,7 +320,7 @@
                         <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown" 
                             OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True" 
                             onchange="stoneTexture();"  />
-                        <asp:DropDownList ID="ddlStoneSlab" runat="server" class="btn btn-info dropdown-toggle"/>
+                        
                         
                          <div id="ProvisionalCosts"  >
                             <%--<label>Confirm Measurements</label>

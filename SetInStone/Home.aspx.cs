@@ -29,7 +29,7 @@ namespace SetInStone
 
                 //Populate menus on page load
                 PopulateStoneMenu();
-                PopulateSlabMenu();
+               
                 PopulateProductMenu();
                 
 
@@ -48,33 +48,48 @@ namespace SetInStone
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
-
+            //Measurements entered by the user through the slider control
             decimal slabHeight = Convert.ToDecimal(SlabHeight.Value);
             decimal pyramidHeight = Convert.ToDecimal(PryHeight.Value);
 
             decimal slabWidth = Convert.ToDecimal(SlabWidth.Value);
             decimal slabLength = Convert.ToDecimal(SlabLength.Value);
 
+            //Area of the customer slab.  This will be used to determine
+            //cut costs for the slab and the pyramid
             decimal customerSlabArea = slabWidth*slabLength;
 
+            //Total height of the customer slab
             decimal heightTotal = (slabHeight + pyramidHeight);
 
+            //Depending on the customers measurments, this method will determine
+            //which slab in stock is selected
             decimal slabCost = DetermineSlab(heightTotal);
 
+            //Determine the size of the slab in stock for cost purposes
             decimal stockSlabWidth = DetermineStockSlabWidth(heightTotal);
 
             decimal stockSlabHeight = DetermineStockSlabLength(heightTotal);
 
             decimal stockSlabArea = stockSlabWidth*stockSlabHeight;
 
+            //Calculate the cost of the customer slab excluding cut costs
             decimal customerSlabCost = (customerSlabArea/stockSlabArea)*slabCost;
             
+            //Surface area of sides and underside of slab for cut costs
+            //The underside surface area will be taken from customerSlabArea
 
-            //decimal provionalSlabCost = (Convert.ToDecimal(ddlStoneType.SelectedValue)*
-            //                    Convert.ToDecimal(ddlStoneSlab.SelectedValue)) * slabArea;
+            decimal sideCutCosts = DetermineSideCutCosts();
 
+            //Surface of slab sides width
+            decimal slabSidesWidth = ((slabHeight*slabWidth)*2) * sideCutCosts;
 
+            //Surface of slab sides width
+            decimal slabSidesLength = (slabHeight * slabLength) * 2 * sideCutCosts;
 
+            decimal slabUndersideCut = customerSlabArea*sideCutCosts;
+
+            decimal totalAreaCuts = slabSidesWidth + slabSidesLength + slabUndersideCut;
             //Pyramid surface area - formula A = lw+l.√(w2/2)²+h²+w.√(l/2)²+h²
 
             //step one of formula (L)(W)+(L)
@@ -96,13 +111,42 @@ namespace SetInStone
 
             decimal costOfPyrCut = DeterminePyramidCutCost(surfaceAreaOfPyramid);
 
+            decimal finalCost = customerSlabCost + totalAreaCuts + costOfPyrCut;
+
             //method to calculate the cost of the cut, sending the surface of the area to 
             //the CalculatePyrimidAreaCutCost method
             //var dummyDecimal = CalculatePyrimidAreaCutCost(surfaceAreaOfPyramid);
 
             //lblCalculateAnswer.Text = dummyDecimal.ToString("#,##0.00");
-            lblCalculateAnswer.Text = surfaceAreaOfPyramid.ToString();
+            lblCalculateAnswer.Text = finalCost.ToString("c2");
 
+        }
+
+        private decimal DetermineSideCutCosts()
+        {
+            decimal sideCuts = 0;
+
+            var sideCalcCost =
+                (from scc in db.Slabs
+                 where scc.StoneId == ddlStoneType.SelectedIndex
+                 select scc.CutCostPerSqMtr).ToList();
+
+            if (ddlStoneType.SelectedIndex == 1)
+            {
+                sideCuts = (Decimal)sideCalcCost.FirstOrDefault();
+            }
+
+            else if (ddlStoneType.SelectedIndex == 2)
+            {
+                sideCuts = (Decimal)sideCalcCost.ElementAt(1);
+            }
+
+            else if (ddlStoneType.SelectedIndex == 3)
+            {
+                sideCuts = (Decimal)sideCalcCost.ElementAt(2);
+            }
+
+            return sideCuts ;
         }
 
         private decimal DeterminePyramidCutCost(decimal pyrArea)
@@ -114,11 +158,7 @@ namespace SetInStone
 
                  where cc.StoneId == ddlStoneType.SelectedIndex
                  select cc.CutCostPerSqMtr).ToList();
-
-            //var slabLength =
-            //   (from sl in db.Slabs
-            //    where sl.StoneId == ddlStoneType.SelectedIndex
-            //    select sl.Length).ToList();
+            
 
             if (ddlStoneType.SelectedIndex == 1)
             {
@@ -260,22 +300,6 @@ namespace SetInStone
 
             return stockSlabWidth;
         }
-
-        //private decimal CalculatePyrimidAreaCutCost(decimal surfaceArea)
-        //{
-        //    var costPerMetre = from c in db.Stone_Type
-        //                       where c.StoneTypeID == Convert.ToByte(ddlStoneType.SelectedItem.Value)
-        //                       select c.CutCost;
-
-        //    return Convert.ToDecimal(costPerMetre)*surfaceArea;
-        //    //decimal totalCutCost = 0;
-        //    //if (ddlStoneType.SelectedIndex == 1)
-        //    //{
-        //    //    totalCutCost = ;
-        //    //}
-        //    //return totalCutCost;
-        //}
-
         
 
         //Determines the slab height based on the slab deminsions
@@ -341,18 +365,6 @@ namespace SetInStone
              return slabCost;
 
         }
-
-        private decimal CalculateCost(decimal stoneArea)
-        {
-            return stoneArea * (decimal)7.5;
-
-            
-
-        }
-
-        
-       
-
         private void PopulateStoneMenu()
         {
             var stone = from s in db.Stone_Type select new { s.StoneType};
@@ -362,16 +374,7 @@ namespace SetInStone
             ddlStoneType.DataBind();
             ddlStoneType.Items.Insert(0, "Select Stone Type");
         }
-        private void PopulateSlabMenu()
-        {
-            //var slabsz = (from sz in db.Slab_Table
-            //              select new { sz.SlabSize, sz.SlabCost }).ToList();
-            //ddlStoneSlab.DataValueField = "SlabCost";
-            //ddlStoneSlab.DataTextField = "SlabSize";
-            //ddlStoneSlab.DataSource = slabsz;
-            //ddlStoneSlab.DataBind();
-            //ddlStoneSlab.Items.Insert(0, "--Select--");
-        }
+       
         private  void PopulateProductMenu()
         {
             var p = from pdt in db.Products select new {pdt.ProductType};
