@@ -19,14 +19,12 @@ namespace SetInStone
             this.Quotes = new HashSet<Quote>();
         }
     
-        public byte CustomerID { get; set; }
-        public Nullable<byte> OrderID { get; set; }
-        public string Cust_Name { get; set; }
-        public string Cust_Address { get; set; }
-        public string Cust_Email { get; set; }
-        public Nullable<int> Cust_Phone { get; set; }
+        public int CustomerID { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public Nullable<int> Phone { get; set; }
     
-        public virtual Order Order { get; set; }
         public virtual ICollection<Quote> Quotes { get; set; }
     }
 }

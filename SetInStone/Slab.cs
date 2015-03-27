@@ -14,14 +14,20 @@ namespace SetInStone
     
     public partial class Slab
     {
-        public byte SlabID { get; set; }
-        public Nullable<byte> StoneId { get; set; }
-        public Nullable<decimal> Length { get; set; }
-        public Nullable<decimal> Width { get; set; }
-        public Nullable<decimal> Depth { get; set; }
-        public Nullable<decimal> Cost { get; set; }
-        public Nullable<decimal> CutCostPerSqMtr { get; set; }
+        public Slab()
+        {
+            this.Quotes = new HashSet<Quote>();
+        }
     
-        public virtual Stone_Type Stone_Type { get; set; }
+        public int SlabId { get; set; }
+        public Nullable<int> StoneId { get; set; }
+        public Nullable<double> Length { get; set; }
+        public Nullable<double> Width { get; set; }
+        public Nullable<double> Thickness { get; set; }
+        public Nullable<double> Cost { get; set; }
+        public Nullable<double> CostPerSqMtr { get; set; }
+    
+        public virtual ICollection<Quote> Quotes { get; set; }
+        public virtual Stone Stone { get; set; }
     }
 }

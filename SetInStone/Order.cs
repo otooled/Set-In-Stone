@@ -14,17 +14,9 @@ namespace SetInStone
     
     public partial class Order
     {
-        public Order()
-        {
-            this.Customers = new HashSet<Customer>();
-            this.Order_Details = new HashSet<Order_Details>();
-        }
+        public int OrderId { get; set; }
+        public Nullable<int> Quoteid { get; set; }
     
-        public byte OrderID { get; set; }
-        public string OrderRef { get; set; }
-        public Nullable<byte> CustomerID { get; set; }
-    
-        public virtual ICollection<Customer> Customers { get; set; }
-        public virtual ICollection<Order_Details> Order_Details { get; set; }
+        public virtual Quote Quote { get; set; }
     }
 }

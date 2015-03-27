@@ -117,9 +117,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="CalcClasses\CutCost.cs" />
     <Compile Include="Customer.cs">
-      <DependentUpon>SetInStone.tt</DependentUpon>
+      <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomerSlab.cs" />
     <Compile Include="Cut_Cost.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
@@ -128,7 +130,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs">
-      <DependentUpon>SetInStone.tt</DependentUpon>
+      <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
     <Compile Include="Order_Details.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
@@ -144,8 +146,9 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pyramid.cs" />
     <Compile Include="Quote.cs">
-      <DependentUpon>SetInStone.tt</DependentUpon>
+      <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
     <Compile Include="SetInStone.Context.cs">
       <AutoGen>True</AutoGen>
@@ -162,14 +165,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SetInStone.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SIS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SIS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SIS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SIS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SIS.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Slab.cs">
-      <DependentUpon>SetInStone.tt</DependentUpon>
+      <DependentUpon>SIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stone.cs">
+      <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
     <Compile Include="Stone_Type.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>SetInStone.tt</DependentUpon>
+      <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +211,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SetInStone.edmx</DependentUpon>
       <LastGenOutput>SetInStone.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="SIS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SIS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="SIS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SIS.edmx</DependentUpon>
+      <LastGenOutput>SIS.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SIS.edmx.diagram">
+      <DependentUpon>SIS.edmx</DependentUpon>
+    </Content>
+    <Content Include="SIS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SIS.edmx</DependentUpon>
+      <LastGenOutput>SIS.cs</LastGenOutput>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
