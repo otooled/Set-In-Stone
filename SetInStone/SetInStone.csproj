@@ -88,9 +88,18 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\back.png" />
+    <Content Include="Content\Images\back2.jpg" />
+    <Content Include="Content\Images\back3.jpg" />
+    <Content Include="Content\Images\back4.jpg" />
+    <Content Include="Content\Images\back5.jpg" />
+    <Content Include="Content\Images\LoginBackground.JPG" />
+    <Content Include="Content\Login.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\HomePage.css" />
+    <Content Include="Content\Images\Background.png" />
+    <Content Include="Login.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dat.gui.min.js" />
@@ -121,12 +130,18 @@
     <Compile Include="Customer.cs">
       <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomerSlab.cs" />
     <Compile Include="Cut_Cost.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs">
@@ -146,7 +161,6 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pyramid.cs" />
     <Compile Include="Quote.cs">
       <DependentUpon>SIS.tt</DependentUpon>
     </Compile>
