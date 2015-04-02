@@ -1,11 +1,7 @@
 ﻿body {
     background: url("Images/back5.JPG");
     background-repeat: no-repeat;
-    /*background-size: auto;*/
-   	background-size: 1400px 650px;
-    
-    /*position: fixed;*/
-    
+   background-size: 1400px 650px;
 }
 .TextBoxes {
     border: none;
@@ -46,20 +42,18 @@ input:focus {
     color: white;
     font-family: Papyrus;
     font-size: 50px;
-    
-    /*position: fixed;*/
-    
-    
 }
 #LoginDiv {
     margin-left: 100px;
-    
     top: 30%;
     bottom: auto;
-
     width: 300px;
-   
     position: fixed;
-   
+}
+#divNewEmployee {
+     right: 100px;
+    top: 30%;
+    width: 300px;
+    position: fixed;
 }
 

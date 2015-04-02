@@ -7,7 +7,7 @@ namespace SetInStone.CalcClasses
 {
     public static class Cost
     {
-        private static SiSSetInStone2Entities2 db = new SiSSetInStone2Entities2();
+        private static SIS2 db = new SIS2();
        static void Dispose(bool disposing)
         {
             db.Dispose();

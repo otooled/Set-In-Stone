@@ -25,11 +25,11 @@
         <br/>
         <label  class="bars"> </label>
         <br/>
-        <asp:TextBox runat="server" placeholder="Password" ID="txtPassword" CssClass="TextBoxes"></asp:TextBox>
+        <asp:TextBox runat="server" placeholder="Password" ID="txtPassword" CssClass="TextBoxes" TextMode="Password"></asp:TextBox>
         <br/>
         <label  class="bars"> </label>
         <br/>
-        <asp:Button runat="server" ID="btnLogin" Text="Login" CssClass="LoginButtons"/>
+        <asp:Button runat="server" ID="btnLogin" Text="Login" CssClass="LoginButtons" OnClick="btnLogin_Click"/>
         
         <br/>
     <br/>
@@ -37,6 +37,9 @@
     <br/>
         <asp:Button runat="server" ID="btnRetrieveQuote" Text="Retrieve a Quote" CssClass="LoginButtons"/>
     </div>
+        <div id="divNewEmployee">
+            <asp:Button runat="server" ID="btnNewEmployee" Text="Other Options" CssClass="LoginButtons"/>
+        </div>
     </form>
 </body>
 </html>

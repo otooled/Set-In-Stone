@@ -88,18 +88,13 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\back.png" />
-    <Content Include="Content\Images\back2.jpg" />
-    <Content Include="Content\Images\back3.jpg" />
-    <Content Include="Content\Images\back4.jpg" />
     <Content Include="Content\Images\back5.jpg" />
-    <Content Include="Content\Images\LoginBackground.JPG" />
     <Content Include="Content\Login.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\HomePage.css" />
-    <Content Include="Content\Images\Background.png" />
     <Content Include="Login.aspx" />
+    <Content Include="NewEmployee.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dat.gui.min.js" />
@@ -128,10 +123,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="CalcClasses\CutCost.cs" />
     <Compile Include="Customer.cs">
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
     <Compile Include="Cut_Cost.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employee.cs">
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -144,8 +142,15 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="NewEmployee.aspx.cs">
+      <DependentUpon>NewEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewEmployee.aspx.designer.cs">
+      <DependentUpon>NewEmployee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs">
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
     <Compile Include="Order_Details.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
@@ -162,7 +167,7 @@
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Quote.cs">
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
     <Compile Include="SetInStone.Context.cs">
       <AutoGen>True</AutoGen>
@@ -179,32 +184,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SetInStone.edmx</DependentUpon>
     </Compile>
-    <Compile Include="SIS.Context.cs">
+    <Compile Include="SIS2.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SIS.Context.tt</DependentUpon>
+      <DependentUpon>SIS2.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="SIS.cs">
+    <Compile Include="SIS2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
-    <Compile Include="SIS.Designer.cs">
+    <Compile Include="SIS2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SIS.edmx</DependentUpon>
+      <DependentUpon>SIS2.edmx</DependentUpon>
     </Compile>
     <Compile Include="Slab.cs">
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
     <Compile Include="Stone.cs">
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
     <Compile Include="Stone_Type.cs">
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>SIS.tt</DependentUpon>
+      <DependentUpon>SIS2.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -226,22 +231,22 @@
       <DependentUpon>SetInStone.edmx</DependentUpon>
       <LastGenOutput>SetInStone.cs</LastGenOutput>
     </Content>
-    <EntityDeploy Include="SIS.edmx">
+    <EntityDeploy Include="SIS2.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SIS.Designer.cs</LastGenOutput>
+      <LastGenOutput>SIS2.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="SIS.Context.tt">
+    <Content Include="SIS2.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SIS.edmx</DependentUpon>
-      <LastGenOutput>SIS.Context.cs</LastGenOutput>
+      <DependentUpon>SIS2.edmx</DependentUpon>
+      <LastGenOutput>SIS2.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="SIS.edmx.diagram">
-      <DependentUpon>SIS.edmx</DependentUpon>
+    <Content Include="SIS2.edmx.diagram">
+      <DependentUpon>SIS2.edmx</DependentUpon>
     </Content>
-    <Content Include="SIS.tt">
+    <Content Include="SIS2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SIS.edmx</DependentUpon>
-      <LastGenOutput>SIS.cs</LastGenOutput>
+      <DependentUpon>SIS2.edmx</DependentUpon>
+      <LastGenOutput>SIS2.cs</LastGenOutput>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

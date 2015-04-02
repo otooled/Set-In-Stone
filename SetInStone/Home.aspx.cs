@@ -14,7 +14,7 @@ namespace SetInStone
         
         
        // private SetInStoneEntities4  db = new SetInStoneEntities4();
-        private SiSSetInStone2Entities2 db = new SiSSetInStone2Entities2();
+        private SIS2 db = new SIS2();
 
         protected void Dispose(bool disposing)
         {
@@ -205,95 +205,95 @@ namespace SetInStone
         }
 
 
-        private float DetermineGraniteSlabCost(float heightTotal)
-        {
-            //determine cost of the slab based on its depth and
-            //granite is selected by the user
-            float granSlabCost = 0;
+        //private float DetermineGraniteSlabCost(float heightTotal)
+        //{
+        //    //determine cost of the slab based on its depth and
+        //    //granite is selected by the user
+        //    float granSlabCost = 0;
 
-            var findSlabCost =
-                (from sc in db.Slabs
-                 where sc.StoneId == 1
+        //    var findSlabCost =
+        //        (from sc in db.Slabs
+        //         where sc.StoneId == 1
 
-                 select sc.Cost).ToList();
+        //         select sc.Cost).ToList();
 
-            if (heightTotal < 2)
-            {
-                granSlabCost = (float)findSlabCost.FirstOrDefault();
-            }
+        //    if (heightTotal < 2)
+        //    {
+        //        granSlabCost = (float)findSlabCost.FirstOrDefault();
+        //    }
 
-            else if (heightTotal >= 2 && heightTotal < 3)
-            {
-                granSlabCost = (float)findSlabCost.ElementAt(1);
-            }
+        //    else if (heightTotal >= 2 && heightTotal < 3)
+        //    {
+        //        granSlabCost = (float)findSlabCost.ElementAt(1);
+        //    }
 
-            else
-            {
-                granSlabCost = (float)findSlabCost.ElementAt(2);
-            }
+        //    else
+        //    {
+        //        granSlabCost = (float)findSlabCost.ElementAt(2);
+        //    }
 
-            return granSlabCost;
-        }
+        //    return granSlabCost;
+        //}
 
-        private float DetermineLStoneSlabCost(float heightTotal)
-        {
-            //determine cost of the slab based on its depth and
-            //stonetype limestone is selected by the user
-            float lStoneSlabCost = 0;
+        //private float DetermineLStoneSlabCost(float heightTotal)
+        //{
+        //    //determine cost of the slab based on its depth and
+        //    //stonetype limestone is selected by the user
+        //    float lStoneSlabCost = 0;
 
-            var findSlabCost =
-                (from sc in db.Slabs
-                 where sc.StoneId == 2
+        //    var findSlabCost =
+        //        (from sc in db.Slabs
+        //         where sc.StoneId == 2
 
-                 select sc.Cost).ToList();
+        //         select sc.Cost).ToList();
 
-            if (heightTotal < 2)
-            {
-                lStoneSlabCost = (float)findSlabCost.FirstOrDefault();
-            }
+        //    if (heightTotal < 2)
+        //    {
+        //        lStoneSlabCost = (float)findSlabCost.FirstOrDefault();
+        //    }
 
-            else if (heightTotal >= 2 && heightTotal < 3)
-            {
-                lStoneSlabCost = (float)findSlabCost.ElementAt(1);
-            }
+        //    else if (heightTotal >= 2 && heightTotal < 3)
+        //    {
+        //        lStoneSlabCost = (float)findSlabCost.ElementAt(1);
+        //    }
 
-            else
-            {
-                lStoneSlabCost = (float)findSlabCost.ElementAt(2);
-            }
+        //    else
+        //    {
+        //        lStoneSlabCost = (float)findSlabCost.ElementAt(2);
+        //    }
 
-            return lStoneSlabCost;
-        }
+        //    return lStoneSlabCost;
+        //}
 
-        private float DetermineSStoneSlabCost(float heightTotal)
-        {
-            //determine cost of the slab based on its depth and
-            //stonetype sandstone is selected by the user
-            float sndStoneSlabCost = 0;
+        //private float DetermineSStoneSlabCost(float heightTotal)
+        //{
+        //    //determine cost of the slab based on its depth and
+        //    //stonetype sandstone is selected by the user
+        //    float sndStoneSlabCost = 0;
 
-            var findSlabCost =
-                (from sc in db.Slabs
-                 where sc.StoneId == 2
+        //    var findSlabCost =
+        //        (from sc in db.Slabs
+        //         where sc.StoneId == 2
 
-                 select sc.Cost).ToList();
+        //         select sc.Cost).ToList();
 
-            if (heightTotal < 2)
-            {
-                sndStoneSlabCost = (float)findSlabCost.FirstOrDefault();
-            }
+        //    if (heightTotal < 2)
+        //    {
+        //        sndStoneSlabCost = (float)findSlabCost.FirstOrDefault();
+        //    }
 
-            else if (heightTotal >= 2 && heightTotal < 3)
-            {
-                sndStoneSlabCost = (float)findSlabCost.ElementAt(1);
-            }
+        //    else if (heightTotal >= 2 && heightTotal < 3)
+        //    {
+        //        sndStoneSlabCost = (float)findSlabCost.ElementAt(1);
+        //    }
 
-            else
-            {
-                sndStoneSlabCost = (float)findSlabCost.ElementAt(2);
-            }
+        //    else
+        //    {
+        //        sndStoneSlabCost = (float)findSlabCost.ElementAt(2);
+        //    }
 
-            return sndStoneSlabCost;
-        }
+        //    return sndStoneSlabCost;
+        //}
 
 
         
