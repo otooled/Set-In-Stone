@@ -16,21 +16,35 @@ namespace SetInStone.CalcClasses
 
        public static float CalcStraightCuts(string sType, float slWidth, float slHeight, float slLength)
        {
-           float normalCuts = 0;
+           float totalCutArea = 0;
            float surfaceArea = 0;
            float sideArea = 0;
+           float totalSlabHeight = 0;
 
            surfaceArea = slLength*slWidth;
            sideArea = (slLength*slWidth)*2;
+           totalCutArea = surfaceArea + sideArea;
+           
 
             List<Slab> slabs = db.Slabs.ToList();
 
             var heightOk = slabs.Where(a => a.Thickness > slHeight);
             var pickSlab = heightOk.OrderBy(a => a.Thickness).Take(1);
+            var slabCutCost = db.Stones.Where(a => a.StoneType == sType).FirstOrDefault();
+
+            totalCutArea = surfaceArea * (float)slabCutCost.CutCost;
+              return totalCutArea;
+            
+            //if (slHeight != float(pickSlab))
+            //{
+            //    totalCutArea = surfaceArea * (float)slabCutCost.CutCost;
+            //    return totalCutArea;
+            //}
+           
 
 
 
-        }
+       }
 
         public static float CalcCost(string sType, float slWidth, float slHeight, float slLength)
         {

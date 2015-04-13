@@ -23,7 +23,10 @@ namespace SetInStone
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+        //    protected void Button1_Click(object sender, EventArgs e)
+        //{
+        //  Label1.Text =  Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+        //}
             
             if (!Page.IsPostBack)
             {
@@ -55,13 +58,14 @@ namespace SetInStone
             
             float slabSurfaceCost = CustomerSlabDetails();
             float pyrSurfaceArea = PyramidSurface();
+            float cutCost = CalculateStraightCuts();
 
             //float custSlabHeight = DetermineSlab();
             //float slabcost = DetermineLStoneSlabCost();
 
             ////Display final cost of stone work
-            lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost).ToString("c2");//"c2"
-            //lblCalculateAnswer.Text = custSlabsurfaceArea.ToString();//"c2"
+            //lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost).ToString("c2");//"c2"
+            lblCalculateAnswer.Text = cutCost.ToString();//"c2"
         }
 
         private float PyramidSurface()
@@ -89,6 +93,17 @@ namespace SetInStone
 
            var price = CalcClasses.Cost.CalcCost(sType, slabWidth, slabHeight, slabLength);
             return price;
+        }
+
+        private float CalculateStraightCuts()
+        {
+            string sType = ddlStoneType.SelectedValue;
+            float slabWidth = float.Parse(SlabWidth.Value);
+            float slabHeight = float.Parse(SlabHeight.Value);
+            float slabLength = float.Parse(SlabLength.Value);
+
+            var cutCost = CalcClasses.Cost.CalcStraightCuts(sType, slabWidth, slabHeight, slabLength);
+            return cutCost;
         }
 
 
