@@ -21,6 +21,18 @@ namespace SetInStone
             db.Dispose();
         }
 
+        private void Page_PreInit(object sender, System.EventArgs e)
+        {
+            if ((Session["loginDetails"] == null))
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
+        //protected override void OnInit(EventArgs e)
+        //{
+        //    base.OnInit(e);
+        //    if(Session.)
+        //}
         protected void Page_Load(object sender, EventArgs e)
         {
         //    protected void Button1_Click(object sender, EventArgs e)

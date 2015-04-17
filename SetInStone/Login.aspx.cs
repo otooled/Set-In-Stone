@@ -57,7 +57,7 @@ namespace SetInStone
                     Employee emp = (Employee)Session["loginDetails"];
                     emp.User_ID = logDet.User_ID;
                 }
-                Response.Redirect("Home.aspx");
+                Response.Redirect("LandingPage.aspx");
             }
             else
             {

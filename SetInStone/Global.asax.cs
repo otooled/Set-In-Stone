@@ -46,5 +46,12 @@ namespace SetInStone
         {
 
         }
+        //void Application_PostAcquireRequestState(object sender, EventArgs e)
+        //{
+        //    if(Session["loginDetails"]) == null && !Request.Path.EndsWith("Login.aspx"))
+        //    {
+        //        Response.Redirect("Login.aspx");
+        //    }
+        //}
     }
 }

@@ -7,7 +7,7 @@
 <head runat="server">
     <%: Styles.Render("~/Content/bootstrap.css", "~/Content/Login.css") %> 
     <%: Scripts.Render("~/bundles/jQuery") %>
-    <title></title>
+    <title>Set In Stone</title>
 </head>
 <body>
     <br/>
