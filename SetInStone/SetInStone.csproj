@@ -162,6 +162,7 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\stats.min.js" />
     <Content Include="Scripts\TGALoader.js" />

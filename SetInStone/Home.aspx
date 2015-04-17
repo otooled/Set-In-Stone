@@ -10,15 +10,114 @@
     <meta content='IE=EmulateIE7' http-equiv='X-UA-Compatible' />
     <meta content='width=1100' name='viewport' />
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-
-    <%--<script src="Scripts/three.min.js"></script>
-    <script src="Scripts/TrackballControls.js"></script>
-    <script src="Scripts/Detector.js"></script>
-    <script src="Scripts/stats.min.js"></script>
-    <script src="Scripts/dat.gui.min.js"></script>--%>
+    <link rel="stylesheet" href="/resources/demos/style.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <style>
+     body { font-size: 62.5%; }
+    label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+        </style>
     <%: Styles.Render("~/Content/bootstrap.css", "~/Content/HomePage.css") %> 
     <%: Scripts.Render("~/bundles/jQuery") %>
+    <script>
+        $(function () {
+            var dialog, form,
 
+              // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+              emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+              name = $("#name"),
+              email = $("#email"),
+              password = $("#password"),
+              allFields = $([]).add(name).add(email).add(password),
+              tips = $(".validateTips");
+
+            function updateTips(t) {
+                tips
+                  .text(t)
+                  .addClass("ui-state-highlight");
+                setTimeout(function () {
+                    tips.removeClass("ui-state-highlight", 1500);
+                }, 500);
+            }
+
+            function checkLength(o, n, min, max) {
+                if (o.val().length > max || o.val().length < min) {
+                    o.addClass("ui-state-error");
+                    updateTips("Length of " + n + " must be between " +
+                      min + " and " + max + ".");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function checkRegexp(o, regexp, n) {
+                if (!(regexp.test(o.val()))) {
+                    o.addClass("ui-state-error");
+                    updateTips(n);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function addUser() {
+                var valid = true;
+                allFields.removeClass("ui-state-error");
+
+                //valid = valid && checkLength(name, "username", 3, 16);
+                //valid = valid && checkLength(email, "email", 6, 80);
+                //valid = valid && checkLength(password, "password", 5, 16);
+
+                //valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+                valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
+                //valid = valid && checkRegexp(password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
+
+                if (valid) {
+                    $("#users tbody").append("<tr>" +
+                      "<td>" + name.val() + "</td>" +
+                      "<td>" + email.val() + "</td>" +
+                      "<td>" + password.val() + "</td>" +
+                    "</tr>");
+                    dialog.dialog("close");
+                }
+                return valid;
+            }
+
+            dialog = $("#dialog-form").dialog({
+                autoOpen: false,
+                height: 550,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Create an account": addUser,
+                    Cancel: function () {
+                        dialog.dialog("close");
+                    }
+                },
+                close: function () {
+                    form[0].reset();
+                    allFields.removeClass("ui-state-error");
+                }
+            });
+
+            form = dialog.find("form").on("submit", function (event) {
+                event.preventDefault();
+                addUser();
+            });
+
+            $("#create-user").button().on("click", function () {
+                dialog.dialog("open");
+            });
+            
+            
+            
+        });
+    </script>
     <script>
         var renderer, scene, camera, controls, stats;
         var light, geometry, material, mesh, np;
@@ -103,7 +202,7 @@
                 geometry = new THREE.CubeGeometry(100, 15, 100);
 
                 //color of slab color: color , ambient: color, transparent: true
-               // color = 0x969696;
+                // color = 0x969696;
 
                 material = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide,  transparent: true });
 
@@ -320,30 +419,17 @@
                         <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown" 
                             OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True" 
                             onchange="stoneTexture();"  />
-                        
-                        
                          <div id="ProvisionalCosts"  >
-                            <%--<label>Confirm Measurements</label>
                             <br/>
-                            <label>Are these measurements correct?</label>--%>
-                            <br/>
-                            <%--<asp:Button ID="BtnProvisionalCost" runat="server" Text="Yes" OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
-                                DisplaySlabWidth();" OnClick="BtnProvisionalCost_Click" class="btn btn-primary" />--%>
                             <br />
-                            <%--<asp:Button runat="server" ID="btnTotalCost"  OnClick="btnTotalCost_Click" Text="Total" />--%>
                             <asp:Label runat="server" ID="lblTotalCost" Visible="False"></asp:Label>
-                            <%--<asp:Label Visible="False" ID="lblTotalHeight" runat="server">Total Height (Slab and Pryamid)</asp:Label>
-                             <asp:Label ID="lblDisplyHeightTotal" runat="server"></asp:Label>--%>
                              <br/>
-                             <%--<asp:Label Visible="False" ID="lblTotalWidth"  runat="server">Total Width (Metres sq.)</asp:Label>
-                            <asp:Label  ID="lblDisplayTotalWidth" runat="server"></asp:Label>--%>
-                            
                         </div>
                         <br />
 
                         <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"
                               OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
-                                DisplaySlabWidth();  DisplaySlabLength();" />
+        DisplaySlabWidth();  DisplaySlabLength();" />
                         <asp:Button runat="server" class="btn btn-warning" ID="btnSaveConfirm" Text="Save Quote / Place Order"/>
                         <br />
 
@@ -364,5 +450,29 @@
             </div>
          
         </form>
+    <div id="dialog-form" title="Create new user">
+    <form id="quote" >
+        <fieldset>
+      <label for="name">First Name</label>
+<%--            <asp:TextBox runat="server" ID="name"></asp:TextBox>--%>
+            <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all"/>
+        <label for="name">Surname</label>
+            <input type="text" name="surname" id="surname"  class="text ui-widget-content ui-corner-all"/>
+      <label for="email">Phone Number</label>
+            <input type="text" name="phoneNo" id="phoneNo"  class="text ui-widget-content ui-corner-all"/>
+        <label for="name">Product</label>
+            <input type="text" name="product" id="product"  class="text ui-widget-content ui-corner-all"/>
+        <label for="name">Quantity</label>
+            <input type="text" name="quantity" id="quantity"  class="text ui-widget-content ui-corner-all"/>
+        <label for="name">Price</label>
+            <input type="text" name="price" id="price" value="lblTotalCost" class="text ui-widget-content ui-corner-all"/>
+      
+ 
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"/>
+    </fieldset>
+    </form>
+        </div>
+    <button id="create-user">Create new user</button>
 </body>
 </html>

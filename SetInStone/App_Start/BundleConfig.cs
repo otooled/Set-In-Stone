@@ -20,7 +20,8 @@ namespace SetInStone.App_Start
                  "~/Scripts/three.min.js",
                  "~/Scripts/TrackballControls.js",
                  "~/Scripts/TGALoader.js",
-                 "~/Scripts/grayscale.js"
+                 "~/Scripts/grayscale.js",
+                 "~/Scripts/jquery-ui.js"
                  ));
 
             BundleTable.EnableOptimizations = true;
