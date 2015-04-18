@@ -35,11 +35,11 @@
     <br/>
         <br/>
     <br/>
-        <asp:Button runat="server" ID="btnRetrieveQuote" Text="Retrieve a Quote" CssClass="LoginButtons"/>
+<%--        <asp:Button runat="server" ID="btnRetrieveQuote" Text="Retrieve a Quote" CssClass="LoginButtons"/>--%>
     </div>
-        <div id="divNewEmployee">
+        <%--<div id="divNewEmployee">
             <asp:Button runat="server" ID="btnNewEmployee" Text="Other Options" CssClass="LoginButtons"/>
-        </div>
+        </div>--%>
     </form>
 </body>
 </html>

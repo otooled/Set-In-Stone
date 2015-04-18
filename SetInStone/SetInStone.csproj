@@ -169,6 +169,7 @@
     <Content Include="Scripts\three.min.js" />
     <Content Include="Scripts\TrackballControls.js" />
     <Content Include="Textures\Granite.jpg" />
+    <Content Include="Textures\gridcomb.gif" />
     <Content Include="Textures\Limestone.jpg" />
     <Content Include="Textures\sstone.jpg" />
     <Content Include="Web.config" />

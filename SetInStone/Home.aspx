@@ -27,18 +27,18 @@
         $(function () {
             var dialog, form,
 
-              // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-              emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-              name = $("#name"),
-              email = $("#email"),
-              password = $("#password"),
-              allFields = $([]).add(name).add(email).add(password),
-              tips = $(".validateTips");
+                // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+                emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                name = $("#name"),
+                email = $("#email"),
+                password = $("#password"),
+                allFields = $([]).add(name).add(email).add(password),
+                tips = $(".validateTips");
 
             function updateTips(t) {
                 tips
-                  .text(t)
-                  .addClass("ui-state-highlight");
+                    .text(t)
+                    .addClass("ui-state-highlight");
                 setTimeout(function () {
                     tips.removeClass("ui-state-highlight", 1500);
                 }, 500);
@@ -48,7 +48,7 @@
                 if (o.val().length > max || o.val().length < min) {
                     o.addClass("ui-state-error");
                     updateTips("Length of " + n + " must be between " +
-                      min + " and " + max + ".");
+                        min + " and " + max + ".");
                     return false;
                 } else {
                     return true;
@@ -79,10 +79,10 @@
 
                 if (valid) {
                     $("#users tbody").append("<tr>" +
-                      "<td>" + name.val() + "</td>" +
-                      "<td>" + email.val() + "</td>" +
-                      "<td>" + password.val() + "</td>" +
-                    "</tr>");
+                        "<td>" + name.val() + "</td>" +
+                        "<td>" + email.val() + "</td>" +
+                        "<td>" + password.val() + "</td>" +
+                        "</tr>");
                     dialog.dialog("close");
                 }
                 return valid;
@@ -132,6 +132,22 @@
         var Slab_Length = null;
 
         var Slab_Height = null;
+        
+
+        var slab;
+        var newPyramid;
+        var parameters;
+        var gui;
+        var folder1;
+        var slabX;
+        var slabY;
+        var slabZ;
+        var pyramidY;
+        //default size for new pier cap
+        var SLAB_WIDTH = 80; SLAB_LENGTH = 100; SLAB_HEIGHT = 25; PYRAMID_HEIGHT = 20;
+        //max dimensions for pier caps
+        var MIN_SLAB_WIDTH = 400; MIN_SLAB_LENGTH = 400; MIN_SLAB_HEIGHT = 150; MIN_PYRAMID_HEIGHT = 0;
+        var MAX_SLAB_WIDTH = 1200; MAX_SLAB_LENGTH = 1200; MAX_SLAB_HEIGHT = 350; MAX_PYRAMID_HEIGHT = 300;
     </script>
     <title>Set In Stone</title>
 
@@ -140,9 +156,7 @@
 <body >
     
     <div id="Title">
-       <script type="text/javascript">
-           
-       </script>
+     
         
       </div>
 
@@ -150,26 +164,28 @@
         
         
         <script type='text/javascript'>
+           // var controls, stats;
             init();
 
             function init() {
                 mainGraphic = document.getElementById('MainGraphic');
                 // d = document.body;
                 // console.log('hi ', d);
+                
                 renderer = new THREE.WebGLRenderer({ antialias: true });
                 renderer.setSize(640, 320);
                 renderer.shadowMapEnabled = true;
                 renderer.shadowMapSoft = true;
                 renderer.domElement.style.border = '5px solid black';
-                renderer.domElement.style.backgroundColor = '#000';
+                renderer.domElement.style.backgroundColor = '#d6dbe3';
                 //renderer.domElement.style.font = '12px bold monospace';
                 //renderer.domElement.style.textAlign = 'center';
                 mainGraphic.appendChild(renderer.domElement);
 
-                var light, geometry, color, material, pyrimid;
+                var light, geometry, color, material, pyramid;
                 
                 //Load textures
-                var stoneTex = new THREE.ImageUtils.loadTexture("Textures/Granite.jpg");
+                var stoneTex =  new THREE.ImageUtils.loadTexture("Textures/gridcomb.gif");
                 
                 stoneTex.minFilter= THREE.LinearFilter;
                 stoneTex.magFilter = THREE.LinearFilter;
@@ -203,24 +219,75 @@
 
                 //color of slab color: color , ambient: color, transparent: true
                 // color = 0x969696;
+                gui = new dat.GUI();
 
-                material = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide,  transparent: true });
+                parameters =
+                {
+                    Length: (SLAB_LENGTH * 10), Width: (SLAB_WIDTH * 10), Slab_Height: (SLAB_HEIGHT * 10), Point_Height: (PYRAMID_HEIGHT * 10),    //these will be read from the DB for previous quotes!
+                    stone: "Granite",
+                    reset: function () { resetPier() }
+                };
+
+                folder1 = gui.addFolder('Pier Cap Dimensions (mm)');
+                slabX = folder1.add(parameters, 'Width').min(MIN_SLAB_LENGTH).max(MAX_SLAB_LENGTH).step(1).listen();
+                slabZ = folder1.add(parameters, 'Length').min(MIN_SLAB_WIDTH).max(MAX_SLAB_WIDTH).step(1).listen();
+                slabY = folder1.add(parameters, 'Slab_Height').min(MIN_SLAB_HEIGHT).max(MAX_SLAB_HEIGHT).step(1).listen();
+                pyramidY = folder1.add(parameters, 'Point_Height').min(MIN_PYRAMID_HEIGHT).max(MAX_PYRAMID_HEIGHT).step(1).listen();
+                folder1.open();
+                
+                var cubeMaterial = gui.add(parameters, 'stone', ["Granite", "Sandstone", "Limestone", "Wireframe"]).name('Stone Type').listen();
+                cubeMaterial.onChange(function (value)
+                { updateProduct(); });
+                
+                function updateProduct() {
+                    var value = parameters.stone;
+                    var newMaterial;
+                    if (value == "Granite"){
+                        newMaterial = new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture("Textures/Granite.jpg"), shading: THREE.FlatShading, overdraw : true});
+                    }
+                    else if (value == "Sandstone") {
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/sstone.jpg") });
+                    }
+                    else if (value == "Limestone"){
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg") });
+                    }
+                    else // (value == "Wireframe")
+                        newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
+
+                    slab.material = newMaterial;
+                    pyramid.material = newMaterial;
+                    
+                animate();
+            }
+
+                material = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide,  transparent: false, opacity: 100 });
 
                 //slab creation and position setting
                 slab = new THREE.Mesh(geometry, material);
                 slab.castShadow = true;
-                slab.position.set(0, 12, 0);
+                slab.position.set(0, SLAB_HEIGHT / 2, 0); //(0, 12, 0);
+                
+
+                var pyramidGeom = new THREE.Geometry();
+                pyramidGeom.vertices = [  // array of Vector3 giving vertex coordinates
+                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
+                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
+                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
+                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
+                        new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
+                ];
+
 
                 //create the pyrimid shape
-                pyrimid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
+                pyramid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
                 //add the pyrimid to the scene
-                pyrimid = new THREE.Mesh(pyrimid, material);
-                pyrimid.position.set(0, 24.5, 0);
-                pyrimid.rotation.y = Math.PI * 45 / 180;
+                pyramid = new THREE.Mesh(pyramid, material, pyramidGeom);
+                pyramid.position.set(0, SLAB_HEIGHT + 20, 0); //(0, 24.5, 0);
+                pyramid.rotation.y = Math.PI * 45 / 180;
 
                 scene.add(slab);
-                scene.add(pyrimid);
+                scene.add(pyramid);
                 
                 //X & Z co-ordinates of pryamid
 
@@ -260,75 +327,95 @@
                         callback = function () {
                             var tim = clock.getElapsedTime() * 0.7;
                             //pyrimid.scale.x = 1 + Math.sin(tim);
-                            pyrimid.scale.y = 1 + Math.cos(1.5798 + tim);
+                            pyramid.scale.y = 1 + Math.cos(1.5798 + tim);
                             //pyrimid.scale.z = 1 + Math.cos(1.5798 + tim) * Math.cos(tim);
                         }
 
                     };
                 };
 
-                var slabConfig = new slabConfigData();
-                var slabGui = new dat.GUI();
-                var guiSlab = slabGui.addFolder('Slab ~ Scale');
+                //var slabConfig = new slabConfigData();
+                //var slabGui = new dat.GUI();
+                //var guiSlab = slabGui.addFolder('Slab ~ Scale');
                 
-                //scale for pyrimid top
-                var pyrimidConfig = new pyrimidConfigData();
-                var pyrimidGui = new dat.GUI();
-                var guiPyrimid = pyrimidGui.addFolder('Pyramid ~ Scale');
+                ////scale for pyrimid top
+                //var pyrimidConfig = new pyrimidConfigData();
+                //var pyrimidGui = new dat.GUI();
+                //var guiPyrimid = pyrimidGui.addFolder('Pyramid ~ Scale');
               
                 
-                //add slab scale control
-                guiSlab.open();
+                ////add slab scale control
+                //guiSlab.open();
+                
 
-                //Change slab deminisions & move pyrimid in accordance with the altered slab
-                guiSlab.add(slabConfig, 'scaleY', 0.5, 1.5).onChange(function () {
-
-                    
-                    slab.scale.y = (slabConfig.scaleY);
-
+                slabX.onChange(function(value) {
+                    slab.scale.x = value / (SLAB_WIDTH * 10);
+                    pyramid.scale.x = slab.scale.x;
                     //Put Y scale value in global variable
                     Slab_Height = slab.scale.y;
+                });
 
-                    //This moves the slab and pyrimid as one but there is a gap between the objects
-                    pyrimid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
+                slabY.onChange(function(value) {
+                    slab.scale.y = value / (SLAB_HEIGHT * 10);
+                    slab.position.y = (slab.scale.y * 25) / 2;
+                    pyramid.position.y = (slab.scale.y * 25);
+                });
+
+                slabZ.onChange(function(value) {
+                    slab.scale.z = value / (SLAB_LENGTH * 10);
+                    pyramid.scale.z = slab.scale.z;
+                    Slab_Width = slab.scale.z;
+                });
+
+                ////Change slab deminisions & move pyrimid in accordance with the altered slab
+                //guiSlab.add(slabConfig, 'scaleY', 0.5, 1.5).onChange(function () {
+
+                    
+                //    slab.scale.y = (slabConfig.scaleY);
+
+                //    //Put Y scale value in global variable
+                //    Slab_Height = slab.scale.y;
+
+                //    //This moves the slab and pyrimid as one but there is a gap between the objects
+                //    pyramid.position.y = (slabConfig.scaleY * slab.position.y) + (slab.position.y + slab.position.y) * 0.5;
 
                    
 
-                });
+                //});
 
-                //The following controls the x axis which I'm not working on yet
-                guiSlab.add(slabConfig, 'scaleX', 0.5, 1.5).step(.01).onChange(function () {
-                    slab.scale.x = (slabConfig.scaleX);
+                ////The following controls the x axis which I'm not working on yet
+                //guiSlab.add(slabConfig, 'scaleX', 0.5, 1.5).step(.01).onChange(function () {
+                //    slab.scale.x = (slabConfig.scaleX);
                     
 
-                    //Puts value of X co-ordinate in globally declared variable
-                    //Slab_Width = slab.scale.x;
-                    Slab_Length = slab.scale.x;
-                });
+                //    //Puts value of X co-ordinate in globally declared variable
+                //    //Slab_Width = slab.scale.x;
+                //    Slab_Length = slab.scale.x;
+                //});
 
-                //Z co-ordinates for slab - not working on it yet
+                ////Z co-ordinates for slab - not working on it yet
 
-                guiSlab.add(slabConfig, 'scaleZ', 0.5, 1.5).onChange(function () {
-                    slab.scale.z = (slabConfig.scaleZ);
+                //guiSlab.add(slabConfig, 'scaleZ', 0.5, 1.5).onChange(function () {
+                //    slab.scale.z = (slabConfig.scaleZ);
 
-                    //Puts value of Z co-ordingate in globally declared variable
-                    //Slab_Length = slab.scale.z;
-                    Slab_Width = slab.scale.z;
-                });
+                //    //Puts value of Z co-ordingate in globally declared variable
+                //    //Slab_Length = slab.scale.z;
+                //    Slab_Width = slab.scale.z;
+                //});
                 
-                //add pryimid scale control
-                guiPyrimid.open();
+                ////add pryimid scale control
+                //guiPyrimid.open();
 
-                //Pryamid scale Y co-ordinate
-                guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 1).onChange(function () {
+                ////Pryamid scale Y co-ordinate
+                //guiPyrimid.add(pyrimidConfig, 'scaleY', 0, 1).onChange(function () {
 
-                    pyrimid.scale.y = (pyrimidConfig.scaleY);
+                //    pyramid.scale.y = (pyrimidConfig.scaleY);
 
-                    //Puts value of Y co-ordinate in globally declared variable
-                    Pyramid_Height = pyrimid.scale.y;
+                //    //Puts value of Y co-ordinate in globally declared variable
+                //    Pyramid_Height = pyramid.scale.y;
 
                   
-                });
+                //});
 
                 //guiPyrimid.add(pyrimidConfig, 'scaleX', 0, 1.5).onChange(function () {
                 //    pyrimid.scale.x = (pyrimidConfig.scaleX);
@@ -365,11 +452,11 @@
             }
 
             //Stone texture
-            function stoneTexture() {
-                var getStoneTexture = stoneTex;
-                document.getElementById('<%= stoneTextureHF%>').value = getStoneTexture;
-            }
-            
+                function stoneTexture() {
+                    var getStoneTexture = stoneTex;
+                    document.getElementById('<%= stoneTextureHF%>').value = getStoneTexture;
+                }
+
         </script>
 
          </div>
