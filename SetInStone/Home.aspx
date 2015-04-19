@@ -156,8 +156,6 @@
 <body >
     
     <div id="Title">
-     
-        
       </div>
 
     <div  id='MainGraphic'>
@@ -268,22 +266,22 @@
                 slab.position.set(0, SLAB_HEIGHT / 2, 0); //(0, 12, 0);
                 
 
-                var pyramidGeom = new THREE.Geometry();
-                pyramidGeom.vertices = [  // array of Vector3 giving vertex coordinates
-                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
-                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
-                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
-                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
-                        new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
-                ];
+                //var pyramidGeom = new THREE.Geometry();
+                //pyramidGeom.vertices = [  // array of Vector3 giving vertex coordinates
+                //        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
+                //        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
+                //        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
+                //        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
+                //        new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
+                //];
 
 
                 //create the pyrimid shape
                 pyramid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
                 //add the pyrimid to the scene
-                pyramid = new THREE.Mesh(pyramid, material, pyramidGeom);
-                pyramid.position.set(0, SLAB_HEIGHT + 20, 0); //(0, 24.5, 0);
+                pyramid = new THREE.Mesh(pyramid, material);//pyramidGeom
+                pyramid.position.set(0, SLAB_HEIGHT , 0); //(0, 24.5, 0);
                 pyramid.rotation.y = Math.PI * 45 / 180;
 
                 scene.add(slab);
@@ -351,20 +349,29 @@
                 slabX.onChange(function(value) {
                     slab.scale.x = value / (SLAB_WIDTH * 10);
                     pyramid.scale.x = slab.scale.x;
+                    pyramid.scale.z = slab.scale.x;
                     //Put Y scale value in global variable
-                    Slab_Height = slab.scale.y;
+                    Slab_Length = slab.scale.x;
                 });
 
                 slabY.onChange(function(value) {
                     slab.scale.y = value / (SLAB_HEIGHT * 10);
                     slab.position.y = (slab.scale.y * 25) / 2;
                     pyramid.position.y = (slab.scale.y * 25);
+                    Slab_Height = slab.scale.y;
                 });
 
                 slabZ.onChange(function(value) {
                     slab.scale.z = value / (SLAB_LENGTH * 10);
+                    pyramid.scale.x = slab.scale.z;
                     pyramid.scale.z = slab.scale.z;
                     Slab_Width = slab.scale.z;
+                });
+
+                pyramidY.onChange(function(value) {
+                    pyramid.scale.y = value / (PYRAMID_HEIGHT * 10);
+                    slab.position.y = (pyramid.scale.y/10) / 2;
+                    Pyramid_Height = pyramid.scale.y;
                 });
 
                 ////Change slab deminisions & move pyrimid in accordance with the altered slab
