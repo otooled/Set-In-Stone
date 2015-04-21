@@ -16,13 +16,18 @@ namespace SetInStone
     {
         public Product()
         {
-            this.Order_Details = new HashSet<Order_Details>();
+            this.Quotes = new HashSet<Quote>();
         }
     
-        public byte ProductID { get; set; }
-        public string ProductType { get; set; }
-        public string ProductNumber { get; set; }
+        public int ProductID { get; set; }
+        public Nullable<double> Height { get; set; }
+        public Nullable<double> Width { get; set; }
+        public Nullable<double> Length { get; set; }
+        public Nullable<double> PyrHeight { get; set; }
+        public Nullable<double> StoneType { get; set; }
+        public Nullable<int> ProductOptionID { get; set; }
     
-        public virtual ICollection<Order_Details> Order_Details { get; set; }
+        public virtual ICollection<Quote> Quotes { get; set; }
+        public virtual ProductOption ProductOption { get; set; }
     }
 }

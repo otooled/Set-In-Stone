@@ -14,15 +14,24 @@ namespace SetInStone
     
     public partial class Quote
     {
+        public Quote()
+        {
+            this.Orders = new HashSet<Order>();
+        }
+    
         public int QuoteId { get; set; }
+        public string Quote_Ref { get; set; }
+        public Nullable<int> Quantity { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> SlabId { get; set; }
         public Nullable<double> Price { get; set; }
         public Nullable<int> EmployeeId { get; set; }
+        public Nullable<int> ProductId { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
         public virtual Slab Slab { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

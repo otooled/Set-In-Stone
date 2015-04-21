@@ -12,9 +12,10 @@ namespace SetInStone
     public partial class WebForm1 : System.Web.UI.Page
     {
         
-        
+        public Product prt = new Product();
+ 
        // private SetInStoneEntities4  db = new SetInStoneEntities4();
-        private SIS2 db = new SIS2();
+        private SetStone db = new SetStone();
 
         protected void Dispose(bool disposing)
         {
@@ -67,17 +68,20 @@ namespace SetInStone
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
+           
+                float slabSurfaceCost = CustomerSlabDetails();
+                float pyrSurfaceArea = PyramidSurface();
+                float cutCost = CalculateStraightCuts();
+
+                //float custSlabHeight = DetermineSlab();
+                //float slabcost = DetermineLStoneSlabCost();
+
+                ////Display final cost of stone work
+                //lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost).ToString("c2");//"c2"
+                lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
+
+                
             
-            float slabSurfaceCost = CustomerSlabDetails();
-            float pyrSurfaceArea = PyramidSurface();
-            float cutCost = CalculateStraightCuts();
-
-            //float custSlabHeight = DetermineSlab();
-            //float slabcost = DetermineLStoneSlabCost();
-
-            ////Display final cost of stone work
-            //lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost).ToString("c2");//"c2"
-            lblCalculateAnswer.Text = cutCost.ToString();//"c2"
         }
 
         private float PyramidSurface()
@@ -135,12 +139,13 @@ namespace SetInStone
        
         private  void PopulateProductMenu()
         {
-            //var p = from pdt in db. select new {pdt.ProductType};
-            //ddlProductType.DataSource = p.ToList();
-            //ddlProductType.DataValueField = "ProductType";
-            //ddlProductType.DataTextField = "ProductType";
-            //ddlProductType.DataBind();
-            //ddlProductType.Items.Insert(0, "Select Product");
+            var p = from pdt in db.ProductOptions select new {pdt};
+            var pp = db.ProductOptions;
+            ddlProductType.DataSource = pp.ToList();
+            ddlProductType.DataValueField = "ProductOptionID";
+            ddlProductType.DataTextField = "ProductOption1";
+            ddlProductType.DataBind();
+            ddlProductType.Items.Insert(0, "Select Product");
 
         }
 
@@ -153,6 +158,23 @@ namespace SetInStone
             {
                 //stoneTextureHF.Value = "Textures/Granite.jpg";
                 //lblCalculateAnswer.Text = "hello";
+            }
+        }
+
+        protected void btnSaveConfirm_Click(object sender, EventArgs e)
+        {
+            if(Page.IsValid)
+            {
+                prt.ProductOptionID = Convert.ToInt32(ddlProductType.SelectedValue);
+                prt.Width = float.Parse(SlabWidth.Value);
+                //prt.StoneType = ddlStoneType.SelectedValue;
+               
+                prt.Height = float.Parse(SlabHeight.Value);
+                prt.Length = float.Parse(SlabLength.Value);
+                prt.PyrHeight = float.Parse(PryHeight.Value);
+                Session.Add("quote", lblCalculateAnswer.Text);
+                Session.Add("product", prt);
+                Response.Redirect("Quote.aspx");
             }
         }
 

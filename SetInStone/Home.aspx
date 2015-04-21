@@ -94,7 +94,7 @@
                 width: 350,
                 modal: true,
                 buttons: {
-                    "Create an account": addUser,
+                    "Save Quote": addUser,
                     Cancel: function () {
                         dialog.dialog("close");
                     }
@@ -150,6 +150,7 @@
         var MAX_SLAB_WIDTH = 1200; MAX_SLAB_LENGTH = 1200; MAX_SLAB_HEIGHT = 350; MAX_PYRAMID_HEIGHT = 300;
     </script>
     <title>Set In Stone</title>
+Set In Stone</title>
 
 
 </head>
@@ -356,8 +357,8 @@
 
                 slabY.onChange(function(value) {
                     slab.scale.y = value / (SLAB_HEIGHT * 10);
-                    slab.position.y = (slab.scale.y * 25) / 2;
-                    pyramid.position.y = (slab.scale.y * 25);
+                    slab.position.y = (slab.scale.y * SLAB_HEIGHT) / 2;
+                    pyramid.position.y = (slab.scale.y * SLAB_HEIGHT);
                     Slab_Height = slab.scale.y;
                 });
 
@@ -370,8 +371,10 @@
 
                 pyramidY.onChange(function(value) {
                     pyramid.scale.y = value / (PYRAMID_HEIGHT * 10);
-                    slab.position.y = (pyramid.scale.y/10) / 2;
+                    slab.position.y = (pyramid.scale.y * PYRAMID_HEIGHT) / 2;
                     Pyramid_Height = pyramid.scale.y;
+                    //slab.position.y = (slab.scale.y * 25) / 2;
+                    //pyramid.position.y = (slab.scale.y * 25);
                 });
 
                 ////Change slab deminisions & move pyrimid in accordance with the altered slab
@@ -459,10 +462,10 @@
             }
 
             //Stone texture
-                function stoneTexture() {
-                    var getStoneTexture = stoneTex;
-                    document.getElementById('<%= stoneTextureHF%>').value = getStoneTexture;
-                }
+               // function stoneTexture() {
+              //      var getStoneTexture = stoneTex;
+                //    
+               // }
 
         </script>
 
@@ -524,7 +527,7 @@
                         <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"
                               OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
         DisplaySlabWidth();  DisplaySlabLength();" />
-                        <asp:Button runat="server" class="btn btn-warning" ID="btnSaveConfirm" Text="Save Quote / Place Order"/>
+                        <asp:Button runat="server" class="btn btn-warning" ID="btnSaveConfirm" Text="Save Quote / Place Order" OnClick="btnSaveConfirm_Click"/>
                         <br />
 
                        
@@ -534,7 +537,7 @@
                         <asp:HiddenField ID="PryHeight" runat="server" />
                         <asp:HiddenField ID="SlabHeight" runat="server" />
                         
-                        <asp:HiddenField runat="server" ID="stoneTextureHF"/>
+                        <%--<asp:HiddenField runat="server" ID="stoneTextureHF"/>--%>
 
                         <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
                         <asp:Label runat="server"></asp:Label>
@@ -544,29 +547,6 @@
             </div>
          
         </form>
-    <div id="dialog-form" title="Create new user">
-    <form id="quote" >
-        <fieldset>
-      <label for="name">First Name</label>
-<%--            <asp:TextBox runat="server" ID="name"></asp:TextBox>--%>
-            <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all"/>
-        <label for="name">Surname</label>
-            <input type="text" name="surname" id="surname"  class="text ui-widget-content ui-corner-all"/>
-      <label for="email">Phone Number</label>
-            <input type="text" name="phoneNo" id="phoneNo"  class="text ui-widget-content ui-corner-all"/>
-        <label for="name">Product</label>
-            <input type="text" name="product" id="product"  class="text ui-widget-content ui-corner-all"/>
-        <label for="name">Quantity</label>
-            <input type="text" name="quantity" id="quantity"  class="text ui-widget-content ui-corner-all"/>
-        <label for="name">Price</label>
-            <input type="text" name="price" id="price" value="lblTotalCost" class="text ui-widget-content ui-corner-all"/>
-      
- 
-      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"/>
-    </fieldset>
-    </form>
-        </div>
-    <button id="create-user">Create new user</button>
+   
 </body>
 </html>
