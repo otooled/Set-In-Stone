@@ -174,7 +174,9 @@ namespace SetInStone
                 prt.PyrHeight = float.Parse(PryHeight.Value);
                 Session.Add("quote", lblCalculateAnswer.Text);
                 Session.Add("product", prt);
-                Response.Redirect("Quote.aspx");
+
+                //Response.Write("<script language=javascript>child=window.open('Quote.aspx');</script>");
+               Response.Redirect("Quote.aspx");
             }
         }
 

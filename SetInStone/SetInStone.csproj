@@ -102,6 +102,7 @@
     <Content Include="Content\LandingPage\img\map-marker.png" />
     <Content Include="Content\LandingPage\js\bootstrap.js" />
     <Content Include="Content\LandingPage\js\bootstrap.min.js" />
+    <Content Include="Content\Quote.css" />
     <Content Include="Quote.aspx" />
     <Content Include="Scripts\grayscale.js" />
     <Content Include="Content\LandingPage\js\jquery.easing.min.js" />

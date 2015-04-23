@@ -33,7 +33,7 @@ namespace SetInStone
                 {
                     string quote = (string) Session["quote"];
                    // qte = quote;
-                    txtQuote.Text = quote;
+                    lblDisplayQuote.Text = quote;
                 }
                 
             }
@@ -55,7 +55,7 @@ namespace SetInStone
 
             Quote qute = new Quote();
             qute.CustomerId = customer2.CustomerID;
-            qute.Price = float.Parse(txtQuote.Text);
+            qute.Price = float.Parse(lblDisplayQuote.Text);
 
             qute.ProductId = pt.ProductID;
             db.Quotes.Add(qute);

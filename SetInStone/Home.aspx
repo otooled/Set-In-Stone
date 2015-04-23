@@ -527,7 +527,8 @@ Set In Stone</title>
                         <asp:Button class="btn btn-success" runat="server" ID="btnCalculate" Text="Calculate Cost" OnClick="btnCalculate_Click"
                               OnClientClick="DisplayPryHeight(); DisplaySlabHeight();
         DisplaySlabWidth();  DisplaySlabLength();" />
-                        <asp:Button runat="server" class="btn btn-warning" ID="btnSaveConfirm" Text="Save Quote / Place Order" OnClick="btnSaveConfirm_Click"/>
+                        <asp:Button runat="server" class="btn btn-warning" ID="btnSaveConfirm" Text="Save Quote / Place Order"
+                             OnClick="btnSaveConfirm_Click" />
                         <br />
 
                        
