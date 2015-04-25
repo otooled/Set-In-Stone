@@ -20,7 +20,7 @@
             <asp:Button runat="server" ID="btnCreateQuote" CssClass="LoginButtons" Text="Create Quote" OnClick="btnCreateQuote_Click" />
         </div>
         <div id="retrieveControlsDiv">
-            <asp:Button runat="server" ID="btnRetrieveQuote" CssClass="LoginButtons" Text="Retrieve Quote" />
+            <asp:Button runat="server" ID="btnRetrieveQuote" CssClass="LoginButtons" Text="Retrieve Quote" OnClick="btnRetrieveQuote_Click" />
         </div>
         <div id="otherDiv">
             <asp:Button runat="server" ID="btnOther" CssClass="LoginButtons" Text="Other" />

@@ -103,7 +103,9 @@
     <Content Include="Content\LandingPage\js\bootstrap.js" />
     <Content Include="Content\LandingPage\js\bootstrap.min.js" />
     <Content Include="Content\Quote.css" />
+    <Content Include="Content\RetrieveQuote.css" />
     <Content Include="Quote.aspx" />
+    <Content Include="RetrieveQuote.aspx" />
     <Content Include="Scripts\grayscale.js" />
     <Content Include="Content\LandingPage\js\jquery.easing.min.js" />
     <Content Include="Content\LandingPage\js\jquery.js" />
@@ -174,7 +176,9 @@
     <Content Include="Textures\gridcomb.gif" />
     <Content Include="Textures\Limestone.jpg" />
     <Content Include="Textures\sstone.jpg" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Home.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +247,13 @@
     </Compile>
     <Compile Include="Quote.cs">
       <DependentUpon>SetStone.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RetrieveQuote.aspx.cs">
+      <DependentUpon>RetrieveQuote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RetrieveQuote.aspx.designer.cs">
+      <DependentUpon>RetrieveQuote.aspx</DependentUpon>
     </Compile>
     <Compile Include="SetInStone.Context.cs">
       <AutoGen>True</AutoGen>

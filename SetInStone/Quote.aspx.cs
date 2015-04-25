@@ -16,8 +16,13 @@ namespace SetInStone
             db.Dispose();
         }
 
-       // public 
-       // public string qte = "";
+        private void Page_PreInit(object sender, System.EventArgs e)
+        {
+            if ((Session["loginDetails"] == null))
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
         public Product pt = new Product();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -41,6 +46,8 @@ namespace SetInStone
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            var qRef = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+
             var customer = db.Customers.Where(a => a.First_Name ==txtFirstName.Text && a.Surname == txtSurname.Text).FirstOrDefault();
             if(customer == null)
             {
@@ -56,10 +63,13 @@ namespace SetInStone
             Quote qute = new Quote();
             qute.CustomerId = customer2.CustomerID;
             qute.Price = float.Parse(lblDisplayQuote.Text);
+            qute.Quote_Ref = qRef;
 
             qute.ProductId = pt.ProductID;
             db.Quotes.Add(qute);
             db.SaveChanges();
+
+            Response.Write("<script LANGUAGE='JavaScript' >alert('Quote has been saved.');document.location='" + ResolveClientUrl("~/LandingPage.aspx") + "';</script>");
 
         }
 

@@ -25,5 +25,10 @@ namespace SetInStone
         {
             Response.Redirect("Home.aspx");
         }
+
+        protected void btnRetrieveQuote_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("RetrieveQuote.aspx");
+        }
     }
 }

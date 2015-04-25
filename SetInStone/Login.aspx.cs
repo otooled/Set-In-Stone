@@ -17,8 +17,13 @@ namespace SetInStone
         {
             db.Dispose();
         }
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now); 
+
             //Highlight username textbox
             txtStaffID.Focus();
             

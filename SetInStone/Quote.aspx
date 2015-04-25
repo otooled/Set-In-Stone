@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <%: Styles.Render("~/Content/bootstrap.css", "~/Content/Login.css") %><%: Scripts.Render("~/bundles/jQuery") %>
+    <%: Styles.Render("~/Content/bootstrap.css", "~/Content/Quote.css") %><%: Scripts.Render("~/bundles/jQuery") %>
     <title>Set In Stone</title>
 </head>
 <body>
@@ -39,9 +39,9 @@
         <asp:RegularExpressionValidator ID="regPhone" runat="server" ControlToValidate="txtPhoneNo" ErrorMessage="Numbers only" ValidationExpression="\d+"></asp:RegularExpressionValidator>
         <br />
          <br />
-        <%--<asp:Label ID="lblEmail" runat="server" Text="Email Address"></asp:Label>
-        <asp:TextBox ID="TextBox2" runat="server" ></asp:TextBox>
-        <br />--%>
+        <asp:Label ID="lblQuoteRef" runat="server" Text=""></asp:Label>
+        
+        <br />
         <asp:Button ID="btnSubmit" runat="server" Text="Save Quote" OnClick="btnSubmit_Click"
             class="btn btn-success" />
         </div>
