@@ -31,15 +31,6 @@ namespace SetInStone {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// lblQuote control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuote;
-        
-        /// <summary>
         /// lblDisplayQuote control.
         /// </summary>
         /// <remarks>
@@ -47,15 +38,6 @@ namespace SetInStone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDisplayQuote;
-        
-        /// <summary>
-        /// lblName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblName;
         
         /// <summary>
         /// txtFirstName control.
@@ -76,15 +58,6 @@ namespace SetInStone {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFirstName;
         
         /// <summary>
-        /// lblSurname control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSurname;
-        
-        /// <summary>
         /// txtSurname control.
         /// </summary>
         /// <remarks>
@@ -103,15 +76,6 @@ namespace SetInStone {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
         
         /// <summary>
-        /// lblAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAddress;
-        
-        /// <summary>
         /// txtAddress control.
         /// </summary>
         /// <remarks>
@@ -128,15 +92,6 @@ namespace SetInStone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAddress;
-        
-        /// <summary>
-        /// lblPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPhone;
         
         /// <summary>
         /// txtPhoneNo control.

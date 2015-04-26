@@ -40,7 +40,7 @@
         var slabY;
         var slabZ;
         var pyramidY;
-        var light, slabGeometry,  slabMaterial, pyramid;
+        var light, slabGeometry,  slabMaterial, color, pyramid;
         
         //default size for new pier cap
         var SLAB_WIDTH = 80; SLAB_LENGTH = 100; SLAB_HEIGHT = 25; PYRAMID_HEIGHT = 20;
@@ -82,13 +82,13 @@
                 
                 //Load textures
                 var stoneTex = new THREE.ImageUtils.loadTexture("Textures/gridcomb.gif");
-                
+                //texture.anisotropy = renderer.getMaxAnisotropy();
                 stoneTex.minFilter= THREE.LinearFilter;
                 stoneTex.magFilter = THREE.LinearFilter;
                 stoneTex.wrapS = THREE.RepeatWrapping;
                 stoneTex.repeat.x = 1;
                 stoneTex.repeat.y = 1;
-
+               
                 scene = new THREE.Scene();
 
                 camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 1000);
@@ -136,7 +136,8 @@
                 pyramidGeom.computeVertexNormals();
                 pyramidGeom.computeBoundingSphere();
 
-                var pyramidMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.2 });
+                
+                var pyramidMaterial = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide, transparent: false, opacity: 100 });// new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.2 });
                 pyramid = new THREE.Mesh(pyramidGeom, pyramidMaterial, new THREE.MeshFaceMaterial());
                 //pyramid = new THREE.Mesh(pyramidGeom, pyramidMaterial);
                 pyramid.position.set(0, SLAB_HEIGHT , 0);
@@ -146,8 +147,6 @@
 
                 scene.add(pyramid);
                 scene.add(new THREE.FaceNormalsHelper(pyramid));
-
-
 
                 gui = new dat.GUI();
 
@@ -165,8 +164,8 @@
                 pyramidY = folder1.add(parameters, 'Point_Height').min(MIN_PYRAMID_HEIGHT).max(MAX_PYRAMID_HEIGHT).step(1).listen();
                 folder1.open();
                 
-                var cubeMaterial = gui.add(parameters, 'stone', ["Granite", "Sandstone", "Limestone", "Wireframe"]).name('Stone Type').listen();
-                cubeMaterial.onChange(function (value)
+                var productMaterial = gui.add(parameters, 'stone', ["Granite", "Sandstone", "Limestone", "Wireframe"]).name('Stone Type').listen();
+                productMaterial.onChange(function (value)
                 {
                     updateSlab();
                     updatePyramid();
@@ -188,7 +187,7 @@
                         newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
 
                     slab.material = newMaterial;
-                    
+                    //pyramid.material = newMaterial;
                     
                 animate();
                 }
@@ -203,7 +202,7 @@
                         newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/sstone.jpg") });
                     }
                     else if (value == "Limestone") {
-                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg") });
+                        newMaterial = new THREE.LineBasicMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg") });
                     }
                     else // (value == "Wireframe")
                         newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
