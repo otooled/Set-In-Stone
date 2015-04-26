@@ -29,18 +29,10 @@ namespace SetInStone
                 Response.Redirect("Login.aspx");
             }
         }
-        //protected override void OnInit(EventArgs e)
-        //{
-        //    base.OnInit(e);
-        //    if(Session.)
-        //}
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-        //    protected void Button1_Click(object sender, EventArgs e)
-        //{
-        //  Label1.Text =  Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
-        //}
-            
+       
             if (!Page.IsPostBack)
             {
                 
@@ -59,8 +51,6 @@ namespace SetInStone
                     //btnCalculate.Enabled = false;
                     btnCalculate.ToolTip = "Please choose a Product & Stone Type";
                 }
-                
-                
             }
 
         }
@@ -77,8 +67,8 @@ namespace SetInStone
                 //float slabcost = DetermineLStoneSlabCost();
 
                 ////Display final cost of stone work
-                //lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost).ToString("c2");//"c2"
-                lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
+                lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost + cutCost).ToString();//"c2"
+                //lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
 
                 
             
@@ -121,10 +111,6 @@ namespace SetInStone
             var cutCost = CalcClasses.Cost.CalcStraightCuts(sType, slabWidth, slabHeight, slabLength);
             return cutCost;
         }
-
-
-        
-        
         
 
         private void PopulateStoneMenu()

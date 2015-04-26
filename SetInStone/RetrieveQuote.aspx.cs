@@ -16,6 +16,8 @@ namespace SetInStone
             db.Dispose();
         }
 
+        public Product pdct = new Product();
+
         private void Page_PreInit(object sender, System.EventArgs e)
         {
             if ((Session["loginDetails"] == null))
@@ -35,10 +37,15 @@ namespace SetInStone
             
             try
             {
-                var q = db.Quotes.Where(a => a.Quote_Ref == txtQuoteRef.Text).FirstOrDefault();
+                var q = db.Quotes.Where(a => a.Quote_Ref == txtQuoteRef.Text.ToUpper()).FirstOrDefault();
                 lblFirstName.Text = q.Customer.First_Name;
+                lblSurname.Text = q.Customer.Surname;
+                lblAddress.Text = q.Customer.Address;
+                lblPhoneNo.Text = q.Customer.Phone.ToString();
+                lblProduct.Text = q.Product.ProductOption.ProductOption1;
+                lblPrice.Text = q.Price.ToString();
 
-                if (q.Quote_Ref != txtQuoteRef.Text)
+                if (q.Quote_Ref == txtQuoteRef.Text)
                 {
                     btnEditQuote.Visible = true;
                     btnPlaceOrder.Visible = true;
@@ -48,12 +55,31 @@ namespace SetInStone
             }
             catch (Exception)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertBox", "alert('Your Message');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Quote Retrieval Error", "alert('This quote does not exist');", true);
                 //Response.Write("Quote retrieval error","<script>alert('This Quote Ref does not exist.');</script>");
                 //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Quote retrieval error", "<script>alert('This Quote Ref does not exist.');</script>");
                 
             }
             
+        }
+
+        protected void btnEditQuote_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    var p = ( from a in db.Products
+            //                  join Quote on )
+            //}
+            //catch (Exception)
+            //{
+                
+            //    throw;
+            //}
+            //if(Page.IsValid)
+            //{
+            //    Session.Add("product",pdct);
+            //    pdct.Height = l
+            //}
         }
     }
 }

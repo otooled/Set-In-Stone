@@ -25,13 +25,25 @@
     
         <br />
         <asp:Label ID="lblFirstName" runat="server" CssClass="Labels"></asp:Label>
-        <asp:Label ID="lblDisplayFName" runat="server" ></asp:Label>
+        
+
+        <br />
+        <asp:Label ID="lblSurname" runat="server" CssClass="Labels"></asp:Label>
+        <br />
+        <asp:Label ID="lblAddress" runat="server" CssClass="Labels"></asp:Label>
+        <br />
+        <asp:Label ID="lblPhoneNo" runat="server" CssClass="Labels"></asp:Label>
+        <br />
+        <asp:Label ID="lblProduct" runat="server" CssClass="Labels"></asp:Label>
+        <br />
+        <asp:Label ID="lblPrice" runat="server" CssClass="Labels"></asp:Label>
+        
 
         <br />
         <asp:Button ID="btnRetrieveQuote" runat="server" Text="Retrieve Quote" 
             OnClick="btnRetrieveQuote_Click" CssClass="btn btn-info" />
         <br />
-        <asp:Button ID="btnEditQuote" runat="server" Text="Edit Quote" CssClass="btn btn-danger"/>
+        <asp:Button ID="btnEditQuote" runat="server" Text="Edit Quote" CssClass="btn btn-danger" OnClick="btnEditQuote_Click"/>
         <asp:Button ID="btnPlaceOrder" runat="server" Text="Place Order" CssClass="btn btn-success"/>
         <br />
     </div>

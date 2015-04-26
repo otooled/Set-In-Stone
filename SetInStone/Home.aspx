@@ -12,112 +12,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
     <link rel="stylesheet" href="/resources/demos/style.css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
-    <style>
-     body { font-size: 62.5%; }
-    label, input { display:block; }
-    input.text { margin-bottom:12px; width:95%; padding: .4em; }
-    fieldset { padding:0; border:0; margin-top:25px; }
-    h1 { font-size: 1.2em; margin: .6em 0; }
-    .ui-dialog .ui-state-error { padding: .3em; }
-    .validateTips { border: 1px solid transparent; padding: 0.3em; }
-        </style>
+    
     <%: Styles.Render("~/Content/bootstrap.css", "~/Content/HomePage.css") %> 
     <%: Scripts.Render("~/bundles/jQuery") %>
-    <script>
-        $(function () {
-            var dialog, form,
-
-                // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-                emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-                name = $("#name"),
-                email = $("#email"),
-                password = $("#password"),
-                allFields = $([]).add(name).add(email).add(password),
-                tips = $(".validateTips");
-
-            function updateTips(t) {
-                tips
-                    .text(t)
-                    .addClass("ui-state-highlight");
-                setTimeout(function () {
-                    tips.removeClass("ui-state-highlight", 1500);
-                }, 500);
-            }
-
-            function checkLength(o, n, min, max) {
-                if (o.val().length > max || o.val().length < min) {
-                    o.addClass("ui-state-error");
-                    updateTips("Length of " + n + " must be between " +
-                        min + " and " + max + ".");
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            function checkRegexp(o, regexp, n) {
-                if (!(regexp.test(o.val()))) {
-                    o.addClass("ui-state-error");
-                    updateTips(n);
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            function addUser() {
-                var valid = true;
-                allFields.removeClass("ui-state-error");
-
-                //valid = valid && checkLength(name, "username", 3, 16);
-                //valid = valid && checkLength(email, "email", 6, 80);
-                //valid = valid && checkLength(password, "password", 5, 16);
-
-                //valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
-                valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
-                //valid = valid && checkRegexp(password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
-
-                if (valid) {
-                    $("#users tbody").append("<tr>" +
-                        "<td>" + name.val() + "</td>" +
-                        "<td>" + email.val() + "</td>" +
-                        "<td>" + password.val() + "</td>" +
-                        "</tr>");
-                    dialog.dialog("close");
-                }
-                return valid;
-            }
-
-            dialog = $("#dialog-form").dialog({
-                autoOpen: false,
-                height: 550,
-                width: 350,
-                modal: true,
-                buttons: {
-                    "Save Quote": addUser,
-                    Cancel: function () {
-                        dialog.dialog("close");
-                    }
-                },
-                close: function () {
-                    form[0].reset();
-                    allFields.removeClass("ui-state-error");
-                }
-            });
-
-            form = dialog.find("form").on("submit", function (event) {
-                event.preventDefault();
-                addUser();
-            });
-
-            $("#create-user").button().on("click", function () {
-                dialog.dialog("open");
-            });
-            
-            
-            
-        });
-    </script>
+    
     <script>
         var renderer, scene, camera, controls, stats;
         var light, geometry, material, mesh, np;
@@ -130,12 +28,11 @@
         //This will act as width & length as slab
         var Slab_Width = null;
         var Slab_Length = null;
-
         var Slab_Height = null;
         
-
+        //Global variables
         var slab;
-        var newPyramid;
+        
         var parameters;
         var gui;
         var folder1;
@@ -143,16 +40,16 @@
         var slabY;
         var slabZ;
         var pyramidY;
+        var light, slabGeometry,  slabMaterial, pyramid;
+        
         //default size for new pier cap
         var SLAB_WIDTH = 80; SLAB_LENGTH = 100; SLAB_HEIGHT = 25; PYRAMID_HEIGHT = 20;
+        
         //max dimensions for pier caps
         var MIN_SLAB_WIDTH = 400; MIN_SLAB_LENGTH = 400; MIN_SLAB_HEIGHT = 150; MIN_PYRAMID_HEIGHT = 0;
         var MAX_SLAB_WIDTH = 1200; MAX_SLAB_LENGTH = 1200; MAX_SLAB_HEIGHT = 350; MAX_PYRAMID_HEIGHT = 300;
     </script>
     <title>Set In Stone</title>
-Set In Stone</title>
-
-
 </head>
 <body >
     
@@ -181,17 +78,16 @@ Set In Stone</title>
                 //renderer.domElement.style.textAlign = 'center';
                 mainGraphic.appendChild(renderer.domElement);
 
-                var light, geometry, color, material, pyramid;
+                
                 
                 //Load textures
-                var stoneTex =  new THREE.ImageUtils.loadTexture("Textures/gridcomb.gif");
+                var stoneTex = new THREE.ImageUtils.loadTexture("Textures/gridcomb.gif");
                 
                 stoneTex.minFilter= THREE.LinearFilter;
                 stoneTex.magFilter = THREE.LinearFilter;
                 stoneTex.wrapS = THREE.RepeatWrapping;
                 stoneTex.repeat.x = 1;
                 stoneTex.repeat.y = 1;
-               
 
                 scene = new THREE.Scene();
 
@@ -208,16 +104,51 @@ Set In Stone</title>
                 light.castShadow = true;
                 scene.add(light);
 
-                //var quaternion = new THREE.Quaternion();
-                //quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-                //var vector = new THREE.Vector3(1, 10, 20);
-                //vector.applyQuaternion(quaternion);
-
                 //Create the slab
-                geometry = new THREE.CubeGeometry(100, 15, 100);
+                slabGeometry = new THREE.CubeGeometry(SLAB_WIDTH, SLAB_HEIGHT, SLAB_LENGTH);//(100, 15, 100);
+                slabMaterial = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide, transparent: false, opacity: 100 });
+                
+                slab = new THREE.Mesh(slabGeometry, slabMaterial);
+                slab.castShadow = true;
+                slab.position.set(0, SLAB_HEIGHT / 2, 0); //(0, 12, 0);
+                
+                scene.add(slab);
+                
 
-                //color of slab color: color , ambient: color, transparent: true
-                // color = 0x969696;
+                var pyramidGeom = new THREE.Geometry();
+                pyramidGeom.vertices = [  // array of Vector3 giving vertex coordinates
+                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
+                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
+                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
+                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
+                        new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
+                ];
+
+                pyramidGeom.faces = [
+                    
+                    new THREE.Face3(3, 0, 4), // remaining faces are triangles
+                    new THREE.Face3(0, 1, 4),
+                    new THREE.Face3(1, 2, 4),
+                    new THREE.Face3(2, 3, 4)
+                ];
+                pyramidGeom.dynamic = true;
+                pyramidGeom.computeFaceNormals();
+                pyramidGeom.computeVertexNormals();
+                pyramidGeom.computeBoundingSphere();
+
+                var pyramidMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.2 });
+                pyramid = new THREE.Mesh(pyramidGeom, pyramidMaterial, new THREE.MeshFaceMaterial());
+                //pyramid = new THREE.Mesh(pyramidGeom, pyramidMaterial);
+                pyramid.position.set(0, SLAB_HEIGHT , 0);
+                pyramid.overdraw = true;
+                pyramid.castShadow = true;
+                pyramid.receiveShadow = true;
+
+                scene.add(pyramid);
+                scene.add(new THREE.FaceNormalsHelper(pyramid));
+
+
+
                 gui = new dat.GUI();
 
                 parameters =
@@ -236,9 +167,12 @@ Set In Stone</title>
                 
                 var cubeMaterial = gui.add(parameters, 'stone', ["Granite", "Sandstone", "Limestone", "Wireframe"]).name('Stone Type').listen();
                 cubeMaterial.onChange(function (value)
-                { updateProduct(); });
+                {
+                    updateSlab();
+                    updatePyramid();
+                });
                 
-                function updateProduct() {
+                function updateSlab() {
                     var value = parameters.stone;
                     var newMaterial;
                     if (value == "Granite"){
@@ -254,39 +188,52 @@ Set In Stone</title>
                         newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
 
                     slab.material = newMaterial;
-                    pyramid.material = newMaterial;
+                    
                     
                 animate();
-            }
+                }
 
-                material = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide,  transparent: false, opacity: 100 });
+                function updatePyramid() {
+                    var value = parameters.stone;
+                    var newMaterial;
+                    if (value == "Granite") {
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Granite.jpg"), shading: THREE.FlatShading, overdraw: true });
+                    }
+                    else if (value == "Sandstone") {
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/sstone.jpg") });
+                    }
+                    else if (value == "Limestone") {
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg") });
+                    }
+                    else // (value == "Wireframe")
+                        newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
+
+                    
+                    pyramid.material = newMaterial;
+
+                    animate();
+  
+                }
+
+               
 
                 //slab creation and position setting
-                slab = new THREE.Mesh(geometry, material);
-                slab.castShadow = true;
-                slab.position.set(0, SLAB_HEIGHT / 2, 0); //(0, 12, 0);
+                
                 
 
-                //var pyramidGeom = new THREE.Geometry();
-                //pyramidGeom.vertices = [  // array of Vector3 giving vertex coordinates
-                //        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
-                //        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
-                //        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
-                //        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
-                //        new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
-                //];
+                
 
 
                 //create the pyrimid shape
-                pyramid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
+                //pyramid = new THREE.CylinderGeometry(0, 70, 10, 4, 1);
 
-                //add the pyrimid to the scene
-                pyramid = new THREE.Mesh(pyramid, material);//pyramidGeom
-                pyramid.position.set(0, SLAB_HEIGHT , 0); //(0, 24.5, 0);
-                pyramid.rotation.y = Math.PI * 45 / 180;
+                ////add the pyrimid to the scene
+                //pyramid = new THREE.Mesh(pyramid, material);//pyramidGeom
+                //pyramid.position.set(0, SLAB_HEIGHT , 0); //(0, 24.5, 0);
+                //pyramid.rotation.y = Math.PI * 45 / 180;
 
-                scene.add(slab);
-                scene.add(pyramid);
+                
+                //scene.add(pyramid);
                 
                 //X & Z co-ordinates of pryamid
 
@@ -350,28 +297,35 @@ Set In Stone</title>
                 slabX.onChange(function(value) {
                     slab.scale.x = value / (SLAB_WIDTH * 10);
                     pyramid.scale.x = slab.scale.x;
-                    pyramid.scale.z = slab.scale.x;
-                    //Put Y scale value in global variable
+                    //pyramid.scale.z = slab.scale.x;
+                    
+                    //Put X scale value in global variable
                     Slab_Length = slab.scale.x;
                 });
 
                 slabY.onChange(function(value) {
                     slab.scale.y = value / (SLAB_HEIGHT * 10);
-                    slab.position.y = (slab.scale.y * SLAB_HEIGHT) / 2;
-                    pyramid.position.y = (slab.scale.y * SLAB_HEIGHT);
+                    slab.position.y = (slab.scale.y * 25) / 2;
+                    pyramid.position.y = (slab.scale.y * 25);
+                    
+                    //Put Y scale value in global variable
                     Slab_Height = slab.scale.y;
                 });
 
                 slabZ.onChange(function(value) {
                     slab.scale.z = value / (SLAB_LENGTH * 10);
-                    pyramid.scale.x = slab.scale.z;
+                    //pyramid.scale.x = slab.scale.z;
                     pyramid.scale.z = slab.scale.z;
+                    
+                    //Put Z scale value in global variable
                     Slab_Width = slab.scale.z;
                 });
 
                 pyramidY.onChange(function(value) {
                     pyramid.scale.y = value / (PYRAMID_HEIGHT * 10);
-                    slab.position.y = (pyramid.scale.y * PYRAMID_HEIGHT) / 2;
+                    //slab.position.y = (pyramid.scale.y * PYRAMID_HEIGHT) / 2;
+                    
+                    //Put pryamid Y scale value in global variable
                     Pyramid_Height = pyramid.scale.y;
                     //slab.position.y = (slab.scale.y * 25) / 2;
                     //pyramid.position.y = (slab.scale.y * 25);

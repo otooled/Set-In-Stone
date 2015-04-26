@@ -23,6 +23,7 @@ namespace SetInStone
                 Response.Redirect("Login.aspx");
             }
         }
+
         public Product pt = new Product();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -37,7 +38,7 @@ namespace SetInStone
                 if(Session["quote"] != null)
                 {
                     string quote = (string) Session["quote"];
-                   // qte = quote;
+                  
                     lblDisplayQuote.Text = quote;
                 }
                 
