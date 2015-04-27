@@ -469,7 +469,7 @@
                         <asp:AsyncPostBackTrigger ControlID="btnCalculate" />
                     </Triggers>
                     <ContentTemplate>
-                        <asp:DropDownList ID="ddlProductType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>
+<%--                        <asp:DropDownList ID="ddlProductType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>--%>
                         <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown" 
                             OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True" 
                             onchange="stoneTexture();"  />

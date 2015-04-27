@@ -14,7 +14,7 @@ namespace SetInStone.CalcClasses
         }
 
 
-       public static float CalcStraightCuts(string sType, float slWidth, float slHeight, float slLength)
+       public static float CalcStraightCuts(int sType, float slWidth, float slHeight, float slLength)
        {
            float totalCutArea = 0;
            float surfaceArea = 0;
@@ -30,7 +30,7 @@ namespace SetInStone.CalcClasses
 
             var heightOk = slabs.Where(a => a.Thickness > slHeight);
             var pickSlab = heightOk.OrderBy(a => a.Thickness).Take(1);
-            var slabCutCost = db.Stones.Where(a => a.StoneType == sType).FirstOrDefault();
+            var slabCutCost = db.Stones.Where(a => a.StoneId == sType).FirstOrDefault();
 
             totalCutArea = surfaceArea * (float)slabCutCost.CutCost;
               return totalCutArea;
@@ -46,13 +46,13 @@ namespace SetInStone.CalcClasses
 
        }
 
-        public static float CalcCost(string sType, float slWidth, float slHeight, float slLength)
+        public static float CalcCost(int sType, float slWidth, float slHeight, float slLength)
         {
             float cost = 0;
 
             var volume = slHeight*slWidth*slLength;
 
-            var stoneCost = db.Stones.Where(a => a.StoneType == sType).FirstOrDefault();
+            Stone stoneCost = db.Stones.Where(a => a.StoneId == sType).FirstOrDefault();
             cost = volume*(float)stoneCost.CostPerCube;
 
             return cost;
@@ -60,7 +60,7 @@ namespace SetInStone.CalcClasses
 
         ////Pyramid surface area - formula A = lw+l.√(w2/2)²+h²+w.√(l/2)²+h²
         //decimal surfaceAreaOfPyramid = fPart1*sqrtOfPart2*sqrtOfPart3;
-        public static float PyramidCutCost(string sType, float slWidth, float slHeight, float pyrHeight, float slLength)
+        public static float PyramidCutCost(int sType, float slWidth, float slHeight, float pyrHeight, float slLength)
         {
             float totalPyramidCost = 0;
 
@@ -82,7 +82,7 @@ namespace SetInStone.CalcClasses
             var surfaceArea = fPart1 * sqrtOfPart2 * sqrtOfPart3;
 
 
-            var pyramidCost = db.Stones.Where(a => a.StoneType == sType).FirstOrDefault();
+            Stone pyramidCost = db.Stones.Where(a => a.StoneId == sType).FirstOrDefault();
             totalPyramidCost = surfaceArea*(float) pyramidCost.CutCost;
             return totalPyramidCost;
         }

@@ -43,6 +43,7 @@ namespace SetInStone
                 lblAddress.Text = q.Customer.Address;
                 lblPhoneNo.Text = q.Customer.Phone.ToString();
                 lblProduct.Text = q.Product.ProductOption.ProductOption1;
+                lblStone.Text = db.Stones.Where(a => a.StoneId == q.Product.StoneId).FirstOrDefault().StoneType;
                 //lblPrice.Text = String.Format("0.##", q.Price);
                 lblPrice.Text = q.Price.ToString();
 
@@ -66,21 +67,22 @@ namespace SetInStone
 
         protected void btnEditQuote_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    var p = ( from a in db.Products
-            //                  join Quote on )
-            //}
-            //catch (Exception)
-            //{
+            try
+            {
+                var q = db.Quotes.Where(a => a.Quote_Ref == txtQuoteRef.Text.ToUpper()).FirstOrDefault();
+            
+                if(Page.IsValid)
+                {
+                    Session.Add("quote",q);
+                    Session.Add("EditMode", true);
+                    Response.Redirect("Home.aspx");
+                }
+            }
+            catch (Exception)
+            {
                 
-            //    throw;
-            //}
-            //if(Page.IsValid)
-            //{
-            //    Session.Add("product",pdct);
-            //    pdct.Height = l
-            //}
+                throw;
+            }
         }
     }
 }

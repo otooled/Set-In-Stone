@@ -35,6 +35,8 @@
         <br />
         <asp:Label ID="lblProduct" runat="server" CssClass="Labels" placeholder="Product"></asp:Label>
         <br />
+        <asp:Label ID="lblStone" runat="server" CssClass="Labels" placeholder="Stone"></asp:Label>
+        <br />
         <asp:Label ID="lblPrice" runat="server" CssClass="Labels" placeholder="Price"></asp:Label>
         
 

@@ -36,8 +36,16 @@
 .LoginButtons {
     background-color: transparent;
     border-color: transparent;
-    color: white;
+    color: black;
     font-family: Book Antiqua;
     font-size: 30px;
     
+}
+#ddlProductType {
+    /*background: url("Images/intro-bg.jpg");*/
+    background-color: transparent;
+    border-color: transparent;
+    color: black;
+    font-family: Book Antiqua;
+    font-size: 30px;
 }

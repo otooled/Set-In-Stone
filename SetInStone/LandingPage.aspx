@@ -17,7 +17,10 @@
     </div>
     <form id="form1" runat="server">
         <div id="createControlsDiv" class="controlsDiv">
-            <asp:Button runat="server" ID="btnCreateQuote" CssClass="LoginButtons" Text="Create Quote" OnClick="btnCreateQuote_Click" />
+               <asp:DropDownList ID="ddlProductType" runat="server"   data-toggle="dropdown" OnSelectedIndexChanged="ddlProductType_SelectedIndexChanged1"
+                   AutoPostBack="True"/>
+            
+<%--            <asp:Button runat="server" ID="btnCreateQuote" CssClass="LoginButtons" Text="Create Quote" OnClick="btnCreateQuote_Click" />--%>
         </div>
         <div id="retrieveControlsDiv">
             <asp:Button runat="server" ID="btnRetrieveQuote" CssClass="LoginButtons" Text="Retrieve Quote" OnClick="btnRetrieveQuote_Click" />

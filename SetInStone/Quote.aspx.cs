@@ -41,7 +41,12 @@ namespace SetInStone
                   
                     lblDisplayQuote.Text = quote;
                 }
-                
+                if (Session["productID"] != null)
+                {
+                    //string quote = (string)Session["quote"];
+
+                    //lblDisplayQuote.Text = quote;
+                }
             }
         }
 
@@ -57,7 +62,11 @@ namespace SetInStone
                 db.SaveChanges();
             }
             var customer2 = db.Customers.Where(a => a.First_Name == txtFirstName.Text && a.Surname == txtSurname.Text).FirstOrDefault();
-
+            if (Session["productOptionID"] != null)
+            {
+                var id = (string)Session["productOptionID"];
+                pt.ProductOptionID = Convert.ToInt32(id);
+            }
             db.Products.Add(pt);
             db.SaveChanges();
 

@@ -24,8 +24,8 @@ namespace SetInStone
         public Nullable<double> Width { get; set; }
         public Nullable<double> Length { get; set; }
         public Nullable<double> PyrHeight { get; set; }
-        public Nullable<double> StoneType { get; set; }
         public Nullable<int> ProductOptionID { get; set; }
+        public Nullable<int> StoneId { get; set; }
     
         public virtual ICollection<Quote> Quotes { get; set; }
         public virtual ProductOption ProductOption { get; set; }

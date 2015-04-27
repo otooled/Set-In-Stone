@@ -35,22 +35,32 @@ namespace SetInStone
        
             if (!Page.IsPostBack)
             {
-                
-                
-                //ddlStoneType.Attributes.Add("onchange", "stoneTexture();");
+                //if ((Session["EditMode"] != null) && true)
+                //{
+                //    if ((Session["quote"] != null))
+                //    {
+                //        Quote q = (Quote)Session["quote"];
+                        
+                //    }
+                //}
+                //else
+                //{
+                    //ddlStoneType.Attributes.Add("onchange", "stoneTexture();");
 
-                //Populate menus on page load
-                PopulateStoneMenu();
-               
-                PopulateProductMenu();
-                
+                    //Populate menus on page load
+                    PopulateStoneMenu();
 
-                //Forces the user to select a stone type
-                if (ddlStoneType.SelectedIndex == 0) 
-                {
-                    //btnCalculate.Enabled = false;
-                    btnCalculate.ToolTip = "Please choose a Product & Stone Type";
-                }
+                    //PopulateProductMenu();
+
+
+                    //Forces the user to select a stone type
+                    if (ddlStoneType.SelectedIndex == 0)
+                    {
+                        //btnCalculate.Enabled = false;
+                        btnCalculate.ToolTip = "Please choose a Product & Stone Type";
+                    }
+                //}
+                
             }
 
         }
@@ -77,7 +87,7 @@ namespace SetInStone
         private float PyramidSurface()
         {
             //Measurements entered by the user through the slider control
-            string sType = ddlStoneType.SelectedValue;
+            int sType = Convert.ToInt32( ddlStoneType.SelectedValue);
             float slabWidth = float.Parse(SlabWidth.Value);
             float slabHeight = float.Parse(SlabHeight.Value);
             float pyramidHeight = float.Parse(PryHeight.Value);
@@ -90,7 +100,7 @@ namespace SetInStone
         private float CustomerSlabDetails()
         {
             //Measurements entered by the user through the slider control
-            string sType = ddlStoneType.SelectedValue;
+            int sType = Convert.ToInt32(ddlStoneType.SelectedValue);
             float slabWidth = float.Parse(SlabWidth.Value);
             float slabHeight = float.Parse(SlabHeight.Value);
             //float pyramidHeight = float.Parse(PryHeight.Value);
@@ -103,7 +113,7 @@ namespace SetInStone
 
         private float CalculateStraightCuts()
         {
-            string sType = ddlStoneType.SelectedValue;
+            int sType = Convert.ToInt32(ddlStoneType.SelectedValue);
             float slabWidth = float.Parse(SlabWidth.Value);
             float slabHeight = float.Parse(SlabHeight.Value);
             float slabLength = float.Parse(SlabLength.Value);
@@ -116,24 +126,25 @@ namespace SetInStone
         private void PopulateStoneMenu()
         {
             var stone = from s in db.Stones select new { s.StoneType};
-            ddlStoneType.DataSource = stone.ToList();
-            //ddlStoneType.DataValueField = "CostPerSqMetre";
+            var stonee = db.Stones.ToList();
+            ddlStoneType.DataSource = stonee;//.ToList();
+            ddlStoneType.DataValueField = "StoneId";
             ddlStoneType.DataTextField = "StoneType";
             ddlStoneType.DataBind();
             ddlStoneType.Items.Insert(0, "Select Stone Type");
         }
        
-        private  void PopulateProductMenu()
-        {
-            var p = from pdt in db.ProductOptions select new {pdt};
-            var pp = db.ProductOptions;
-            ddlProductType.DataSource = pp.ToList();
-            ddlProductType.DataValueField = "ProductOptionID";
-            ddlProductType.DataTextField = "ProductOption1";
-            ddlProductType.DataBind();
-            ddlProductType.Items.Insert(0, "Select Product");
+        //private  void PopulateProductMenu()
+        //{
+        //    var p = from pdt in db.ProductOptions select new {pdt};
+        //    var pp = db.ProductOptions;
+        //    ddlProductType.DataSource = pp.ToList();
+        //    ddlProductType.DataValueField = "ProductOptionID";
+        //    ddlProductType.DataTextField = "ProductOption1";
+        //    ddlProductType.DataBind();
+        //    ddlProductType.Items.Insert(0, "Select Product");
 
-        }
+        //}
 
         protected void ddlStoneType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -151,18 +162,36 @@ namespace SetInStone
         {
             if(Page.IsValid)
             {
-                prt.ProductOptionID = Convert.ToInt32(ddlProductType.SelectedValue);
-                prt.Width = float.Parse(SlabWidth.Value);
-                //prt.StoneType = ddlStoneType.SelectedValue;
-               
-                prt.Height = float.Parse(SlabHeight.Value);
-                prt.Length = float.Parse(SlabLength.Value);
-                prt.PyrHeight = float.Parse(PryHeight.Value);
-                Session.Add("quote", lblCalculateAnswer.Text);
-                Session.Add("product", prt);
+                if ((Session["EditMode"] != null) && true)
+                {
+                    if ((Session["quote"] != null))
+                    {
+                        Quote q = (Quote)Session["quote"];
+                        q.Product.Width = float.Parse(SlabWidth.Value);
+                        q.Product.StoneId = Convert.ToInt32(ddlStoneType.SelectedValue);
 
-                //Response.Write("<script language=javascript>child=window.open('Quote.aspx');</script>");
-               Response.Redirect("Quote.aspx");
+                        q.Product.Height = float.Parse(SlabHeight.Value);
+                        q.Product.Length = float.Parse(SlabLength.Value);
+                        q.Product.PyrHeight = float.Parse(PryHeight.Value);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    //prt.ProductOptionID = Convert.ToInt32(ddlProductType.SelectedValue);
+                    prt.Width = float.Parse(SlabWidth.Value);
+                    prt.StoneId = Convert.ToInt32(ddlStoneType.SelectedValue);
+
+                    prt.Height = float.Parse(SlabHeight.Value);
+                    prt.Length = float.Parse(SlabLength.Value);
+                    prt.PyrHeight = float.Parse(PryHeight.Value);
+                    Session.Add("quote", lblCalculateAnswer.Text);
+                    Session.Add("product", prt);
+
+                    //Response.Write("<script language=javascript>child=window.open('Quote.aspx');</script>");
+                    Response.Redirect("Quote.aspx");
+                }
+                
             }
         }
 

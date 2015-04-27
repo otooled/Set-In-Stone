@@ -35,10 +35,6 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Quote" EntitySet="Quote" />
           </AssociationSet>
-          <AssociationSet Name="FK_Quote_Slab" Association="SetStone2Model.Store.FK_Quote_Slab">
-            <End Role="Slab" EntitySet="Slab" />
-            <End Role="Quote" EntitySet="Quote" />
-          </AssociationSet>
           <AssociationSet Name="FK_Slab_Stone" Association="SetStone2Model.Store.FK_Slab_Stone">
             <End Role="Stone" EntitySet="Stone" />
             <End Role="Slab" EntitySet="Slab" />
@@ -81,7 +77,7 @@
           <Property Name="Width" Type="float" />
           <Property Name="Length" Type="float" />
           <Property Name="PyrHeight" Type="float" />
-          <Property Name="StoneType" Type="float" />
+          <Property Name="StoneId" Type="int" />
           <Property Name="ProductOptionID" Type="int" />
         </EntityType>
         <EntityType Name="ProductOption">
@@ -99,7 +95,6 @@
           <Property Name="Quote_Ref" Type="nvarchar" MaxLength="10" />
           <Property Name="Quantity" Type="int" />
           <Property Name="CustomerId" Type="int" />
-          <Property Name="SlabId" Type="int" />
           <Property Name="Price" Type="float" />
           <Property Name="EmployeeId" Type="int" />
           <Property Name="ProductId" Type="int" />
@@ -193,18 +188,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quote_Slab">
-          <End Role="Slab" Type="SetStone2Model.Store.Slab" Multiplicity="0..1" />
-          <End Role="Quote" Type="SetStone2Model.Store.Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Slab">
-              <PropertyRef Name="SlabId" />
-            </Principal>
-            <Dependent Role="Quote">
-              <PropertyRef Name="SlabId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Slab_Stone">
           <End Role="Stone" Type="SetStone2Model.Store.Stone" Multiplicity="0..1" />
           <End Role="Slab" Type="SetStone2Model.Store.Slab" Multiplicity="*" />
@@ -240,10 +223,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Quote_Product" Association="SetStone2Model.FK_Quote_Product">
             <End Role="Product" EntitySet="Products" />
-            <End Role="Quote" EntitySet="Quotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quote_Slab" Association="SetStone2Model.FK_Quote_Slab">
-            <End Role="Slab" EntitySet="Slabs" />
             <End Role="Quote" EntitySet="Quotes" />
           </AssociationSet>
           <AssociationSet Name="FK_Slab_Stone" Association="SetStone2Model.FK_Slab_Stone">
@@ -300,10 +279,10 @@
           <Property Name="Width" Type="Double" />
           <Property Name="Length" Type="Double" />
           <Property Name="PyrHeight" Type="Double" />
-          <Property Name="StoneType" Type="Double" />
           <NavigationProperty Name="Quotes" Relationship="SetStone2Model.FK_Quote_Product" FromRole="Product" ToRole="Quote" />
           <Property Type="Int32" Name="ProductOptionID" />
           <NavigationProperty Name="ProductOption" Relationship="SetStone2Model.FK_Product_ProductOption" FromRole="Product" ToRole="ProductOption" />
+          <Property Type="Int32" Name="StoneId" />
         </EntityType>
         <EntityType Name="Quote">
           <Key>
@@ -313,14 +292,12 @@
           <Property Name="Quote_Ref" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="CustomerId" Type="Int32" />
-          <Property Name="SlabId" Type="Int32" />
           <Property Name="Price" Type="Double" />
           <Property Name="EmployeeId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="SetStone2Model.FK_Quote_Customer" FromRole="Quote" ToRole="Customer" />
           <NavigationProperty Name="Employee" Relationship="SetStone2Model.FK_Quote_Employee" FromRole="Quote" ToRole="Employee" />
           <NavigationProperty Name="Product" Relationship="SetStone2Model.FK_Quote_Product" FromRole="Quote" ToRole="Product" />
-          <NavigationProperty Name="Slab" Relationship="SetStone2Model.FK_Quote_Slab" FromRole="Quote" ToRole="Slab" />
           <NavigationProperty Name="Orders" Relationship="SetStone2Model.FK_Order_Quote" FromRole="Quote" ToRole="Order" />
         </EntityType>
         <EntityType Name="Slab">
@@ -332,7 +309,6 @@
           <Property Name="Length" Type="Double" />
           <Property Name="Width" Type="Double" />
           <Property Name="Thickness" Type="Double" />
-          <NavigationProperty Name="Quotes" Relationship="SetStone2Model.FK_Quote_Slab" FromRole="Slab" ToRole="Quote" />
           <NavigationProperty Name="Stone" Relationship="SetStone2Model.FK_Slab_Stone" FromRole="Slab" ToRole="Stone" />
         </EntityType>
         <EntityType Name="Stone">
@@ -388,18 +364,6 @@
             </Principal>
             <Dependent Role="Quote">
               <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Quote_Slab">
-          <End Role="Slab" Type="SetStone2Model.Slab" Multiplicity="0..1" />
-          <End Role="Quote" Type="SetStone2Model.Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Slab">
-              <PropertyRef Name="SlabId" />
-            </Principal>
-            <Dependent Role="Quote">
-              <PropertyRef Name="SlabId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -487,13 +451,13 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="SetStone2Model.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="StoneId" ColumnName="StoneId" />
                 <ScalarProperty Name="ProductOptionID" ColumnName="ProductOptionID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Length" ColumnName="Length" />
                 <ScalarProperty Name="PyrHeight" ColumnName="PyrHeight" />
-                <ScalarProperty Name="StoneType" ColumnName="StoneType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -504,7 +468,6 @@
                 <ScalarProperty Name="Quote_Ref" ColumnName="Quote_Ref" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="SlabId" ColumnName="SlabId" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
