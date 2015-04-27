@@ -43,6 +43,7 @@ namespace SetInStone
                 lblAddress.Text = q.Customer.Address;
                 lblPhoneNo.Text = q.Customer.Phone.ToString();
                 lblProduct.Text = q.Product.ProductOption.ProductOption1;
+                //lblPrice.Text = String.Format("0.##", q.Price);
                 lblPrice.Text = q.Price.ToString();
 
                 if (q.Quote_Ref == txtQuoteRef.Text)

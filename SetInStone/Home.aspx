@@ -53,8 +53,12 @@
 </head>
 <body >
     
-    <div id="Title">
-      </div>
+     <br/>
+    <br/>
+        <div id="divTitle">
+        <label>Set In Stone</label>
+    </div>
+    
 
     <div  id='MainGraphic'>
         
@@ -69,11 +73,11 @@
                 // console.log('hi ', d);
                 
                 renderer = new THREE.WebGLRenderer({ antialias: true });
-                renderer.setSize(640, 320);
+                renderer.setSize(740, 320);
                 renderer.shadowMapEnabled = true;
                 renderer.shadowMapSoft = true;
-                renderer.domElement.style.border = '5px solid black';
-                renderer.domElement.style.backgroundColor = '#d6dbe3';
+                renderer.domElement.style.border = '5px solid white';
+                //renderer.domElement.style.backgroundColor = '#d6dbe3';
                 //renderer.domElement.style.font = '12px bold monospace';
                 //renderer.domElement.style.textAlign = 'center';
                 mainGraphic.appendChild(renderer.domElement);
@@ -493,7 +497,7 @@
                         
                         <%--<asp:HiddenField runat="server" ID="stoneTextureHF"/>--%>
 
-                        <asp:Label runat="server" ID="lblCalculateAnswer"></asp:Label>
+                        <asp:Label runat="server" ID="lblCalculateAnswer" CssClass="Labels"></asp:Label>
                         <asp:Label runat="server"></asp:Label>
                         
                     </ContentTemplate>

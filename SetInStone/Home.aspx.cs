@@ -67,7 +67,7 @@ namespace SetInStone
                 //float slabcost = DetermineLStoneSlabCost();
 
                 ////Display final cost of stone work
-                lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost + cutCost).ToString();//"c2"
+                lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost + cutCost).ToString("0.##");//"c2"
                 //lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
 
                 
