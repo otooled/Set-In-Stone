@@ -29,5 +29,6 @@ namespace SetInStone
     
         public virtual ICollection<Quote> Quotes { get; set; }
         public virtual ProductOption ProductOption { get; set; }
+        public virtual Stone Stone { get; set; }
     }
 }

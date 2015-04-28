@@ -37,12 +37,17 @@ namespace SetInStone
             {
                 if(Session["quote"] != null)
                 {
+                    //string prt = (string)Session["productOptionID"];
+                    //lblDisplayProd.Text = prt;
+                    string quoteRef = (string) Session["quoteRef"];
+                    lblDisplayQuoteRef.Text = quoteRef;
+
                     string quote = (string) Session["quote"];
-                  
                     lblDisplayQuote.Text = quote;
                 }
                 if (Session["productID"] != null)
                 {
+                    
                     //string quote = (string)Session["quote"];
 
                     //lblDisplayQuote.Text = quote;
@@ -52,7 +57,7 @@ namespace SetInStone
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var qRef = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+           // var qRef = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
 
             var customer = db.Customers.Where(a => a.First_Name ==txtFirstName.Text && a.Surname == txtSurname.Text).FirstOrDefault();
             if(customer == null)
@@ -73,7 +78,8 @@ namespace SetInStone
             Quote qute = new Quote();
             qute.CustomerId = customer2.CustomerID;
             qute.Price = float.Parse(lblDisplayQuote.Text);
-            qute.Quote_Ref = qRef;
+            qute.Quote_Ref = lblDisplayQuoteRef.Text;
+            //qute.Quote_Ref = qRef;
 
             qute.ProductId = pt.ProductID;
             db.Quotes.Add(qute);

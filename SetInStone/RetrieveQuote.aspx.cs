@@ -75,7 +75,7 @@ namespace SetInStone
                 {
                     Session.Add("quote",q);
                     Session.Add("EditMode", true);
-                    Response.Redirect("Home.aspx");
+                    Response.Redirect("ProductPage.aspx");
                 }
             }
             catch (Exception)

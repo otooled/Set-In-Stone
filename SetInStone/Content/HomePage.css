@@ -32,14 +32,22 @@
 }
 #costControls {
     
-    margin: 30px;
+    margin: 10px;
     width: 400px;
     border: 1px solid white;
     -moz-border-radius:  2px;
     border-radius: 5px;
-    height: 150px;
+    height: 190px;
     text-align: center;
     float: right;
 
      margin-top: -300px;
+}
+.Buttons {
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
+    font-family: Book Antiqua;
+    font-size: 20px;
+    
 }

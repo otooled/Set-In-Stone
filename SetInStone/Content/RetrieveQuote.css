@@ -12,6 +12,14 @@
     background-color: transparent;
     font-family: Book Antiqua;
 }
+.Buttons {
+    background-color: transparent;
+    border-color: transparent;
+    color: white;
+    font-family: Book Antiqua;
+    font-size: 30px;
+    
+}
 .TextBoxes {
     border: none;
     height: 40px;

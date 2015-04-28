@@ -57,7 +57,7 @@ namespace SetInStone
             if (ddlProductType.SelectedIndex == 1)
             {
                 Session.Add("productOptionID",ddlProductType.SelectedValue);
-                Response.Redirect("Home.aspx");
+                Response.Redirect("ProductPage.aspx");
                 
             }
         }

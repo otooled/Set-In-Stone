@@ -23,6 +23,10 @@
             <End Role="ProductOption" EntitySet="ProductOption" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_Stone" Association="SetStone2Model.Store.FK_Product_Stone">
+            <End Role="Stone" EntitySet="Stone" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_Quote_Customer" Association="SetStone2Model.Store.FK_Quote_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Quote" EntitySet="Quote" />
@@ -31,7 +35,7 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Quote" EntitySet="Quote" />
           </AssociationSet>
-          <AssociationSet Name="FK_Quote_Product" Association="SetStone2Model.Store.FK_Quote_Product">
+          <AssociationSet Name="FK_Quote_Product1" Association="SetStone2Model.Store.FK_Quote_Product1">
             <End Role="Product" EntitySet="Product" />
             <End Role="Quote" EntitySet="Quote" />
           </AssociationSet>
@@ -152,6 +156,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Stone">
+          <End Role="Stone" Type="SetStone2Model.Store.Stone" Multiplicity="0..1" />
+          <End Role="Product" Type="SetStone2Model.Store.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stone">
+              <PropertyRef Name="StoneId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="StoneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Quote_Customer">
           <End Role="Customer" Type="SetStone2Model.Store.Customer" Multiplicity="0..1" />
           <End Role="Quote" Type="SetStone2Model.Store.Quote" Multiplicity="*" />
@@ -176,7 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quote_Product">
+        <Association Name="FK_Quote_Product1">
           <End Role="Product" Type="SetStone2Model.Store.Product" Multiplicity="0..1" />
           <End Role="Quote" Type="SetStone2Model.Store.Quote" Multiplicity="*" />
           <ReferentialConstraint>
@@ -238,6 +254,10 @@
             <End Role="Quote" EntitySet="Quotes" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_Stone" Association="SetStone2Model.FK_Product_Stone">
+            <End Role="Stone" EntitySet="Stones" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customer">
           <Key>
@@ -283,6 +303,7 @@
           <Property Type="Int32" Name="ProductOptionID" />
           <NavigationProperty Name="ProductOption" Relationship="SetStone2Model.FK_Product_ProductOption" FromRole="Product" ToRole="ProductOption" />
           <Property Type="Int32" Name="StoneId" />
+          <NavigationProperty Name="Stone" Relationship="SetStone2Model.FK_Product_Stone" FromRole="Product" ToRole="Stone" />
         </EntityType>
         <EntityType Name="Quote">
           <Key>
@@ -320,6 +341,7 @@
           <Property Name="CostPerCube" Type="Double" />
           <Property Name="CutCost" Type="Double" />
           <NavigationProperty Name="Slabs" Relationship="SetStone2Model.FK_Slab_Stone" FromRole="Stone" ToRole="Slab" />
+          <NavigationProperty Name="Products" Relationship="SetStone2Model.FK_Product_Stone" FromRole="Stone" ToRole="Product" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -408,6 +430,18 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="Quoteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Stone">
+          <End Type="SetStone2Model.Stone" Role="Stone" Multiplicity="0..1" />
+          <End Type="SetStone2Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stone">
+              <PropertyRef Name="StoneId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="StoneId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

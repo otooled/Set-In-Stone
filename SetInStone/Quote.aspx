@@ -24,6 +24,8 @@
         <asp:Label runat="server" ID="lblDisplayQuote" CssClass="Labels"></asp:Label>
         
         <br />
+        <asp:Label runat="server" ID="lblDisplayQuoteRef" CssClass="Labels"></asp:Label>
+        <br/>
        <%-- <asp:Label ID="lblName" runat="server" Text="First Name"></asp:Label>--%>
         <asp:TextBox ID="txtFirstName" runat="server" CssClass="TextBoxes" placeholder="First Name"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ControlToValidate="txtFirstName" ErrorMessage="Please enter a first name"></asp:RequiredFieldValidator>
@@ -48,8 +50,8 @@
         <asp:Label ID="lblQuoteRef" runat="server" Text=""></asp:Label>
         
         <br />
-        <asp:Button ID="btnSubmit" runat="server" Text="Save Quote" OnClick="btnSubmit_Click"
-            class="btn btn-success" />
+        <asp:Button ID="btnSubmit" runat="server" Text="Save Quote" OnClick="btnSubmit_Click" CssClass="Buttons"
+            c />
         </div>
     </form>
 </body>

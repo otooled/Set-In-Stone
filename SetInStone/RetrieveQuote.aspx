@@ -42,11 +42,11 @@
 
         <br />
         <asp:Button ID="btnRetrieveQuote" runat="server" Text="Retrieve Quote" 
-            OnClick="btnRetrieveQuote_Click" CssClass="btn btn-info" />
+            OnClick="btnRetrieveQuote_Click" CssClass="Buttons" />
         <br />
         <br />
-        <asp:Button ID="btnEditQuote" runat="server" Text="Edit Quote" CssClass="btn btn-danger" OnClick="btnEditQuote_Click"/>
-        <asp:Button ID="btnPlaceOrder" runat="server" Text="Place Order" CssClass="btn btn-success"/>
+        <asp:Button ID="btnEditQuote" runat="server" Text="Edit Quote" CssClass="Buttons" OnClick="btnEditQuote_Click"/>
+        <asp:Button ID="btnPlaceOrder" runat="server" Text="Place Order" CssClass="Buttons"/>
         <br />
     </div>
     </form>

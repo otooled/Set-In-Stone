@@ -17,6 +17,7 @@ namespace SetInStone
         public Stone()
         {
             this.Slabs = new HashSet<Slab>();
+            this.Products = new HashSet<Product>();
         }
     
         public int StoneId { get; set; }
@@ -25,5 +26,6 @@ namespace SetInStone
         public Nullable<double> CutCost { get; set; }
     
         public virtual ICollection<Slab> Slabs { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
