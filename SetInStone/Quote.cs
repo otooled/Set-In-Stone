@@ -23,13 +23,13 @@ namespace SetInStone
         public string Quote_Ref { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<int> CustomerId { get; set; }
-        public Nullable<double> Price { get; set; }
+        public Nullable<decimal> Price { get; set; }
         public Nullable<int> EmployeeId { get; set; }
         public Nullable<int> ProductId { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual Product Product { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

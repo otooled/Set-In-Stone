@@ -24,7 +24,7 @@ namespace SetInStone
         public string Surname { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
-        public Nullable<int> Phone { get; set; }
+        public string Phone { get; set; }
     
         public virtual ICollection<Quote> Quotes { get; set; }
     }

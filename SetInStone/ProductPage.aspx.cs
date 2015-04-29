@@ -32,6 +32,14 @@ namespace SetInStone
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!ClientScript.IsStartupScriptRegistered("DisableVal"))
+            {
+
+                ClientScript.RegisterStartupScript(this.GetType(), "DisableVal", "<script>DisableValidators(false)</script>");
+
+                btnSaveConfirm.Attributes.Add("onclick", "return EnableVal()");
+
+            }
        
             if (!Page.IsPostBack)
             {
@@ -68,20 +76,22 @@ namespace SetInStone
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
-           
+            float qauntity = float.Parse(txtQuantity.Text);
                 float slabSurfaceCost = CustomerSlabDetails();
                 float pyrSurfaceArea = PyramidSurface();
                 float cutCost = CalculateStraightCuts();
+            float total = (pyrSurfaceArea + slabSurfaceCost + cutCost);
 
                 //float custSlabHeight = DetermineSlab();
                 //float slabcost = DetermineLStoneSlabCost();
 
                 ////Display final cost of stone work
-                lblCalculateAnswer.Text = (pyrSurfaceArea + slabSurfaceCost + cutCost).ToString("0.##");//"c2"
-                //lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
+            lblCalculateAnswer.Text = (total * qauntity).ToString("#.##");
+            //lblCalculateAnswer.Text = ((pyrSurfaceArea + slabSurfaceCost + cutCost)*(qauntity).ToString();//"c2"
+            //lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
 
-                
-            
+
+
         }
 
         private float PyramidSurface()
@@ -156,6 +166,7 @@ namespace SetInStone
                 //stoneTextureHF.Value = "Textures/Granite.jpg";
                 //lblCalculateAnswer.Text = "hello";
             }
+                     
         }
 
         protected void btnSaveConfirm_Click(object sender, EventArgs e)
@@ -179,6 +190,7 @@ namespace SetInStone
                 }
                 else
                 {
+                   
                     //prt.ProductOptionID = Convert.ToInt32(ddlProductType.SelectedValue);
                     prt.Width = float.Parse(SlabWidth.Value);
                     prt.StoneId = Convert.ToInt32(ddlStoneType.SelectedValue);

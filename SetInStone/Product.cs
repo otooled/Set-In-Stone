@@ -27,8 +27,8 @@ namespace SetInStone
         public Nullable<int> ProductOptionID { get; set; }
         public Nullable<int> StoneId { get; set; }
     
-        public virtual ICollection<Quote> Quotes { get; set; }
         public virtual ProductOption ProductOption { get; set; }
         public virtual Stone Stone { get; set; }
+        public virtual ICollection<Quote> Quotes { get; set; }
     }
 }

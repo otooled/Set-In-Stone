@@ -41,7 +41,7 @@ namespace SetInStone
                 lblFirstName.Text = q.Customer.First_Name;
                 lblSurname.Text = q.Customer.Surname;
                 lblAddress.Text = q.Customer.Address;
-                lblPhoneNo.Text = q.Customer.Phone.ToString();
+                lblPhoneNo.Text = q.Customer.Phone;
                 lblProduct.Text = q.Product.ProductOption.ProductOption1;
                 lblStone.Text = db.Stones.Where(a => a.StoneId == q.Product.StoneId).FirstOrDefault().StoneType;
                 //lblPrice.Text = String.Format("0.##", q.Price);
@@ -83,6 +83,12 @@ namespace SetInStone
                 
                 throw;
             }
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LandingPage.aspx");
+
         }
     }
 }

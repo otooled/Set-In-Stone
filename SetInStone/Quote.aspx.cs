@@ -62,7 +62,7 @@ namespace SetInStone
             var customer = db.Customers.Where(a => a.First_Name ==txtFirstName.Text && a.Surname == txtSurname.Text).FirstOrDefault();
             if(customer == null)
             {
-                Customer cust = new Customer{ First_Name = txtFirstName.Text, Surname = txtSurname.Text, Address = txtAddress.Text, Phone = Convert.ToInt32(txtPhoneNo.Text)};
+                Customer cust = new Customer{ First_Name = txtFirstName.Text, Surname = txtSurname.Text, Address = txtAddress.Text, Phone = (txtPhoneNo.Text)};
                 db.Customers.Add(cust);
                 db.SaveChanges();
             }
@@ -77,7 +77,8 @@ namespace SetInStone
 
             Quote qute = new Quote();
             qute.CustomerId = customer2.CustomerID;
-            qute.Price = float.Parse(lblDisplayQuote.Text);
+            qute.Price = Convert.ToDecimal(lblDisplayQuote.Text);
+            //qute.Price = float.Parse(lblDisplayQuote.Text);
             qute.Quote_Ref = lblDisplayQuoteRef.Text;
             //qute.Quote_Ref = qRef;
 
@@ -88,6 +89,16 @@ namespace SetInStone
             Response.Write("<script LANGUAGE='JavaScript' >alert('Quote has been saved.');document.location='" + ResolveClientUrl("~/LandingPage.aspx") + "';</script>");
 
         }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LandingPage.aspx");
+        }
+
+        //protected void btnCancel_Click(object sender, EventArgs e)
+        //{
+        //    
+        //}
 
         
 

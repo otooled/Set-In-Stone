@@ -17,14 +17,17 @@
         <label>Set In Stone</label>
     </div>
     <div id="divRetrieve">
-    
+    <br/>
+    <br/>
 <%--        <asp:Label ID="lblQuoteRef" runat="server" Text="Quote Ref" CssClass="Labels"></asp:Label>--%>
         <asp:TextBox ID="txtQuoteRef" runat="server" CssClass="TextBoxes"
             placeholder="Quote Ref"></asp:TextBox>
 
-    
+    <asp:Button ID="btnRetrieveQuote" runat="server" Text="Retrieve Quote" 
+            OnClick="btnRetrieveQuote_Click" CssClass="Buttons" />
+        <asp:Button runat="server" ID="btnCancel" Text="Cancel" CssClass="Buttons" OnClick="btnCancel_Click"/>
         <br />
-        <asp:Label ID="lblFirstName" runat="server" CssClass="Labels" Text="First Name"></asp:Label>
+        <asp:Label ID="lblFirstName" runat="server" CssClass="Labels" ></asp:Label>
 
         <br />
         <asp:Label ID="lblSurname" runat="server" CssClass="Labels" placeholder="Surame"></asp:Label>
@@ -41,8 +44,7 @@
         
 
         <br />
-        <asp:Button ID="btnRetrieveQuote" runat="server" Text="Retrieve Quote" 
-            OnClick="btnRetrieveQuote_Click" CssClass="Buttons" />
+        
         <br />
         <br />
         <asp:Button ID="btnEditQuote" runat="server" Text="Edit Quote" CssClass="Buttons" OnClick="btnEditQuote_Click"/>

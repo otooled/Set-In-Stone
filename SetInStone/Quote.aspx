@@ -51,7 +51,9 @@
         
         <br />
         <asp:Button ID="btnSubmit" runat="server" Text="Save Quote" OnClick="btnSubmit_Click" CssClass="Buttons"
-            c />
+             />
+        <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="Buttons" OnClick="btnCancel_Click" CausesValidation="False"
+            />
         </div>
     </form>
 </body>

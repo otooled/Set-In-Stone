@@ -18,15 +18,20 @@
     color: white;
     font-family: Book Antiqua;
     font-size: 30px;
+     
+    border-width: 10px;
     
 }
 .TextBoxes {
-    border: none;
+   
     height: 40px;
     font-size: 30px;
     color: white;
     background-color: transparent;
     font-family: Book Antiqua;
+    width: 150px;
+     border: black;
+    
 }
 ::-webkit-input-placeholder {
     color: white;
@@ -45,8 +50,9 @@ input:focus {
     font-size: 50px;
 }
 #divRetrieve {
+    
     margin-left: auto;
-    margin-right: auto;
-    width: 400px;
+    
+    width: 1000px;
     
 }

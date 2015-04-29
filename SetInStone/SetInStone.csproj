@@ -112,7 +112,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\HomePage.css" />
+    <Content Include="Content\ProductPage.css" />
     <Content Include="LandingPage.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="NewEmployee.aspx" />
@@ -173,8 +173,11 @@
     <Content Include="Scripts\three.min.js" />
     <Content Include="Scripts\TrackballControls.js" />
     <Content Include="Textures\Granite.jpg" />
+    <Content Include="Textures\granite2.jpg" />
     <Content Include="Textures\gridcomb.gif" />
     <Content Include="Textures\Limestone.jpg" />
+    <Content Include="Textures\limestone2.jpg" />
+    <Content Include="Textures\sandstone2.jpg" />
     <Content Include="Textures\sstone.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -285,6 +288,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SetStone.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SetStone1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SetStone.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Slab.cs">
       <DependentUpon>SetStone.tt</DependentUpon>
     </Compile>
@@ -319,7 +327,7 @@
     </Content>
     <EntityDeploy Include="SetStone.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SetStone.Designer.cs</LastGenOutput>
+      <LastGenOutput>SetStone1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="SetStone.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

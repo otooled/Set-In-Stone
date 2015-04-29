@@ -1,4 +1,4 @@
-﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProductPage.aspx.cs" Inherits="SetInStone.WebForm1" %>
+﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProductPage.aspx.cs" Inherits="SetInStone.WebForm1" UnobtrusiveValidationMode="None" %>
 
 <%@ Import Namespace="System.Web.Optimization" %>
 
@@ -11,12 +11,12 @@
     <meta content='width=1100' name='viewport' />
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
     <link rel="stylesheet" href="/resources/demos/style.css"/>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="http://localhost:55153/code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
     
-    <%: Styles.Render("~/Content/bootstrap.css", "~/Content/HomePage.css") %> 
-    <%: Scripts.Render("~/bundles/jQuery") %>
+    <%: Styles.Render("~/Content/bootstrap.css", "~/Content/ProductPage.css") %>    <%: Scripts.Render("~/bundles/jQuery") %>
     
     <script>
+       
         var renderer, scene, camera, controls, stats;
         var light, geometry, material, mesh, np;
         var clock = new THREE.Clock();
@@ -40,7 +40,7 @@
         var slabY;
         var slabZ;
         var pyramidY;
-        var light, slabGeometry,  slabMaterial, color, pyramid;
+        var light, slabGeometry, slabMaterial, color, pyramid, assignUVs;
         
         //default size for new pier cap
         var SLAB_WIDTH = 80; SLAB_LENGTH = 100; SLAB_HEIGHT = 25; PYRAMID_HEIGHT = 20;
@@ -48,6 +48,11 @@
         //max dimensions for pier caps
         var MIN_SLAB_WIDTH = 400; MIN_SLAB_LENGTH = 400; MIN_SLAB_HEIGHT = 150; MIN_PYRAMID_HEIGHT = 0;
         var MAX_SLAB_WIDTH = 1200; MAX_SLAB_LENGTH = 1200; MAX_SLAB_HEIGHT = 350; MAX_PYRAMID_HEIGHT = 300;
+    </script>
+    <script language="javascript">
+
+        
+
     </script>
     <title>Set In Stone</title>
 </head>
@@ -60,7 +65,7 @@
     </div>
     
 
-    </div>
+    
     
 
     <div  id='MainGraphic'>
@@ -74,7 +79,7 @@
                 mainGraphic = document.getElementById('MainGraphic');
                 // d = document.body;
                 // console.log('hi ', d);
-                
+
                 renderer = new THREE.WebGLRenderer({ antialias: true });
                 renderer.setSize(740, 320);
                 renderer.shadowMapEnabled = true;
@@ -85,17 +90,18 @@
                 //renderer.domElement.style.textAlign = 'center';
                 mainGraphic.appendChild(renderer.domElement);
 
-                
-                
+                color = new THREE.Color(0xffffff);
+
                 //Load textures
                 var stoneTex = new THREE.ImageUtils.loadTexture("Textures/gridcomb.gif");
-                //texture.anisotropy = renderer.getMaxAnisotropy();
-                stoneTex.minFilter= THREE.LinearFilter;
-                stoneTex.magFilter = THREE.LinearFilter;
                 stoneTex.wrapS = THREE.RepeatWrapping;
+                stoneTex.anisotropy = 16;
+                stoneTex.minFilter = THREE.LinearFilter;
+                stoneTex.magFilter = THREE.LinearFilter;
+                
                 stoneTex.repeat.x = 1;
                 stoneTex.repeat.y = 1;
-               
+
                 scene = new THREE.Scene();
 
                 camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 1000);
@@ -112,28 +118,28 @@
                 scene.add(light);
 
                 //Create the slab
-                slabGeometry = new THREE.CubeGeometry(SLAB_WIDTH, SLAB_HEIGHT, SLAB_LENGTH);//(100, 15, 100);
+                slabGeometry = new THREE.CubeGeometry(SLAB_WIDTH, SLAB_HEIGHT, SLAB_LENGTH); //(100, 15, 100);
                 slabMaterial = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide, transparent: false, opacity: 100 });
-                
+
                 slab = new THREE.Mesh(slabGeometry, slabMaterial);
                 slab.castShadow = true;
                 slab.position.set(0, SLAB_HEIGHT / 2, 0); //(0, 12, 0);
-                
+
                 scene.add(slab);
                 
 
                 var pyramidGeom = new THREE.Geometry();
                 pyramidGeom.vertices = [  // array of Vector3 giving vertex coordinates
-                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
-                        new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
-                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
-                        new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
-                        new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
+                    new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / 2),    // vertex number 0
+                    new THREE.Vector3(SLAB_WIDTH / 2, 0, SLAB_LENGTH / -2),   // vertex number 1
+                    new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / -2),  // vertex number 2
+                    new THREE.Vector3(SLAB_WIDTH / -2, 0, SLAB_LENGTH / 2),   // vertex number 3
+                    new THREE.Vector3(0, PYRAMID_HEIGHT, 0)     // vertex number 4
                 ];
 
                 pyramidGeom.faces = [
                     
-                    new THREE.Face3(3, 0, 4), // remaining faces are triangles
+                    new THREE.Face3(3, 0, 4), // faces are triangles
                     new THREE.Face3(0, 1, 4),
                     new THREE.Face3(1, 2, 4),
                     new THREE.Face3(2, 3, 4)
@@ -144,7 +150,7 @@
                 pyramidGeom.computeBoundingSphere();
 
                 
-                var pyramidMaterial = new THREE.MeshPhongMaterial({ map: stoneTex, side: THREE.DoubleSide, transparent: false, opacity: 100 });// new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.2 });
+                var pyramidMaterial = new THREE.MeshLambertMaterial({ wireframe: true, side: THREE.DoubleSide, transparent: false, opacity: 100 });// new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.2 });
                 pyramid = new THREE.Mesh(pyramidGeom, pyramidMaterial, new THREE.MeshFaceMaterial());
                 //pyramid = new THREE.Mesh(pyramidGeom, pyramidMaterial);
                 pyramid.position.set(0, SLAB_HEIGHT , 0);
@@ -158,11 +164,11 @@
                 gui = new dat.GUI();
 
                 parameters =
-                {
-                    Length: (SLAB_LENGTH * 10), Width: (SLAB_WIDTH * 10), Slab_Height: (SLAB_HEIGHT * 10), Point_Height: (PYRAMID_HEIGHT * 10),    //these will be read from the DB for previous quotes!
-                    stone: "Granite",
-                    reset: function () { resetPier() }
-                };
+                    {
+                        Length: (SLAB_LENGTH * 10), Width: (SLAB_WIDTH * 10), Slab_Height: (SLAB_HEIGHT * 10), Point_Height: (PYRAMID_HEIGHT * 10),    //these will be read from the DB for previous quotes!
+                        stone: "Granite",
+                        reset: function () { resetPier() }
+                    };
 
                 folder1 = gui.addFolder('Pier Cap Dimensions (mm)');
                 slabX = folder1.add(parameters, 'Width').min(MIN_SLAB_LENGTH).max(MAX_SLAB_LENGTH).step(1).listen();
@@ -182,34 +188,34 @@
                     var value = parameters.stone;
                     var newMaterial;
                     if (value == "Granite"){
-                        newMaterial = new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture("Textures/Granite.jpg"), shading: THREE.FlatShading, overdraw : true});
+                        newMaterial = new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture("Textures/granite2.jpg"), shading: THREE.FlatShading, overdraw : true});
                     }
                     else if (value == "Sandstone") {
-                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/sstone.jpg") });
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/sandstone2.jpg") });
                     }
                     else if (value == "Limestone"){
-                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg") });
+                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/limestone2.jpg") });
                     }
                     else // (value == "Wireframe")
                         newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
 
                     slab.material = newMaterial;
-                    //pyramid.material = newMaterial;
+                    //pyramid.material = newMaterial;   
                     
-                animate();
+                    animate();
                 }
 
                 function updatePyramid() {
                     var value = parameters.stone;
                     var newMaterial;
                     if (value == "Granite") {
-                        newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Granite.jpg"), shading: THREE.FlatShading, overdraw: true });
+                        newMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });//new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Granite.jpg"), shading: THREE.FlatShading, overdraw: true });
                     }
                     else if (value == "Sandstone") {
                         newMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture("Textures/sstone.jpg") });
                     }
                     else if (value == "Limestone") {
-                        newMaterial = new THREE.LineBasicMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg") });
+                        newMaterial = new THREE.MeshBasicMaterial({ color: 0x7C7062 });//new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("Textures/Limestone.jpg")});
                     }
                     else // (value == "Wireframe")
                         newMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
@@ -308,7 +314,7 @@
                 renderers.push({ renderer: renderer, scene: scene, camera: camera, controls: controls, callback: callback });
 
             }
-
+            
             //Functions to send co-ordinates of pryamid and slab to code behind
             function DisplaySlabHeight() {
                 var GetSlabHeight = Slab_Height;
@@ -330,7 +336,7 @@
                 document.getElementById('<%= PryHeight.ClientID %>').value = GetPryHeight;
             }
 
-            //Stone texture
+        //Stone texture
                // function stoneTexture() {
               //      var getStoneTexture = stoneTex;
                 //    
@@ -369,7 +375,10 @@
             }
 
         </script>
+    
         <form id="fmControls" runat="server">
+            
+
             <%--Start of Ajax commands--%>
             <asp:ScriptManager ID="MainScriptManager" runat="server" />
 
@@ -384,7 +393,11 @@
 <%--                        <asp:DropDownList ID="ddlProductType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown"/>--%>
                         <asp:DropDownList ID="ddlStoneType" runat="server" class="btn btn-info dropdown-toggle" data-toggle="dropdown" 
                             OnSelectedIndexChanged="ddlStoneType_SelectedIndexChanged" AutoPostBack="True" 
-                            onchange="stoneTexture();"  />
+                             />
+                        <asp:TextBox runat="server" ID="txtQuantity" CssClass="TextBoxes" placeholder="Enter quantity here"
+                            ></asp:TextBox>
+                         <asp:RequiredFieldValidator ID="rfvQuantity" runat="server" ControlToValidate="txtQuantity" ErrorMessage="Please enter no of products required" EnableClientScript="False"></asp:RequiredFieldValidator>
+                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtQuantity" ErrorMessage="Number only" ValidationExpression="^\d$"></asp:RegularExpressionValidator>
                          <div id="ProvisionalCosts"  >
                             <br/>
                             <br />
@@ -418,6 +431,7 @@
             </div>
          
         </form>
-   
+       
+
 </body>
 </html>
