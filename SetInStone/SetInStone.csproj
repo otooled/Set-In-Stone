@@ -269,10 +269,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SetInStone.tt</DependentUpon>
     </Compile>
-    <Compile Include="SetInStone.Designer.cs">
+    <Compile Include="OldSetInStone.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SetInStone.edmx</DependentUpon>
+      <DependentUpon>OldSetInStone.edmx</DependentUpon>
     </Compile>
     <Compile Include="SetStone.Context.cs">
       <AutoGen>True</AutoGen>
@@ -309,21 +309,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <EntityDeploy Include="SetInStone.edmx">
+    <EntityDeploy Include="OldSetInStone.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SetInStone.Designer.cs</LastGenOutput>
+      <LastGenOutput>OldSetInStone.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="SetInStone.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SetInStone.edmx</DependentUpon>
+      <DependentUpon>OldSetInStone.edmx</DependentUpon>
       <LastGenOutput>SetInStone.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="SetInStone.edmx.diagram">
-      <DependentUpon>SetInStone.edmx</DependentUpon>
+    <Content Include="OldSetInStone.edmx.diagram">
+      <DependentUpon>OldSetInStone.edmx</DependentUpon>
     </Content>
     <Content Include="SetInStone.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SetInStone.edmx</DependentUpon>
+      <DependentUpon>OldSetInStone.edmx</DependentUpon>
       <LastGenOutput>SetInStone.cs</LastGenOutput>
     </Content>
     <EntityDeploy Include="SetStone.edmx">
