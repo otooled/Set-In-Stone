@@ -11,10 +11,10 @@ namespace SetInStone
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        
+        //product option for session
         public Product prt = new Product();
  
-       // private SetInStoneEntities4  db = new SetInStoneEntities4();
+       //database connection
         private SetStone db = new SetStone();
 
         protected void Dispose(bool disposing)
@@ -22,6 +22,7 @@ namespace SetInStone
             db.Dispose();
         }
 
+        //Check user is logged in
         private void Page_PreInit(object sender, System.EventArgs e)
         {
             if ((Session["loginDetails"] == null))
@@ -32,17 +33,12 @@ namespace SetInStone
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!ClientScript.IsStartupScriptRegistered("DisableVal"))
-            {
-
-                ClientScript.RegisterStartupScript(this.GetType(), "DisableVal", "<script>DisableValidators(false)</script>");
-
-                btnSaveConfirm.Attributes.Add("onclick", "return EnableVal()");
-
-            }
        
             if (!Page.IsPostBack)
             {
+                //The following commented out code will be used
+                //editing a quote
+
                 //if ((Session["EditMode"] != null) && true)
                 //{
                 //    if ((Session["quote"] != null))
@@ -54,21 +50,10 @@ namespace SetInStone
                 //else
                 //{
                     //ddlStoneType.Attributes.Add("onchange", "stoneTexture();");
-
-                    //Populate menus on page load
-                    PopulateStoneMenu();
-
-                    //PopulateProductMenu();
-
-
-                    //Forces the user to select a stone type
-                    if (ddlStoneType.SelectedIndex == 0)
-                    {
-                        //btnCalculate.Enabled = false;
-                        //btnCalculate.ToolTip = "Please choose a Product & Stone Type";
-                    }
                 //}
-                
+                //Populate stone menu
+
+                PopulateStoneMenu();
             }
 
         }
@@ -76,21 +61,16 @@ namespace SetInStone
 
         protected void btnCalculate_Click(object sender, EventArgs e)
         {
+
+            //variables to hold cost and cutting calculation results
             float qauntity = float.Parse(txtQuantity.Text);
-                float slabSurfaceCost = CustomerSlabDetails();
-                float pyrSurfaceArea = PyramidSurface();
-                float cutCost = CalculateStraightCuts();
+            float slabSurfaceCost = CustomerSlabDetails();
+            float pyrSurfaceArea = PyramidSurface();
+            float cutCost = CalculateStraightCuts();
             float total = (pyrSurfaceArea + slabSurfaceCost + cutCost);
 
-                //float custSlabHeight = DetermineSlab();
-                //float slabcost = DetermineLStoneSlabCost();
-
-                ////Display final cost of stone work
+            //Display final cost of stone work
             lblCalculateAnswer.Text = (total * qauntity).ToString("#.##");
-            //lblCalculateAnswer.Text = ((pyrSurfaceArea + slabSurfaceCost + cutCost)*(qauntity).ToString();//"c2"
-            //lblCalculateAnswer.Text = cutCost.ToString(); //"c2"
-
-
 
         }
 
@@ -103,6 +83,7 @@ namespace SetInStone
             float pyramidHeight = float.Parse(PryHeight.Value);
             float slabLength = float.Parse(SlabLength.Value);
 
+            //calculations performed cost class
             var surface = CalcClasses.Cost.PyramidCutCost(sType, slabWidth, slabHeight, pyramidHeight, slabLength);
             return surface;
         }
@@ -113,21 +94,22 @@ namespace SetInStone
             int sType = Convert.ToInt32(ddlStoneType.SelectedValue);
             float slabWidth = float.Parse(SlabWidth.Value);
             float slabHeight = float.Parse(SlabHeight.Value);
-            //float pyramidHeight = float.Parse(PryHeight.Value);
-            
             float slabLength = float.Parse(SlabLength.Value);
 
-           var price = CalcClasses.Cost.CalcCost(sType, slabWidth, slabHeight, slabLength);
+            //calculations performed cost class
+            var price = CalcClasses.Cost.CalcCost(sType, slabWidth, slabHeight, slabLength);
             return price;
         }
 
         private float CalculateStraightCuts()
         {
+            //Measurements entered by the user through the slider control
             int sType = Convert.ToInt32(ddlStoneType.SelectedValue);
             float slabWidth = float.Parse(SlabWidth.Value);
             float slabHeight = float.Parse(SlabHeight.Value);
             float slabLength = float.Parse(SlabLength.Value);
 
+            //calculations performed cost class
             var cutCost = CalcClasses.Cost.CalcStraightCuts(sType, slabWidth, slabHeight, slabLength);
             return cutCost;
         }
@@ -143,35 +125,29 @@ namespace SetInStone
             ddlStoneType.DataBind();
             ddlStoneType.Items.Insert(0, "Select Stone Type");
         }
-       
-        //private  void PopulateProductMenu()
-        //{
-        //    var p = from pdt in db.ProductOptions select new {pdt};
-        //    var pp = db.ProductOptions;
-        //    ddlProductType.DataSource = pp.ToList();
-        //    ddlProductType.DataValueField = "ProductOptionID";
-        //    ddlProductType.DataTextField = "ProductOption1";
-        //    ddlProductType.DataBind();
-        //    ddlProductType.Items.Insert(0, "Select Product");
-
-        //}
+     
 
         protected void ddlStoneType_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnCalculate.Enabled = true;
             btnCalculate.ToolTip = "Calculate";
 
+            //attempt at controlling Three.js texture with server side dropdown menu
             if (ddlStoneType.SelectedIndex == 1)
             {
                 //stoneTextureHF.Value = "Textures/Granite.jpg";
-                //lblCalculateAnswer.Text = "hello";
+                
             }
                      
         }
 
+        //Save user inputs
         protected void btnSaveConfirm_Click(object sender, EventArgs e)
         {
+            //generate a random alphanumeric string for Quote Reference
             string qRef = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+
+            //This is for editing a quote which is implemented yet
             if(Page.IsValid)
             {
                 if ((Session["EditMode"] != null) && true)
@@ -188,10 +164,11 @@ namespace SetInStone
                         db.SaveChanges();
                     }
                 }
+
+                    //This adds product deminsions into session
                 else
                 {
-                   
-                    //prt.ProductOptionID = Convert.ToInt32(ddlProductType.SelectedValue);
+                    
                     prt.Width = float.Parse(SlabWidth.Value);
                     prt.StoneId = Convert.ToInt32(ddlStoneType.SelectedValue);
 
@@ -201,8 +178,7 @@ namespace SetInStone
                     Session.Add("quoteRef",qRef);
                     Session.Add("quote", lblCalculateAnswer.Text);
                     Session.Add("product", prt);
-
-                    //Response.Write("<script language=javascript>child=window.open('Quote.aspx');</script>");
+                    
                     Response.Redirect("Quote.aspx");
                 }
                 

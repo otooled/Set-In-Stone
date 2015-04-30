@@ -49,6 +49,15 @@ namespace SetInStone {
         protected global::System.Web.UI.WebControls.Button btnRetrieveQuote;
         
         /// <summary>
+        /// ddlOther control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlOther;
+        
+        /// <summary>
         /// btnOther control.
         /// </summary>
         /// <remarks>
@@ -56,5 +65,14 @@ namespace SetInStone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnOther;
+        
+        /// <summary>
+        /// btnLogOut control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLogOut;
     }
 }

@@ -26,7 +26,14 @@
             <asp:Button runat="server" ID="btnRetrieveQuote" CssClass="LoginButtons" Text="Retrieve Quote" OnClick="btnRetrieveQuote_Click" />
         </div>
         <div id="otherDiv">
+            <asp:DropDownList runat="server" ID="ddlOther" AutoPostBack="True" OnSelectedIndexChanged="ddlOther_SelectedIndexChanged">
+                <asp:ListItem Value="0">Other</asp:ListItem>
+                <asp:ListItem Value="1">Add Employee</asp:ListItem>
+                <asp:ListItem Value="2">Update Stock</asp:ListItem>
+            </asp:DropDownList>
             <asp:Button runat="server" ID="btnOther" CssClass="LoginButtons" Text="Other" />
+                
+                <asp:Button  runat="server" ID="btnLogOut" Text="Logout" OnClick="btnLogOut_Click" CssClass="Buttons"/>
         </div>
     
     </form>

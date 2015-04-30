@@ -9,6 +9,7 @@ namespace SetInStone
 {
     public partial class Quote1 : System.Web.UI.Page
     {
+        //database connection
         private SetStone db = new SetStone();
 
         protected void Dispose(bool disposing)
@@ -16,6 +17,7 @@ namespace SetInStone
             db.Dispose();
         }
 
+        //check user is logged in
         private void Page_PreInit(object sender, System.EventArgs e)
         {
             if ((Session["loginDetails"] == null))
@@ -24,8 +26,10 @@ namespace SetInStone
             }
         }
 
+        //create product for session
         public Product pt = new Product();
 
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["product"] != null)
@@ -37,14 +41,15 @@ namespace SetInStone
             {
                 if(Session["quote"] != null)
                 {
-                    //string prt = (string)Session["productOptionID"];
-                    //lblDisplayProd.Text = prt;
+                    //Display quote ref generated on product page
                     string quoteRef = (string) Session["quoteRef"];
                     lblDisplayQuoteRef.Text = quoteRef;
 
+                    //Display quote price generated on product page
                     string quote = (string) Session["quote"];
                     lblDisplayQuote.Text = quote;
                 }
+
                 if (Session["productID"] != null)
                 {
                     
@@ -55,10 +60,10 @@ namespace SetInStone
             }
         }
 
+        //Add the quote, customer and product to the database
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-           // var qRef = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
-
+           
             var customer = db.Customers.Where(a => a.First_Name ==txtFirstName.Text && a.Surname == txtSurname.Text).FirstOrDefault();
             if(customer == null)
             {
@@ -78,14 +83,13 @@ namespace SetInStone
             Quote qute = new Quote();
             qute.CustomerId = customer2.CustomerID;
             qute.Price = Convert.ToDecimal(lblDisplayQuote.Text);
-            //qute.Price = float.Parse(lblDisplayQuote.Text);
             qute.Quote_Ref = lblDisplayQuoteRef.Text;
-            //qute.Quote_Ref = qRef;
 
             qute.ProductId = pt.ProductID;
             db.Quotes.Add(qute);
             db.SaveChanges();
 
+            //send user back to landing page after details are saved
             Response.Write("<script LANGUAGE='JavaScript' >alert('Quote has been saved.');document.location='" + ResolveClientUrl("~/LandingPage.aspx") + "';</script>");
 
         }
@@ -95,10 +99,7 @@ namespace SetInStone
             Response.Redirect("LandingPage.aspx");
         }
 
-        //protected void btnCancel_Click(object sender, EventArgs e)
-        //{
-        //    
-        //}
+        
 
         
 

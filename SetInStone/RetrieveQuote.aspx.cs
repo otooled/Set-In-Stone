@@ -9,6 +9,7 @@ namespace SetInStone
 {
     public partial class RetrieveQuote : System.Web.UI.Page
     {
+        //database connection
         private SetStone db = new SetStone();
 
         protected void Dispose(bool disposing)
@@ -16,7 +17,8 @@ namespace SetInStone
             db.Dispose();
         }
 
-        public Product pdct = new Product();
+        //create a product for session
+        //public Product pdct = new Product();
 
         private void Page_PreInit(object sender, System.EventArgs e)
         {
@@ -25,6 +27,8 @@ namespace SetInStone
                 Response.Redirect("Login.aspx");
             }
         }
+
+        //Don't have edit and order visible until quote ref has been verified
         protected void Page_Load(object sender, EventArgs e)
         {
             btnEditQuote.Visible = false;
@@ -32,6 +36,7 @@ namespace SetInStone
 
         }
 
+        //verify if quote exists
         protected void btnRetrieveQuote_Click(object sender, EventArgs e)
         {
             
@@ -44,7 +49,6 @@ namespace SetInStone
                 lblPhoneNo.Text = q.Customer.Phone;
                 lblProduct.Text = q.Product.ProductOption.ProductOption1;
                 lblStone.Text = db.Stones.Where(a => a.StoneId == q.Product.StoneId).FirstOrDefault().StoneType;
-                //lblPrice.Text = String.Format("0.##", q.Price);
                 lblPrice.Text = q.Price.ToString();
 
                 if (q.Quote_Ref == txtQuoteRef.Text)
@@ -55,16 +59,17 @@ namespace SetInStone
                 
 
             }
+
+            //inform the user if the quote doesn't exist
             catch (Exception)
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Quote Retrieval Error", "alert('This quote does not exist');", true);
-                //Response.Write("Quote retrieval error","<script>alert('This Quote Ref does not exist.');</script>");
-                //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Quote retrieval error", "<script>alert('This Quote Ref does not exist.');</script>");
                 
             }
             
         }
 
+        //this will allow the user to edit the quote when it's all implemented
         protected void btnEditQuote_Click(object sender, EventArgs e)
         {
             try

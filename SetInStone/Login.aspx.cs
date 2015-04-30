@@ -21,6 +21,8 @@ namespace SetInStone
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            //The system crashes if the user presses back afte logging in.
+            //This should prevent that
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetExpires(DateTime.Now); 
 
@@ -41,6 +43,7 @@ namespace SetInStone
             }
         }
 
+        //Check login details with detail in database
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             Employee details;
@@ -52,6 +55,7 @@ namespace SetInStone
 
             }
 
+            //Encryption for password checking
             string hash = GetMd5Hash(txtPassword.Text);
 
             var logDet = db.Employees.Where(a => a.User_ID == txtStaffID.Text && a.Password == hash).FirstOrDefault();
@@ -71,7 +75,7 @@ namespace SetInStone
         }
 
 
-
+        //Encryption for password checking
         static string GetMd5Hash(string input)
         {
             string output = "";
