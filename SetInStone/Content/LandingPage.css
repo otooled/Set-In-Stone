@@ -12,25 +12,25 @@
     font-size: 50px;
 }
 .controlsDiv {
-    margin-left: 300px;
+    margin-left: 150px;
     top: 30%;
     bottom: auto;
-    width: 300px;
+    width: 280px;
     position: fixed;
     
 }
 #retrieveControlsDiv {
-    margin-left: 600px;
+    margin-left: 450px;
     top: 30%;
     bottom: auto;
-    width: 300px;
+    width: 280px;
     position: fixed;
 }
 #otherDiv {
-    margin-left: 900px;
+    margin-left: 750px;
     top: 30%;
     bottom: auto;
-    width: 300px;
+    width: 280px;
     position: fixed;
 }
 .LoginButtons {
@@ -41,7 +41,14 @@
     font-size: 30px;
     
 }
-#ddlProductType {
+#divLogOut {
+     margin-left: 1000px;
+    top: 30%;
+    bottom: auto;
+    width: 280px;
+    position: fixed;
+}
+.drops {
     /*background: url("Images/intro-bg.jpg");*/
     background-color: #6E767F;
     border-color: transparent;

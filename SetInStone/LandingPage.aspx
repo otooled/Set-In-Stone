@@ -18,22 +18,21 @@
     <form id="form1" runat="server">
         <div id="createControlsDiv" class="controlsDiv">
                <asp:DropDownList ID="ddlProductType" runat="server"   data-toggle="dropdown" OnSelectedIndexChanged="ddlProductType_SelectedIndexChanged1"
-                   AutoPostBack="True"/>
+                   AutoPostBack="True" CssClass="drops"/>
             
-<%--            <asp:Button runat="server" ID="btnCreateQuote" CssClass="LoginButtons" Text="Create Quote" OnClick="btnCreateQuote_Click" />--%>
         </div>
         <div id="retrieveControlsDiv">
             <asp:Button runat="server" ID="btnRetrieveQuote" CssClass="LoginButtons" Text="Retrieve Quote" OnClick="btnRetrieveQuote_Click" />
         </div>
         <div id="otherDiv">
-            <asp:DropDownList runat="server" ID="ddlOther" AutoPostBack="True" OnSelectedIndexChanged="ddlOther_SelectedIndexChanged">
+            <asp:DropDownList runat="server" ID="ddlOther" AutoPostBack="True" CssClass="drops" OnSelectedIndexChanged="ddlOther_SelectedIndexChanged">
                 <asp:ListItem Value="0">Other</asp:ListItem>
                 <asp:ListItem Value="1">Add Employee</asp:ListItem>
                 <asp:ListItem Value="2">Update Stock</asp:ListItem>
             </asp:DropDownList>
-            <asp:Button runat="server" ID="btnOther" CssClass="LoginButtons" Text="Other" />
-                
-                <asp:Button  runat="server" ID="btnLogOut" Text="Logout" OnClick="btnLogOut_Click" CssClass="Buttons"/>
+            </div>
+        <div id="divLogOut">
+            <asp:Button  runat="server" ID="btnLogOut" Text="Logout" OnClick="btnLogOut_Click" CssClass="LoginButtons"/>
         </div>
     
     </form>

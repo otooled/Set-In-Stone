@@ -18,7 +18,8 @@
         <label>Set In Stone</label>
     </div>
     <div id="divQuote">
-    
+    <br/>
+        <asp:Label runat="server" ID="lblInstuctions" ForeColor="white" Text="Enter details below and click Save Quote"></asp:Label>
     
         
         <asp:Label runat="server" ID="lblDisplayQuote" CssClass="Labels"></asp:Label>

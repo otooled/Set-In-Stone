@@ -7,13 +7,14 @@ namespace SetInStone.CalcClasses
 {
     public static class Cost
     {
+        //database connection
         private static SetStone db = new SetStone();
-       static void Dispose(bool disposing)
+        static void Dispose(bool disposing)
         {
             db.Dispose();
         }
 
-
+        //calculate straight cuts
        public static float CalcStraightCuts(int sType, float slWidth, float slHeight, float slLength)
        {
            float totalCutArea = 0;
@@ -40,12 +41,9 @@ namespace SetInStone.CalcClasses
             //    totalCutArea = surfaceArea * (float)slabCutCost.CutCost;
             //    return totalCutArea;
             //}
-           
-
-
 
        }
-
+        //calculate stone cost
         public static float CalcCost(int sType, float slWidth, float slHeight, float slLength)
         {
             float cost = 0;
@@ -58,6 +56,7 @@ namespace SetInStone.CalcClasses
             return cost;
         }
 
+        //calculate pyramid cost
         ////Pyramid surface area - formula A = lw+l.√(w2/2)²+h²+w.√(l/2)²+h²
         //decimal surfaceAreaOfPyramid = fPart1*sqrtOfPart2*sqrtOfPart3;
         public static float PyramidCutCost(int sType, float slWidth, float slHeight, float pyrHeight, float slLength)

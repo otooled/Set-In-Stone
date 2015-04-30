@@ -19,7 +19,8 @@
     <div id="divRetrieve">
     <br/>
     <br/>
-<%--        <asp:Label ID="lblQuoteRef" runat="server" Text="Quote Ref" CssClass="Labels"></asp:Label>--%>
+        <asp:Label ID="lblInstructions" runat="server" ForeColor="white" Text="Enter quote reference below and click Retrieve Quote" ></asp:Label>
+        <br/>
         <asp:TextBox ID="txtQuoteRef" runat="server" CssClass="TextBoxes"
             placeholder="Quote Ref"></asp:TextBox>
 
